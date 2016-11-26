@@ -13,7 +13,7 @@ import {
 import { MockBackend } from '@angular/http/testing';
 
 import { NameListService } from '../shared/index';
-import { HomeModule } from './home.module';
+import { HomeModule } from './organization.module';
 
 export function main() {
   describe('Home component', () => {
@@ -65,6 +65,6 @@ export function main() {
 
 @Component({
   selector: 'test-cmp',
-  template: '<sd-home></sd-home>'
+  template: '<sd-organization></sd-organization>'
 })
 class TestComponent { }
