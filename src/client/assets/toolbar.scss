@@ -1,0 +1,22 @@
+sd-toolbar {
+  background-color: #ffffff;
+  color: rgba(255, 255, 255, 0.87);
+  display: block;
+  height: 78px;
+  padding: 0 16px;
+  width:60%;
+
+  .logo {
+    background-color: white;
+    background-image:url('http://allvectorlogo.com/img/2016/05/equinix-logo-200x116.png') ;
+    background-repeat:no-repeat;
+    position: absolute;
+    left: 0px;
+    top:0px;
+    height: inherit;
+    z-index:1;
+    width: 250px;
+  }
+
+}
+

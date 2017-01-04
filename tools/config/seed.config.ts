@@ -3,7 +3,7 @@ import * as slash from 'slash';
 import * as util from 'gulp-util';
 import { argv } from 'yargs';
 
-import { BuildType, ExtendPackages, InjectableDependency } from './seed.config.interfaces';
+import { BuildType, ExtendPackages, InjectableDependency, SassOptions } from './seed.config.interfaces';
 
 /************************* DO NOT CHANGE ************************
  *
@@ -182,7 +182,7 @@ export class SeedConfig {
    * `index.html`.
    * @type {string}
    */
-  APP_TITLE = 'Welcome to angular2-seed!';
+  APP_TITLE = 'Cloud Portal';
 
   /**
    * The base folder of the applications source files.
@@ -302,6 +302,10 @@ export class SeedConfig {
    * @type {boolean}
    */
   ENABLE_SCSS = argv['scss'] || false;
+
+
+  SASS_OPTIONS: SassOptions = {
+  };
 
   /**
    * The list of NPM dependcies to be injected in the `index.html`.

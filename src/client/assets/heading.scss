@@ -1,0 +1,60 @@
+$break-small: 400px;
+$break-large: 1200px;
+
+.heading {
+  display: flex;
+  flex-direction: row;
+  button {
+    background-color: #ed1c24;
+    border-style: none;
+    color: rgba(255, 255, 255, 0.87);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    height: 40px;
+    text-decoration: none;
+}
+  @media screen and (max-width: $break-small) {
+    button {
+      width: $break-small;
+      float: left;
+      margin-top: 10px;
+    }
+    .btn-group {
+      position:fixed;
+      bottom:0px;
+      button{
+        width:200px;
+      }
+      width:$break-small;
+      z-index:20;
+    }
+
+  }
+  @media screen and (min-width: $break-large) {
+
+    :host {
+      margin: 0px 120px 0px 0px;
+    }
+
+    button {
+      margin-left: 1em;
+      margin-top:40px;
+
+      display: inline-block;
+    }
+  }
+
+  .btn-group {
+    margin: 0px 10px 0px auto;
+    span {
+      color: white;
+    }
+  }
+
+}
+
+
+
+
+

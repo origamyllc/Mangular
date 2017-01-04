@@ -1,0 +1,40 @@
+@import "navbar";
+@import "heading";
+@import "material/card";
+@import "material/materialize";
+
+.main-container{
+  width:80%;
+  z-index:-1;
+  @media screen and (max-width: $break-small) {
+    margin-left:0px;
+  }
+  @media screen and (min-width: $break-large) {
+    margin-left:17%;
+  }
+}
+
+.container {
+  margin-top:30px;
+  @media screen and (max-width: $break-small) {
+    margin-left:0px; padding-left: 0px;
+  }
+  @media screen and (min-width: $break-large) {
+    margin-left:17%;
+  }
+}
+span.badge{ color:white;}
+
+.table-grid-container {
+  max-height: 500px;
+  overflow: scroll;
+}
+
+.card-grid-container {
+  max-height: 500px;
+  @media screen and (min-width: $break-large) {
+    overflow: scroll;
+  }
+}
+.right-alert{ > div{ color:red;margin-top:-10px;margin-bottom:10px;}}
+

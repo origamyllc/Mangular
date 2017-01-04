@@ -219,21 +219,21 @@ Forks of this project demonstrate how to extend and integrate with other librari
 │       ├── app
 │       │   ├── +about
 │       │   │   ├── about.component.css
-│       │   │   ├── about.component.e2e-spec.ts
+│       │   │   ├── account.component.e2e-spec.ts
 │       │   │   ├── about.component.html
-│       │   │   ├── about.component.spec.ts
-│       │   │   ├── about.component.ts
-│       │   │   ├── about.module.ts
-│       │   │   ├── about.routes.ts
+│       │   │   ├── account.component.spec.ts
+│       │   │   ├── account.component.ts
+│       │   │   ├── account.module.ts
+│       │   │   ├── account.routes.ts
 │       │   │   └── index.ts
 │       │   ├── +home
 │       │   │   ├── home.component.css
-│       │   │   ├── home.component.e2e-spec.ts
+│       │   │   ├── organization.component.e2e-spec.ts
 │       │   │   ├── home.component.html
-│       │   │   ├── home.component.spec.ts
-│       │   │   ├── home.component.ts
-│       │   │   ├── home.module.ts
-│       │   │   ├── home.routes.ts
+│       │   │   ├── organization.component.spec.ts
+│       │   │   ├── organization.read.component.ts
+│       │   │   ├── organization.module.ts
+│       │   │   ├── organization.routes.ts
 │       │   │   └── index.ts
 │       │   ├── app.component.e2e-spec.ts
 │       │   ├── app.component.html
@@ -508,3 +508,4 @@ You can follow the [Angular change log here](https://github.com/angular/angular/
 # License
 
 MIT
+# Mangular
