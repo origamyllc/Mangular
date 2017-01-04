@@ -12,7 +12,7 @@ enableProdMode();
 platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
 
 // In order to start the Service Worker located at "./worker.js"
-// uncomment this line. More about Service Workers here
+// uncomment this line. More account Service Workers here
 // https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
 //
 // if ('serviceWorker' in navigator) {

@@ -1,5 +1,6 @@
 /**
- * This barrel file provides the export for the lazy loaded HomeComponent.
+ * This barrel file provides the export for the lazy loaded Component.
  */
-export * from './organization.component';
-export * from './organization.routes';
+export * from './components/view/organization.view.component';
+export * from './components/create/organization.create.component';
+export * from './routes/organization.routes';

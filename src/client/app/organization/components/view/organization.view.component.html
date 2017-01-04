@@ -1,0 +1,46 @@
+<div class="main-container">
+  <div class="heading">
+    <div>
+      <button [routerLink]="['/add/organization']" ><span><i class="fa fa-plus fa-lg" aria-hidden="true"></i></span>ORGANIZATION</button>
+    </div>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default" (click)="viewAsTable()" ><span><i class="fa fa-table fa-lg" aria-hidden="true"></i></span>
+      </button>
+      <button type="button" class="btn btn-default" (click)="viewAsCards()" ><span><i class="fa fa-th fa-lg" aria-hidden="true"></i></span>
+      </button>
+    </div>
+  </div>
+  <hr />
+  <div  *tableView="viewTable" class="card-grid-container">
+    <div *ngFor="let org of organizations" class="card">
+      <img src="{{org.logoUrl}}">
+      <ul>
+        <li><label>{{constants.ORG_ID_LABEL}}:</label><span>{{org.organizationId}}</span></li>
+        <li><label>{{constants.ORG_NAME_LABEL}}:</label><span>{{org.organizationName}}</span></li>
+        <li><label>{{constants.GLOBAL_CUST_ORG_ID_LABEL}}:</label><span>{{org.globalCustOrgId}}</span></li>
+        <li><a href="#">{{constants.SUB_ORG_LABEL}}<span class="badge">5</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div  class="table-grid-container">
+  </div>
+</div>
+<!--
+<div  class="table-grid-container">
+  <table class="responsive-table striped"
+         *tableView="!viewTable">
+    <thead>
+    <tr>
+      <th *ngFor="let title of titles" >{{ title }} </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let org of organizations">
+      <td>{{org.organizationId}}</td>
+      <td>{{org.organizationName}}</td>
+      <td>{{org.globalCustOrgId}}</td>
+      <td><a href="#">{{constants.SUB_ORG_LABEL}}<span class="badge">5</span></a><br></td>
+    </tr>
+    </tbody>
+  </table>
+</div>-->

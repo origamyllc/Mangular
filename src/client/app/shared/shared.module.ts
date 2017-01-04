@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
-import { NameListService } from './name-list/index';
+import { TableComponent } from './table/index';
+import { Format} from './pipes/format.pipe'; // import our pipe here
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -13,15 +14,14 @@ import { NameListService } from './name-list/index';
 
 @NgModule({
   imports: [CommonModule, RouterModule],
-  declarations: [ToolbarComponent, NavbarComponent],
-  exports: [ToolbarComponent, NavbarComponent,
+  declarations: [ToolbarComponent, NavbarComponent,TableComponent,Format],
+  exports: [ToolbarComponent, NavbarComponent,TableComponent,Format,
     CommonModule, FormsModule, RouterModule]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: SharedModule,
-      providers: [NameListService]
+      ngModule: SharedModule
     };
   }
 }

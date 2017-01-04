@@ -17,6 +17,7 @@ gulp.task('build.dev', (done: any) =>
 //              'tslint',
               'build.assets.dev',
               'build.html_css',
+              'build.scss',
               'build.js.dev',
               'build.index.dev',
               done));
@@ -25,6 +26,7 @@ gulp.task('build.dev', (done: any) =>
 // Build dev watch.
 gulp.task('build.dev.watch', (done: any) =>
   runSequence('build.dev',
+              'build.scss',
               'watch.dev',
               done));
 

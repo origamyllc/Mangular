@@ -5,13 +5,19 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-
-import { AboutModule } from './about/about.module';
-import { HomeModule } from './home/home.module';
+import { OrganizationModule } from './organization/organization.module';
 import { SharedModule } from './shared/shared.module';
-
+import { DashboardModule } from './dashboard/dashboard.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  imports: [BrowserModule, HttpModule, RouterModule.forRoot(routes), AboutModule, HomeModule, SharedModule.forRoot()],
+  imports: [FormsModule,
+            ReactiveFormsModule,
+            BrowserModule,
+            HttpModule,
+            RouterModule.forRoot(routes),
+            DashboardModule,
+            OrganizationModule,
+            SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,
@@ -21,4 +27,6 @@ import { SharedModule } from './shared/shared.module';
 
 })
 
-export class AppModule { }
+export class AppModule {
+
+}

@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
-import { HomeComponent } from './organization.component';
-import { NameListService } from '../shared/name-list/index';
+import { OrganizationComponent } from './components/view/organization.view.component';
+import { CreateOrganizationComponent } from './components/create/organization.create.component';
+import { HighlightDirective } from '../shared/directives/hightlight.directive';
+import { TableViewDirective } from '../shared/directives/table/table-view.directive';
 
 @NgModule({
   imports: [CommonModule, SharedModule],
-  declarations: [HomeComponent],
-  exports: [HomeComponent],
-  providers: [NameListService]
+  declarations: [OrganizationComponent,
+                 TableViewDirective,
+                 CreateOrganizationComponent],
+  exports: [OrganizationComponent]
 })
-export class HomeModule { }
+export class OrganizationModule { }
