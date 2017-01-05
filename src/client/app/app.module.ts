@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import { OrganizationModule } from './organization/organization.module';
+import { PlatformModule } from './platform/platform.module';
 import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
             HttpModule,
             RouterModule.forRoot(routes),
             DashboardModule,
-            OrganizationModule,
+            PlatformModule,
             SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{

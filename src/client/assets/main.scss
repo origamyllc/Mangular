@@ -31,10 +31,32 @@ span.badge{ color:white;}
 }
 
 .card-grid-container {
-  max-height: 500px;
+  height: 53vw;
+  border:none;
   @media screen and (min-width: $break-large) {
     overflow: scroll;
   }
 }
 .right-alert{ > div{ color:red;margin-top:-10px;margin-bottom:10px;}}
 
+.card-large-img {
+  height:16vw ;
+  width:13vw ;
+  text-align:center;
+
+  .card-links{
+    height:3vw;
+    >  a{
+          padding:10px;
+          background:red;
+          color:white;
+     }
+  }
+
+  img {
+     padding:10px;
+     height:8vw ;
+     width:10.33vw ;
+  }
+
+}
