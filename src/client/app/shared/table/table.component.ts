@@ -14,18 +14,19 @@ import { TableData } from './table-data';
 })
 export class TableComponent implements OnInit {
   public rows:Array<any> = [];
+
   public columns:Array<any> = [
-    {title: 'Name', name: 'name', filtering: {filterString: '', placeholder: 'Filter by name'}},
-    {
-      title: 'Position',
-      name: 'position',
-      sort: false,
-      filtering: {filterString: '', placeholder: 'Filter by position'}
-    },
-    {title: 'Office', className: ['office-header', 'text-success'], name: 'office', sort: 'asc'},
-    {title: 'Extn.', name: 'ext', sort: '', filtering: {filterString: '', placeholder: 'Filter by extn.'}},
-    {title: 'Start date', className: 'text-warning', name: 'startDate'},
-    {title: 'Salary ($)', name: 'salary'}
+    {title: 'Name', name: 'name'},
+    {title: 'Revision',  name: 'revision',filtering: {filterString: '', placeholder: 'Filter by revision.'}},
+    {title: 'Module', name: 'module',filtering: {filterString: '', placeholder: 'Filter by Module.'}},
+    {title: 'Module SKU', name: 'module-sku',filtering: {filterString: '', placeholder: 'Filter by Module SKU.'}},
+    {title: 'Chip SKU', name: 'chip-sku',filtering: {filterString: '', placeholder: 'Filter by Chip SKU.'}},
+    {title: 'Module Revision', name: 'module-revision',filtering: {filterString: '', placeholder: 'Filter by Module Revision.'}},
+    {title: 'Register Type', name: 'register-type',filtering: {filterString: '', placeholder: 'Filter by Register Type.'}},
+    {title: 'Block', name: 'block',filtering: {filterString: '', placeholder: 'Filter by Block'}},
+    {title: 'Manual', name: 'manual',filtering: {filterString: '', placeholder: 'Filter by Manaual.'}},
+    {title: 'Baseboard', name: 'baseboard',filtering: {filterString: '', placeholder: 'Filter by Manaual.'}},
+
   ];
   public page:number = 1;
   public itemsPerPage:number = 10;
@@ -139,7 +140,7 @@ export class TableComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    console.log(data);
+    console.log(data.row);
   }
 }
 

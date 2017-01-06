@@ -1,19 +1,21 @@
-<!--<div class="row">
-  <div class="col-md-4">
-    <input *ngIf="config.filtering" placeholder="Filter all columns"
-           [ngTableFiltering]="config.filtering"
-           class="form-control"
-           (tableChanged)="onChangeTable(config)"/>
-  </div>
-</div>
-<br>-->
+
 <ng-table id="x-table" [config]="config"
           (tableChanged)="onChangeTable(config)"
           (cellClicked)="onCellClick($event)"
           [rows]="rows" [columns]="columns">
 </ng-table>
 
-<!--
-<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
--->
+
+  <ul class="pagination justify-content-end">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+
 
