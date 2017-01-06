@@ -5,10 +5,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { TableData } from './table-data';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
-  selector: 'sd-table',
+  selector: 'sd-platform-table',
   templateUrl: 'table.component.html',
   styleUrls: ['table.component.css']
 })
@@ -33,6 +34,7 @@ export class TableComponent implements OnInit {
   public maxSize:number = 5;
   public numPages:number = 1;
   public length:number = 0;
+  public _router:any;
 
   public config:any = {
     paging: true,
@@ -43,8 +45,9 @@ export class TableComponent implements OnInit {
 
   private data:Array<any> = TableData;
 
-  public constructor() {
+  public constructor(private router:Router) {
     this.length = this.data.length;
+    this._router=router;
   }
 
   public ngOnInit():void {
@@ -140,7 +143,7 @@ export class TableComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    console.log(data.row);
+    this._router.navigate(['registers','t124']);
   }
 }
 
