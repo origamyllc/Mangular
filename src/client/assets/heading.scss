@@ -4,6 +4,7 @@ $break-large: 1200px;
 .heading {
   display: flex;
   flex-direction: row;
+
   button {
     background-color: #ed1c24;
     border-style: none;
@@ -40,7 +41,6 @@ $break-large: 1200px;
     button {
       margin-left: 1em;
       margin-top:40px;
-
       display: inline-block;
     }
   }

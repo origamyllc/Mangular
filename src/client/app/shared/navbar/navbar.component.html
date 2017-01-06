@@ -1,15 +1,27 @@
-<nav class="heading">
-<!--  -->
-
+<!--<nav class="heading">
       <span data-toggle="collapse" data-target="#navbar">
         <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
       </span>
-      <div id="navbar" class="collapse">
-        <ul>
-          <li [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">
-            <div aria-hidden="true"><i class="fa fa-dashboard fa-lg"></i>Dashboard</div>
-          </li>
-        </ul>
-      </div>
 
+</nav>-->
+
+
+<nav >
+  <div class="nav-wrapper" >
+    <a href="#" class="brand-logo"> <img id="nvidiaLogo" title="Artificial Intelligence Computing Leadership from NVIDIA" alt="Artificial Intelligence Computing Leadership from NVIDIA" src="http://dwglogo.com/wp-content/uploads/2016/08/Nvidia-logo-01.png"></a>
+  </div>
 </nav>
+
+
+<div id="navbar" >
+  <ul>
+    <li><img id="user-vector" src="../../../assets/img/user_placeholder.png"></li>
+    <li><div class="chip">
+      username
+    </div></li>
+    <li [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">
+      <div aria-hidden="true"><i class="fa fa-dashboard fa-lg"></i>Dashboard</div>
+    </li>
+  </ul>
+</div>
+

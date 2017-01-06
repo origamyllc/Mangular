@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
+import { TableComponent } from './table/index';
 
 import { Format} from './pipes/format.pipe'; // import our pipe here
 

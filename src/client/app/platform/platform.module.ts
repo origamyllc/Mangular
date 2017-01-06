@@ -4,9 +4,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlatformComponent } from './platform.component';
+import { TableModule } from '../shared/table/table.module';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule,TableModule],
   declarations: [PlatformComponent],
   exports: [PlatformComponent]
 })

@@ -1,5 +1,8 @@
 $break-small: 500px;
 $break-large: 1200px;
+$layout-default:#fafafa;
+$navbar-width: 15vw;
+
 @mixin navbarlist() {
   ul {
     z-index:100;
@@ -55,6 +58,7 @@ $break-large: 1200px;
 
 sd-navbar {
   font-size: 0.8rem;
+
   span {
     i {
       margin: 10px;
@@ -63,10 +67,9 @@ sd-navbar {
   @media screen and (max-width: $break-small) {
     @include menubar;
     #navbar {
-      margin-top: 60px;
       margin-left: -30px;
       height: 620px;
-      background-color: #333333;
+      background-color: #fafafa;
       z-index: 1;
       @include navbarlist;
       ul {
@@ -97,33 +100,39 @@ sd-navbar {
 
     #navbar {
       @include navbarlist;
-      background-color: #333333;
-      width: 15%;
-      height: 100%;
+      background-color: $layout-default;
+      width: $navbar-width;
+      box-shadow: 0 0px 0px 0 rgba(200, 200, 200, 0.7), 0 6px 6px rgba(0,0,0,0.23);
       display: inline-block;
-      margin-top: 65px;
+      margin-top: -10px;
       a:hover {
         float:left;
         margin-right: 20px;
         width:110px;
       }
       ul {
-        background-color: #333333;
-        width: 15vw;
+        background-color: $layout-default;
+        width:  $navbar-width;
+        box-shadow:0 0px 0px 0 rgba(200, 200, 200, 0.7),0 16px 6px rgba(0,0,0,0.23);
         height: 55vw;
         display: inline-block;
         position: absolute;
         bottom:0px;
+
+        > li:nth-child(1) {
+          margin-top: 30px;
+        }
+
+        > li:nth-child(2) {
+          margin-left: 75px;
+          font-size:20px;
+        }
         div {
-          color: white;
+          color: black;
           font-size: 16px;
           margin: 0px 25px 15px 5px;
           i{
             margin:10px;
-          }
-          > li:nth-child(2) {
-            margin-left: 25px;
-            font-size:20px;
           }
         }
       }
