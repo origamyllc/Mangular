@@ -8,10 +8,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class Format implements PipeTransform  {
 
-  transform(values: any, args: any[]) { let row:any[]=[];
-    if (!values) return value;
+  transform(values: any, args: any[]) {
 
-    if (typeof values[args.variable] !== 'undefined' ) {     console.log(values[args.variable]); row.push(values[args.variable]);
-    return row;
   }
 }

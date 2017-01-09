@@ -5,10 +5,12 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import { OrganizationModule } from './organization/organization.module';
+import { PlatformModule } from './platform/platform.module';
+import { RegistersModule } from './registers/registers.module';
 import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [FormsModule,
             ReactiveFormsModule,
@@ -16,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
             HttpModule,
             RouterModule.forRoot(routes),
             DashboardModule,
-            OrganizationModule,
+            PlatformModule,
+            RegistersModule,
             SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{

@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
-import { TableComponent } from './table/index';
+import { TableComponent } from '../platform/table/index';
+
 import { Format} from './pipes/format.pipe'; // import our pipe here
 
 /**
@@ -14,8 +15,8 @@ import { Format} from './pipes/format.pipe'; // import our pipe here
 
 @NgModule({
   imports: [CommonModule, RouterModule],
-  declarations: [ToolbarComponent, NavbarComponent,TableComponent,Format],
-  exports: [ToolbarComponent, NavbarComponent,TableComponent,Format,
+  declarations: [ToolbarComponent, NavbarComponent,Format],
+  exports: [ToolbarComponent, NavbarComponent,Format,
     CommonModule, FormsModule, RouterModule]
 })
 export class SharedModule {

@@ -4,13 +4,15 @@
 @import "material/materialize";
 
 .main-container{
-  width:80%;
+  width:100%;
+
   z-index:-1;
+  overflow-x: scroll;
   @media screen and (max-width: $break-small) {
     margin-left:0px;
   }
   @media screen and (min-width: $break-large) {
-    margin-left:17%;
+    margin-left:5%;
   }
 }
 
@@ -21,6 +23,7 @@
   }
   @media screen and (min-width: $break-large) {
     margin-left:17%;
+
   }
 }
 span.badge{ color:white;}
@@ -31,10 +34,52 @@ span.badge{ color:white;}
 }
 
 .card-grid-container {
-  max-height: 500px;
+  height: 53vw;
+  border:none;
   @media screen and (min-width: $break-large) {
+
     overflow: scroll;
   }
 }
 .right-alert{ > div{ color:red;margin-top:-10px;margin-bottom:10px;}}
+
+.card-large-img {
+  height:16vw ;
+  width:13vw ;
+  text-align:center;
+
+  .card-links{
+    height:3vw;
+    >  a{
+          padding:10px;
+          background:red;
+          color:white;
+     }
+  }
+
+  img {
+     padding:10px;
+     height:8vw ;
+     width:10.33vw ;
+  }
+
+}
+
+#nvidiaLogo {
+  width: 160px;
+  height: 60px;
+  margin: 0px 60px 80px 50px;
+}
+
+#user-vector{
+  width: 85px;
+  height: 85px;
+  margin: 0px 75px 10px 90px;
+}
+
+table[style] {
+
+  overflow-x: scroll;
+
+}
 
