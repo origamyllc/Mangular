@@ -4,14 +4,15 @@
 @import "material/materialize";
 
 .main-container{
-  width:80%;
+  width:100%;
+
   z-index:-1;
   overflow-x: scroll;
   @media screen and (max-width: $break-small) {
     margin-left:0px;
   }
   @media screen and (min-width: $break-large) {
-    margin-left:17%;
+    margin-left:5%;
   }
 }
 
@@ -22,6 +23,7 @@
   }
   @media screen and (min-width: $break-large) {
     margin-left:17%;
+
   }
 }
 span.badge{ color:white;}
@@ -35,6 +37,7 @@ span.badge{ color:white;}
   height: 53vw;
   border:none;
   @media screen and (min-width: $break-large) {
+
     overflow: scroll;
   }
 }

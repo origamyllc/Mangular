@@ -1,81 +1,24 @@
-$break-small: 500px;
-$break-large: 1200px;
-$layout-default:#fafafa;
-$navbar-width: 15vw;
-
-sd-navbar {
-  font-size: 0.8rem;
-  @media screen and (max-width: $break-small) {
-
-    #navbar {
-      margin-left: -30px;
-      height: 620px;
-      background-color: #fafafa;
-      z-index: 1;
-
-      ul {
-        font-size: 16px;
-        i {
-          margin: 10px;
-        }
-        li {
-          margin-left: 25px;
-        }
-      }
-    }
-  }
-
-  @media screen and (min-width: $break-large) {
-    :host {
-      border-color: #e1e1e1;
-      border-style: solid;
-      border-width: 0 0 1px;
-      display: block;
-      padding: 0 16px;
-    }
-
-    #navbar {
-      background-color: $layout-default;
-      width: $navbar-width;
-      box-shadow: 0 0px 0px 0 rgba(200, 200, 200, 0.7), 0 6px 6px rgba(0,0,0,0.23);
-      display: inline-block;
-      margin-top: -10px;
-
-      a:hover {
-        float:left;
-        margin-right: 20px;
-        width:110px;
-      }
-      ul {
-        background-color: $layout-default;
-        width:  $navbar-width;
-        height:930px;
-        box-shadow:0 0px 0px 0 rgba(200, 200, 200, 0.7),0 16px 6px rgba(0,0,0,0.23);
-        display: inline-block;
-        position: absolute;
-        bottom:0px;
-
-        .nav-link { background-color: black; div  { color:white; text-align:center; i{ margin-right: 20px;}}}
-
-        > li:nth-child(1) {
-          margin-top: 30px;
-        }
-
-        > li:nth-child(2) {
-          margin-left: 80px;
-          font-size:20px;
-        }
-        div {
-          color: black;
-          font-size: 16px;
-          margin: 0px 25px 15px 5px;
-          i{
-            margin:10px;
-          }
-        }
+#side-nav{
+  background-color: #fafafa;
+  margin-top:20px;
+  width:50px;
+  height:1040px;
+  ul{
+    li{
+      i{
+        font-size:30px;
+        color:black;
+        margin-left:10px;
       }
     }
   }
 }
 
-
+nav {
+  i{
+    width:40px;
+    height:40px;
+    color:black;
+    margin-left:10px;
+  }
+}
