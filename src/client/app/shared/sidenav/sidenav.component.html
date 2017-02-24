@@ -1,0 +1,42 @@
+<div id="cont">
+  <div id="menu-fixed" class="menu-fixed">
+    <a href="#cont">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </a>
+    <a href="#menu-fixed">
+      <div class="logo">
+        <span><i class="hamburger fa fa-bars" aria-hidden="true"></i></span>
+        <figure class="nvidia-logo">
+          <img src="../../../assets/imgs/nvidia_logo.png">
+        </figure>
+      </div>
+    </a>
+    <figure class="profile-img">
+      <img  src="http://mdepinet.org/wp-content/uploads/person-placeholder.jpg">
+      <figcaption>Full name</figcaption>
+    </figure>
+
+    <ul class="menu">
+      <li [routerLink]="['/dashboard']" [routerLinkActive]="['router-link-active']"
+          [routerLinkActiveOptions]="{exact:true}"><i class="fa fa-tachometer" aria-hidden="true"></i>
+        <p>Dashboard</p></li>
+      <li [routerLink]="['/nvbugs']" [routerLinkActive]="['router-link-active']"
+          [routerLinkActiveOptions]="{exact:true}"><i class="fa fa-bug" aria-hidden="true"></i>
+        <p>Bugs</p></li>
+      <li [routerLink]="['/notes']" [routerLinkActive]="['router-link-active']"
+          [routerLinkActiveOptions]="{exact:true}"><i class="fa fa-bookmark" aria-hidden="true"></i>
+        <p>Notes</p></li>
+      <li  [routerLink]="['/blocks']" [routerLinkActive]="['router-link-active']"
+           [routerLinkActiveOptions]="{exact:true}" ><i class="fa fa-square" aria-hidden="true"></i>
+        <p>Blocks</p></li>
+      <li  [routerLink]="['/modes']" [routerLinkActive]="['router-link-active']"
+           [routerLinkActiveOptions]="{exact:true}">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+        <p>Modes</p></li>
+      <li [routerLink]="['/users']" [routerLinkActive]="['router-link-active']"
+          [routerLinkActiveOptions]="{exact:true}"><i class="fa fa-user" aria-hidden="true"></i>
+        <p>Users</p></li>
+    </ul>
+  </div>
+</div>
+

@@ -5,10 +5,17 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import { OrganizationModule } from './organization/organization.module';
 import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { NvidiaBugsModule } from './nvbugs/nvbugs.module';
+import { NotesModule } from './notes/notes.module';
+import { BlockModule } from './blocks/block.module';
+import { UserModule } from './user/user.module';
+import { RegistersModule } from './registers/registers.module';
+import { ModeModule } from './modes/mode.module';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   imports: [FormsModule,
             ReactiveFormsModule,
@@ -16,7 +23,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
             HttpModule,
             RouterModule.forRoot(routes),
             DashboardModule,
-            OrganizationModule,
+            NvidiaBugsModule,
+            NotesModule,
+            BlockModule,
+            ModeModule,
+            UserModule,
+            RegistersModule,
             SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{

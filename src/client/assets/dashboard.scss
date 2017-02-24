@@ -1,0 +1,26 @@
+x-dashboard{
+  position: relative;
+  left:70px;
+
+  .container{
+    display:flex;
+    margin:10px;
+
+    .dropdown{
+      margin:20px;
+    }
+
+    .btn, ul{
+      width:200px;
+    }
+
+    .go{
+      margin:20px;
+    }
+
+    .btn{
+      background-color:#76b900;
+    }
+  }
+}
+

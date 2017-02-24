@@ -132,7 +132,7 @@ export class SeedConfig {
   ENABLE_HOT_LOADING = argv['hot-loader'];
 
   /**
-   * The port where the application will run, if the `hot-loader` option mode is used.
+   * The port where the application will run, if the `hot-loader` option modes is used.
    * The default hot-loader port is `5578`.
    * @type {number}
    */
@@ -166,7 +166,7 @@ export class SeedConfig {
   /**
    * The bootstrap file to be used to boot the application. The file to be used is dependent if the hot-loader option is
    * used or not.
-   * Per default (non hot-loader mode) the `main.ts` file will be used, with the hot-loader option enabled, the
+   * Per default (non hot-loader modes) the `main.ts` file will be used, with the hot-loader option enabled, the
    * `hot_loader_main.ts` file will be used.
    * @type {string}
    */

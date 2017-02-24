@@ -1,7 +1,13 @@
-@import "navbar";
-@import "heading";
 @import "material/card";
 @import "material/materialize";
+@import "./sidenav";
+@import "./dashboard";
+@import "./nvbugs";
+@import "./notes";
+@import "./block";
+@import "./modes";
+@import "./users";
+@import "./registers";
 
 .main-container{
   width:80%;
@@ -23,18 +29,11 @@
     margin-left:17%;
   }
 }
-span.badge{ color:white;}
 
-.table-grid-container {
-  max-height: 500px;
-  overflow: scroll;
+.disable {
+  pointer-events: none;
 }
 
-.card-grid-container {
-  max-height: 500px;
-  @media screen and (min-width: $break-large) {
-    overflow: scroll;
-  }
+.title{
+  font-size: 24px;
 }
-.right-alert{ > div{ color:red;margin-top:-10px;margin-bottom:10px;}}
-

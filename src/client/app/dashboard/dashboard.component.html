@@ -1,3 +1,43 @@
-<div class="heading">
-  <i class="fa fa-bars" aria-hidden="true"></i> <div class="menu-bar"></div>
+<h2>Dashboard</h2>
+
+<div class="container ">
+  <div class="dropdown">
+    <p class ='title'>Memory Table</p>
+  </div>
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chip
+      <span class="caret"></span></button>
+     <ul class="dropdown-menu chips">
+      <li *ngFor="let chip of chips" (click)="selectedChip(chip.name)">{{chip.name}}</li>
+    </ul>
+  </div>
+
+  <div class="dropdown" [hidden]="hideModules">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Module
+      <span class="caret"></span></button>
+     <ul class="dropdown-menu chips">
+      <li *ngFor="let mod of mods" (click)="selectedModule(mod.module)" >{{mod.module}}</li>
+    </ul>
+  </div>
+
+  <div class="dropdown" [hidden]="hideSku">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">SKU
+      <span class="caret"></span></button>
+    <ul class="dropdown-menu chips">
+      <li *ngFor="let sku of skus" (click)="selectedSku(sku.sku)">{{sku.sku}}</li>
+    </ul>
+  </div>
+
+  <div class="dropdown" [hidden]="hideRevision" >
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Revision
+      <span class="caret"></span></button>
+    <ul class="dropdown-menu chips">
+      <li *ngFor="let skudetails of revisions" (click)="selectedRevision(skudetails.revision)">{{skudetails.revision}}</li>
+    </ul>
+  </div>
+
+  <div [hidden]="hideSubmit">
+    <button class="btn go" (click)="submit()" >GO!</button>
+  </div>
+
 </div>
