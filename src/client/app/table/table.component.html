@@ -1,0 +1,114 @@
+
+<div class="container table-container">
+  <table class="table data-table" >
+    <thead class="parent-table-header">
+    <tr>
+      <th *ngFor="let group of groups" >
+        <ul>
+          <li>{{group}}</li>
+        </ul>
+      </th>
+    </tr>
+    </thead>
+    <tbody class="parent-table-body">
+    <tr>
+      <td>
+       <table class="table ">
+          <thead>
+          <tr>
+            <th *ngFor="let column of config[groups[0]].columns">
+              <div class="table-header" >
+                <p>{{column.name}}</p>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody class="child-table-body">
+
+         <tr *ngFor="let row of rows">
+            <td>{{row.chipSKU}}</td>
+            <td>{{row.chipRevision}}</td>
+            <td>{{row.chipPackageinfo}}</td>
+          </tr>
+        </table>
+      </td>
+      <td>
+        <table class="table" [hidden]="!config[groups[1]].isVisible">
+          <thead>
+          <tr>
+            <th *ngFor="let column of config[groups[1]].columns">
+              <div class="table-header">
+                <p>{{column.name}}</p>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody class="child-table-body">
+
+          <tr *ngFor="let row of rows">
+            <td>{{row.platform}}</td>
+            <td>{{row.program}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table" [hidden]="!config[groups[2]].isVisible">
+          <thead>
+          <tr>
+            <th *ngFor="let column of config[groups[2]].columns">
+              <div>
+                <p>{{column.name}}</p>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody class="child-table-body">
+          <tr *ngFor="let row of rows">
+            <td>{{row.blockName}}</td>
+            <td>{{row.blockRevision}}</td>
+            <td>{{row.manualName}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table" [hidden]="!config[groups[3]].isVisible">
+          <thead>
+          <tr>
+            <th *ngFor="let column of config[groups[3]].columns">
+              <div>
+                <p>{{column.name}}</p>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody class="child-table-body">
+          <tr *ngFor="let row of rows">
+            <td>{{row.registertype}}</td>
+            <td>{{row.address}}</td>
+            <td>{{row.name}}</td>
+            <td>N/A</td>
+            <td>{{row.mask}}</td>
+            <td>{{row.value}}</td>
+            <td>{{row.asic}}</td>
+            <td>{{row.mintemp}}</td>
+            <td>{{row.maxtemp}}</td>
+            <td>{{row.thermalSensor}}</td>
+            <td>{{row.frequency}}</td>
+            <td>{{row.mode}}</td>
+            <td>{{row.phase}}</td>
+            <td>{{row.state}}</td>
+            <td style="min-width:1500px;">{{row.comments}}</td>
+            <td>N/A</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

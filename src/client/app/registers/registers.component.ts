@@ -18,7 +18,7 @@ export class RegistersComponent {
     private MemoryParamsService:MemoryParamsService,
     private router:Router) {
 
-  console.log( MemoryParamsService.getQueryParams());
+  //console.log( MemoryParamsService.getQueryParams());
 
   }
 
