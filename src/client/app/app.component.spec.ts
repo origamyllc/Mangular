@@ -1,64 +1,29 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { TestBed } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By }              from '@angular/platform-browser';
+import { DebugElement }    from '@angular/core';
 
-import {
-  async
-} from '@angular/core/testing';
-import {
-  Route
-} from '@angular/router';
-import {
-  RouterTestingModule
-} from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './organization/organization.component';
-import { AboutComponent } from './account/account.component';
-import { ToolbarComponent } from './shared/toolbar/toolbar.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
 
 export function main() {
+  describe('App Component (inline template)', () => {
 
-  describe('App component', () => {
+    let comp: AppComponent;
+    let fixture: ComponentFixture<AppComponent>;
+    let de: DebugElement;
+    let el: HTMLElement;
 
-    let config: Route[] = [
-      { path: '', component: HomeComponent },
-      { path: 'about', component: AboutComponent }
-    ];
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [FormsModule, RouterTestingModule.withRoutes(config)],
-        declarations: [TestComponent, ToolbarComponent,
-          NavbarComponent, AppComponent,
-          HomeComponent, AboutComponent],
-        providers: [
-          { provide: APP_BASE_HREF, useValue: '/' }
-        ]
+        declarations: [AppComponent], // declare the test component
       });
+
+      fixture = TestBed.createComponent(AppComponent);
+
+      comp = fixture.componentInstance; // BannerComponent test instance
+
+      // query for the title <h1> by CSS element selector
+      de = fixture.debugElement.query(By.css('h1'));
+      el = de.nativeElement;
     });
-
-    it('should build without a problem',
-      async(() => {
-        TestBed
-          .compileComponents()
-          .then(() => {
-            let fixture = TestBed.createComponent(TestComponent);
-            let compiled = fixture.nativeElement;
-
-            expect(compiled).toBeTruthy();
-          });
-      }));
   });
 }
-
-@Component({
-  selector: 'test-cmp',
-  template: '<sd-app></sd-app>'
-})
-
-class TestComponent {
-}
-
-
-

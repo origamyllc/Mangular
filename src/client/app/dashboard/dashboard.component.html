@@ -1,19 +1,43 @@
-<div class="main-container">
 
-    <div class="card card-large-img">
-      <h5>T124</h5>
-      <img src="http://www.nvidia.com/docs/IO/144267/tegra4-k1.png">
-     <hr />
-      <div class="card-action card-links">
-        <a href="/platform/t124">Specifications</a>
-      </div>
-    </div>
-    <div class="card card-large-img">
-      <h5>T186</h5>
-      <img src="http://www.nvidia.com/docs/IO/144267/tegra4-k1.png">
-      <hr />
-      <div class="card-action card-links">
-        <a href="/platform/t186">Specifications</a>
-      </div>
-    </div>
+<h2>Dashboard</h2>
+<div class="container ">
+  <div class="dropdown">
+    <p class ='title'>Memory Table</p>
+  </div>
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chip
+      <span class="caret"></span></button>
+     <ul class="dropdown-menu chips">
+      <li *ngFor="let chip of chips" (click)="selectedChip(chip.chipName)">{{chip.chipName}}</li>
+    </ul>
+  </div>
+
+  <div class="dropdown" [hidden]="hideModules">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Module
+      <span class="caret"></span></button>
+     <ul class="dropdown-menu chips">
+      <li *ngFor="let mod of mods" (click)="selectedModule(mod.module)" >{{mod.module}}</li>
+    </ul>
+  </div>
+
+  <div class="dropdown" [hidden]="hideSku">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">SKU
+      <span class="caret"></span></button>
+    <ul class="dropdown-menu chips">
+      <li *ngFor="let sku of skus" (click)="selectedSku(sku.sku)">{{sku.sku}}</li>
+    </ul>
+  </div>
+
+  <div class="dropdown" [hidden]="hideRevision" >
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Revision
+      <span class="caret"></span></button>
+    <ul class="dropdown-menu chips">
+      <li *ngFor="let skudetails of revisions" (click)="selectedRevision(skudetails.revision)">{{skudetails.revision}}</li>
+    </ul>
+  </div>
+
+  <div [hidden]="hideSubmit">
+    <button class="btn go" (click)="submit()" >GO!</button>
+  </div>
+
 </div>

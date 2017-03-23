@@ -34,7 +34,7 @@ module.exports = function (config) {
       'node_modules/zone.js/dist/sync-test.js',
       'node_modules/zone.js/dist/proxy.js',
       'node_modules/zone.js/dist/jasmine-patch.js',
-
+      { pattern: './node_modules/jquery/dist/jquery.min.js', watched: false },
       // RxJs.
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
@@ -51,7 +51,7 @@ module.exports = function (config) {
 
       // suppress annoying 404 warnings for resources, images, etc.
       { pattern: 'dist/dev/assets/**/*', watched: false, included: false, served: true },
-
+      { pattern: 'dist/dev/app/app.component.spec.js' , watched: false, included: false, served: true  },
       'test-config.js',
       'dist/dev/app/system-config.js',
       'test-main.js'
@@ -108,7 +108,7 @@ module.exports = function (config) {
       }
     },
 
-    // Continuous Integration mode
+    // Continuous Integration modes
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
 

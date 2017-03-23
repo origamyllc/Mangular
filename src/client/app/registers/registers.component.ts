@@ -1,34 +1,22 @@
-/**
- * Created by prashun on 10/31/16.
- */
-import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Component } from '@angular/core';
+import { MemoryParamsService } from '../shared/services/memorytable.service';
 import { Router } from '@angular/router';
 
 /**
- * This class represents the lazy loaded AboutComponent.
+ * This class represents the navigation bar component.
  */
 @Component({
   moduleId: module.id,
-  selector: 'x-registers',
+  selector: 'sd-register-memory-table',
   templateUrl: 'registers.component.html',
-  styleUrls: ['registers.component.css']
+  providers: [MemoryParamsService]
 })
-export class RegistersComponent  implements OnInit {
-  _router:any;
 
-  /*
-   create an instance or the organization component
-   */
-  constructor(private router:Router) {
-    this._router=router;
+export class RegistersComponent {
+  constructor(
+    private MemoryParamsService:MemoryParamsService,
+    private router:Router) {
+
   }
-
-  /**
-   * Get the names OnInit
-   */
-  ngOnInit() {
-     console.log(this._router.params);
-  }
-
-
 }

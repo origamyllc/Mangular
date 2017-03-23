@@ -1,10 +1,16 @@
-@import "navbar";
-@import "heading";
 @import "material/card";
 @import "material/materialize";
+@import "./sidenav";
+@import "./dashboard";
+@import "./nvbugs";
+@import "./notes";
+@import "./block";
+@import "./modes";
+@import "./users";
+@import "./registers";
 
 .main-container{
-  width:80%;
+  width:100%;
   z-index:-1;
   overflow-x: scroll;
   @media screen and (max-width: $break-small) {
@@ -24,21 +30,91 @@
     margin-left:17%;
   }
 }
-span.badge{ color:white;}
 
-.table-grid-container {
-  max-height: 500px;
-  overflow: scroll;
+.disable {
+  pointer-events: none;
 }
+
 
 .card-grid-container {
   height: 53vw;
   border:none;
   @media screen and (min-width: $break-large) {
     overflow: scroll;
+    }
+}
+.title{
+  font-size: 24px;
+}
+
+.table-header{
+  display: flex;
+  i{
+    margin:5px;
   }
 }
-.right-alert{ > div{ color:red;margin-top:-10px;margin-bottom:10px;}}
+
+.parent-table-header {
+  th {
+    background-color: black;
+    color: white;
+
+    ul{
+      display: inline-flex;
+      li{
+         margin-left:10px;
+        }
+      }
+    }
+  }
+
+.dropdown-with-title{
+   display:flex;
+   margin-left:40px;
+}
+
+.parent-table-body{
+  tr{
+    td{
+     padding: 5px 0px 5px 0px !important;
+      table{
+        thead{
+          tr{
+            th{
+              min-width:170px;
+            }
+            td{
+              .comment{
+                min-width:900px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.child-table-body{
+
+ tr:first-child{
+   border:none;
+ }
+  tr{
+    border-top:2px black solid;
+    border-bottom:2px black solid;
+    td {
+      margin-left: 10px;
+    }
+  }
+}
+
+.table-container{
+  width:1900px;
+  height:600px;
+  max-width:1750px;
+  max-height:600px;
+  overflow:auto;
+}
 
 .card-large-img {
   height:16vw ;
