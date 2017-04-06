@@ -21,7 +21,6 @@ sd-sidenav {
   width:160px !important;
   .profile-img {
     margin: 10px;
-
      img {
       border-radius: 50%;
       width: 100px !important;
@@ -32,15 +31,6 @@ sd-sidenav {
       display: block !important;
       margin-top:10px;
       color:white;
-    }
-  }
-
-  .nvidia-logo{
-    img {
-      margin-top:10px;
-      width: 100px !important;
-      height: 20px;
-      margin-left: -40px !important;
     }
   }
 
@@ -81,7 +71,7 @@ sd-sidenav {
   }
 
   .menu-fixed {
-    width: 45px;
+    width: 28px;
     z-index: 2;
     height: 100%;
     background: #0F0F0F;
@@ -89,22 +79,22 @@ sd-sidenav {
     top: 0px;
     left: 0px;
     transition: all 0.5s;
-    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.19), 8px 0px 10px rgba(0, 0, 0, 0.23);
+    box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.19), 1px 0px 5px rgba(0, 0, 0, 0.23);
     text-align: center;
     font-family: Arial;
 
 
     .nvidia-logo{
       img {
-        margin-top:10px;
-        width: 100px !important;
-        height: 20px;
-        margin-left: -30px !important;
+        margin-top:-27px;
+        width: 95px !important;
+        height: 27px;
+        margin-left: -66px !important;
       }
     }
 
     .profile-img {
-      margin:80px 0px 0px 0px;
+      margin:45px 0px 0px 0px;
       img {
         border-radius: 50%;
         width: 24px;
@@ -113,6 +103,8 @@ sd-sidenav {
 
       figcaption{
         display:none;
+        font-size: 12px;
+        font-weight: normal;
       }
     }
 
@@ -121,7 +113,7 @@ sd-sidenav {
     }
     .logo {
       width: 100%;
-      height: 70px;
+      height: 50px;
       position: absolute;
       top: 0px;
       display: flex;
@@ -134,8 +126,8 @@ sd-sidenav {
       }
       span {
         i {
-          font-size: 25px;
-          margin: 20px 10px 10px 10px;
+          font-size: 12px;
+          margin: 32px 10px 10px 9px;
           position: relative;
           float: left;
           color:#76b900;
@@ -146,7 +138,7 @@ sd-sidenav {
       margin: 0;
       text-align: center;
       color: rgba(255, 255, 255, 0.4);
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 300;
     }
     hr {
@@ -158,10 +150,9 @@ sd-sidenav {
       margin: 0;
       padding: 0;
       width: 100%;
-      margin-top:10px;
+      margin-top:5px;
       li {
         padding: 10px 0px 0px 0px;
-
         margin: auto;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         border-bottom-style: dotted;
@@ -185,10 +176,10 @@ sd-sidenav {
           display: inline-block;
           margin: auto;
           color: white;
-          font-size: 14px;
-          font-weight: 300;
+          font-size: 12px;
+          font-weight: 100;
           position: absolute;
-          padding-left: 15px;
+          padding-left: 6px;
           line-height: 30px;
         }
       }

@@ -1,8 +1,8 @@
 
-<h2>Dashboard</h2>
+<h5>Dashboard</h5>
 <div class="container ">
-  <div class="dropdown">
-    <p class ='title'>Memory Table</p>
+  <div class="title">
+    <h6>Memory Table</h6>
   </div>
   <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chip
@@ -12,7 +12,7 @@
     </ul>
   </div>
 
-  <div class="dropdown" [hidden]="hideModules">
+  <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Module
       <span class="caret"></span></button>
      <ul class="dropdown-menu chips">
@@ -20,7 +20,7 @@
     </ul>
   </div>
 
-  <div class="dropdown" [hidden]="hideSku">
+  <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">SKU
       <span class="caret"></span></button>
     <ul class="dropdown-menu chips">
@@ -28,7 +28,7 @@
     </ul>
   </div>
 
-  <div class="dropdown" [hidden]="hideRevision" >
+  <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Revision
       <span class="caret"></span></button>
     <ul class="dropdown-menu chips">
@@ -39,5 +39,4 @@
   <div [hidden]="hideSubmit">
     <button class="btn go" (click)="submit()" >GO!</button>
   </div>
-
 </div>

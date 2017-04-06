@@ -67,7 +67,7 @@ $button-disabled-color: #9F9F9F !default;
 // Raised buttons
 $button-raised-background: $secondary-color !default;
 $button-raised-background-hover: lighten($button-raised-background, 5%) !default;
-$button-raised-color: #fff !default;
+$button-raised-color: #313131 !default;
 
 // Large buttons
 $button-large-icon-font-size: 1.6rem !default;
@@ -107,7 +107,7 @@ $collapsible-border-color: #ddd !default;
 // ==========================================================================
 
 $chip-bg-color: #e4e4e4 !default;
-$chip-border-color: #9e9e9e !default;
+$chip-border-color: #6E6E6E !default;
 $chip-selected-color: #26a69a !default;
 $chip-margin: 5px !default;
 
@@ -216,7 +216,7 @@ $element-bottom-margin: ($gutter-width*2)/3 !default;
 // 13. Navigation Bar
 // ==========================================================================
 
-$navbar-height: 64px !default;
+$navbar-height: 25px !default;
 $navbar-height-mobile: 56px !default;
 $navbar-font-size: 1rem !default;
 $navbar-font-color: #fff !default;

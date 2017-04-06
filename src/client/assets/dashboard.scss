@@ -1,17 +1,18 @@
 x-dashboard{
   position: relative;
-  left:70px;
+  left:53px;
 
   .container{
     display:flex;
     margin:10px;
+    padding: 10px;
 
     .dropdown{
-      margin:20px;
+      margin:0px;
     }
 
     .btn, ul{
-      width:200px;
+      width:autox;
     }
 
     .go{
@@ -19,7 +20,18 @@ x-dashboard{
     }
 
     .btn{
-      background-color:#76b900;
+      background-color:#FFFFFF;
+      font-size: 12px;
+      height: 22px;
+      border: 1px solid #6E6E6E;
+      border-radius: 2px;
+      display: inline-block;
+      line-height: 20px;
+      padding: 0 0.6rem;
+      margin-right: 8px;
+      text-transform: uppercase;
+      vertical-align: middle;
+     -webkit-tap-highlight-color: transparent;
     }
   }
 }
