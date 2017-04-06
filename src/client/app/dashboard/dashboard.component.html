@@ -8,7 +8,7 @@
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Chip
       <span class="caret"></span></button>
      <ul class="dropdown-menu chips">
-      <li *ngFor="let chip of chips" (click)="selectedChip(chip.chipName)">{{chip.chipName}}</li>
+      <li *ngFor="let chip of chips" (click)="selectedChip(chip.name)">{{chip.name}}</li>
     </ul>
   </div>
 

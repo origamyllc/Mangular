@@ -66,6 +66,7 @@ export class DashboardComponent implements OnInit  {
 
   getModule(name:string) {
     this.modName = name;
+    console.log(this.modName)
     this.ModuleService.getModule(name).subscribe(
        skus => this.skus = skus,
        error =>  this.errorMessage = <any>error);
