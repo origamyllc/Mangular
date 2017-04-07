@@ -14,13 +14,11 @@ import 'rxjs/add/observable/throw';
 export class ModuleSkuService {
   private modulesUrl = '';
   //get the url
-  // URL to web API
   constructor (private http: Http) {}
 
   getModuleSku(name:string):Observable<ModuleSku[]>  {
-    if(name !== '</DC>' &&  name !== 'dc') {
-      this.modulesUrl = 'http://localhost:3000/sku/123';
-    }
+
+      this.modulesUrl = 'http://localhost:3000/sku/'+name;
 
     return this.http.get(this.modulesUrl)
       .map(this.extractData)

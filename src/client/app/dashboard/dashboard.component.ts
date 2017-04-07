@@ -21,7 +21,7 @@ import { Revision } from './models/revision.model';
   selector: 'x-dashboard',
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.css'],
-  providers: [ChipService,ChipDetailsService,ModuleService,ModuleSkuService,MemoryParamsService]
+  providers: [ChipService,ChipDetailsService,ModuleService,ModuleSkuService,MemoryParamsService],
 })
 export class DashboardComponent implements OnInit  {
   chips: Chip[];
@@ -37,6 +37,9 @@ export class DashboardComponent implements OnInit  {
   hideSku:boolean;
   hideRevision:boolean;
   hideSubmit:boolean;
+
+
+  processedModules =new Array<any>();
 
   constructor(
     private ChipService : ChipService,
@@ -65,11 +68,11 @@ export class DashboardComponent implements OnInit  {
   }
 
   getModule(name:string) {
-    this.modName = name;
-    console.log(this.modName)
-    this.ModuleService.getModule(name).subscribe(
-       skus => this.skus = skus,
-       error =>  this.errorMessage = <any>error);
+      this.modName = name;
+      this.ModuleService.getModule(name).subscribe(
+        skus => this.skus = skus,
+        error => this.errorMessage = <any>error);
+       this.processedModules.push(name)
   }
 
   getModuleSku(name:string) {

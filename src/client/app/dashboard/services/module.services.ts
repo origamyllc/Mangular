@@ -21,9 +21,9 @@ export class ModuleService {
   constructor (private http: Http) {}
 
   getModule(name:string):Observable<Module[]>  {
-    if(name !== '</DC>' &&  name !== 'dc') {
-      this.modulesUrl = 'http://localhost:3000/modules/t1234';
-    }
+
+      this.modulesUrl = 'http://localhost:3000/modules/'+name;
+
 
     return this.http.get(this.modulesUrl)
       .map(this.extractData)
@@ -32,6 +32,7 @@ export class ModuleService {
 
   private extractData(res: Response) {
     let body = res.json();
+
     return body.result || { };
   }
 
@@ -47,5 +48,7 @@ export class ModuleService {
     }
     return Observable.throw(errMsg);
   }
+
+
 
 }
