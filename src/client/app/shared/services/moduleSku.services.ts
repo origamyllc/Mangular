@@ -1,12 +1,9 @@
 /**
  * Created by osboxes on 17/02/17.
  */
-/**
- * Created by osboxes on 15/02/17.
- */
 
 import { Injectable } from '@angular/core';
-import { Module } from '../models/module.model';
+import { ModuleSku } from '../models/moduleSku.model';
 import { Http,Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -14,25 +11,32 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
 @Injectable()
-export class ModuleService {
+export class ModuleSkuService {
   private modulesUrl = '';
   //get the url
-  // URL to web API
   constructor (private http: Http) {}
 
-  getModule(name:string):Observable<Module[]>  {
+  getModuleSkuByName(name:string):Observable<ModuleSku[]>  {
 
-      this.modulesUrl = 'http://localhost:3000/modules/'+name;
-
+      this.modulesUrl = 'http://localhost:3000/sku/'+name;
 
     return this.http.get(this.modulesUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
+  getModuleSku():Observable<ModuleSku[]>  {
+
+    this.modulesUrl = 'http://localhost:3000/sku';
+
+    return this.http.get(this.modulesUrl)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+
   private extractData(res: Response) {
     let body = res.json();
-
     return body.result || { };
   }
 
@@ -48,7 +52,5 @@ export class ModuleService {
     }
     return Observable.throw(errMsg);
   }
-
-
 
 }

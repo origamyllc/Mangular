@@ -4,6 +4,7 @@
 import { Component, ElementRef,OnInit } from '@angular/core';
 import { SocketService } from '../shared/services/socket.service';
 import {Http, Headers} from '@angular/http';
+import { MemoryParamsService } from '../shared/services/memorytable.service';
 
 declare var $:any;
 
@@ -25,27 +26,22 @@ export class TableComponent implements OnInit {
 
   constructor(
                elementRef: ElementRef,
+               private MemoryParamsService:MemoryParamsService,
                private socketService:SocketService,
                public http: Http
   ) {
     this.rows =[];
     this.elementRef = elementRef;
+    let query = MemoryParamsService.getQueryParams();
 
-    setTimeout(() => {
-      this.http.get('http://localhost:9000/memorytable/records')
-        .map(res => res.text())
-        .subscribe(
-          () => console.log('Random Quote Complete')
-        );
+       this.http.post('http://localhost:9000/memorytable/records',query ) // ...using post request
+        .map((res) => res.text()) // ...and calling .json() on the response to return data
+        .subscribe()
 
-      this.connection = this.socketService.getMessages().subscribe(message => {
-        this.rows.push(JSON.parse(message.record));
-        console.log(this.rows)
-      });
-    }, 0);
-
-
-
+        this.connection = this.socketService.getMessages().subscribe(message => {
+          this.rows.push(JSON.parse(message.record));
+          console.log(this.rows)
+        });
   }
 
   ngOnInit() {

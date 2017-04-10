@@ -3,16 +3,16 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { ChipService } from './services/chip.services';
-import { ChipDetailsService } from './services/chipDetail.services';
-import { ModuleService } from './services/module.services';
-import { ModuleSkuService } from './services/moduleSku.services';
+import { ChipService } from '../shared/services/chip.services';
+import { ChipDetailsService } from '../shared/services/chipDetail.services';
+import { ModuleService } from '../shared/services/module.services';
+import { ModuleSkuService } from '../shared/services/moduleSku.services';
 import { MemoryParamsService } from '../shared/services/memorytable.service';
 import { Router } from '@angular/router';
-import { Chip } from './models/chip.model';
-import { Module } from './models/module.model';
-import { ModuleSku } from './models/moduleSku.model';
-import { Revision } from './models/revision.model';
+import { Chip } from '../shared/models/chip.model';
+import { Module } from '../shared/models/module.model';
+import { ModuleSku } from '../shared/models/moduleSku.model';
+import { Revision } from '../shared/models/revision.model';
 /**
  * This class represents the lazy loaded AboutComponent.
  */
@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit  {
 
   getModule(name:string) {
       this.modName = name;
-      this.ModuleService.getModule(name).subscribe(
+      this.ModuleService.getModuleByName(name).subscribe(
         skus => this.skus = skus,
         error => this.errorMessage = <any>error);
        this.processedModules.push(name)
@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit  {
 
   getModuleSku(name:string) {
       this.skuNumber = name;
-      this.ModuleSkuService.getModuleSku(name).subscribe(
+      this.ModuleSkuService.getModuleSkuByName(name).subscribe(
         revisions => this.revisions = revisions,
         error =>  this.errorMessage = <any>error);
   }
