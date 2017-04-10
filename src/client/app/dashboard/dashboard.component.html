@@ -11,28 +11,28 @@
       <li *ngFor="let chip of chips" (click)="selectedChip(chip.name)">{{chip.name}}</li>
     </ul>
   </div>
-  <div class="dropdown" [hidden]="hideModules">
+  <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Module
       <span class="caret"></span></button>
      <ul class="dropdown-menu chips">
       <li *ngFor="let mod of ( mods | unique:'module' ) " (click)="selectedModule(mod)" >{{mod}}</li>
     </ul>
   </div>
-  <div class="dropdown" [hidden]="hideSku" >
+  <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">SKU
       <span class="caret"></span></button>
     <ul class="dropdown-menu chips">
       <li *ngFor="let sku of ( skus | unique:'sku' ) " (click)="selectedSku(sku)">{{sku}}</li>
     </ul>
   </div>
-  <div class="dropdown" [hidden]="hideRevision" >
+  <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Revision
       <span class="caret"></span></button>
     <ul class="dropdown-menu chips">
       <li *ngFor="let skudetails of ( revisions | unique:'revision')" (click)="selectedRevision(skudetails)">{{skudetails}}</li>
     </ul>
   </div>
-  <div [hidden]="hideSubmit">
-    <button class="btn go" (click)="submit()" >GO!</button>
+  <div class="dropdown">
+    <button class="btnaction go" (click)="submit()" >GO!</button>
   </div>
 </div>

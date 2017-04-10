@@ -8,6 +8,7 @@
 @import "./modes";
 @import "./users";
 @import "./registers";
+@import "./memorytable";
 
 .main-container{
   width:100%;
@@ -21,11 +22,9 @@
   }
 }
 
-
 .disable {
   pointer-events: none;
 }
-
 
 .card-grid-container {
   height: 53vw;
@@ -34,8 +33,6 @@
     overflow: scroll;
     }
 }
-
-
 
 .title{
   font-size: 14px;
@@ -54,6 +51,9 @@
   th {
     background-color: black;
     color: white;
+    font-size: 12px;
+    font-weight: 300;
+    height:auto;
 
     ul{
       display: inline-flex;
@@ -70,14 +70,18 @@
 }
 
 .parent-table-body{
+  
   tr{
     td{
-     padding: 5px 0px 5px 0px !important;
+     padding: 0px 0px 0px 0px !important;
       table{
         thead{
+          background-color:#EAEDF1;
           tr{
             th{
-              min-width:170px;
+              min-width:auto;
+              font-size: 12px;
+              font-weight: 400;
             }
             td{
               .comment{
@@ -99,24 +103,24 @@
     border-top:2px black solid;
     border-bottom:2px black solid;
     td {
-      margin-left: 10px;
+      margin-left: 2px;
     }
   }
 }
 
 .table-container{
-  width:1900px;
-  height:600px;
-  max-width:1750px;
-  max-height:600px;
+  width:3600px;
+  height:150px; 
+ // max-width:1750px;
+ // max-height:600px;
   overflow:auto;
+  background-color: lightgray;
 }
 
 .card-large-img {
   height:16vw ;
   width:13vw ;
   text-align:center;
-
   .card-links{
     height:3vw;
     >  a{

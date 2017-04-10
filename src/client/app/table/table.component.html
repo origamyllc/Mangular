@@ -1,6 +1,7 @@
 
 <div class="container table-container">
   <table class="table data-table" >
+<!--
     <thead class="parent-table-header">
     <tr>
       <th *ngFor="let group of groups" >
@@ -10,22 +11,23 @@
       </th>
     </tr>
     </thead>
+ -->
+
     <tbody class="parent-table-body">
     <tr>
       <td>
-       <table class="table ">
+       <table class="table">
           <thead>
           <tr>
             <th *ngFor="let column of config[groups[0]].columns">
-              <div class="table-header" >
+              <div class="table-header">
                 <p>{{column.name}}</p>
               </div>
             </th>
           </tr>
           </thead>
           <tbody class="child-table-body">
-
-         <tr *ngFor="let row of rows">
+          <tr *ngFor="let row of rows">
             <td>{{row.chipSKU}}</td>
             <td>{{row.chipRevision}}</td>
             <td>{{row.chipPackageinfo}}</td>
@@ -111,4 +113,3 @@
     </tbody>
   </table>
 </div>
-
