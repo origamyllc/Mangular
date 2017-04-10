@@ -1,3 +1,5 @@
+@import "./dropdown";
+
 sd-register-memory-table{
   position: relative;
   left:10px;
@@ -6,13 +8,7 @@ sd-register-memory-table{
     display:flex;
     margin:10px;
 
-    .dropdown{
-      margin:20px;
-    }
-
-    .btn, ul{
-      width:200px;
-    }
+    @include dropdown();
   }
 }
 

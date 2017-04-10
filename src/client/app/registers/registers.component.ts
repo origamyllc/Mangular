@@ -72,7 +72,6 @@ export class RegistersComponent {
     this.getModules();
     this.getModuleSkus();
     this.getRevision();
-    console.log(this.revisions)
   }
 
 

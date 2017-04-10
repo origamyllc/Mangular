@@ -1,0 +1,46 @@
+@mixin dropdown()
+{
+  .dropdown {
+    margin: 0px;
+  }
+
+  .btn, ul {
+    width: autox;
+  }
+
+  .go {
+    margin: 0 0 0 20px;
+  }
+
+  .btn {
+    background-color: #FFFFFF;
+    font-size: 12px;
+    height: 22px;
+    border: 1px solid #6E6E6E;
+    border-radius: 2px;
+    display: inline-block;
+    line-height: 20px;
+    padding: 0 0.6rem;
+    margin-right: 8px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btnaction {
+    background-color: #76B900;
+    font-size: 12px;
+    height: 22px;
+    border: 1px solid #6E6E6E;
+    border-radius: 2px;
+    display: inline-block;
+    line-height: 20px;
+    padding: 0 0.6rem;
+    margin-right: 8px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    color: #ffffff;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+}

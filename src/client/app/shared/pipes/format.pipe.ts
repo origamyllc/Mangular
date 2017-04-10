@@ -13,6 +13,5 @@ export class Format implements PipeTransform  {
   transform(values: any, args: any[]) { let row:any[]=[];
     if (!values) return this.value;
     return row;
-
   }
 }
