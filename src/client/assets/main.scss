@@ -42,10 +42,18 @@
 
 .table-header{
   display: flex;
+ 
   i{
-    margin:5px;
+    margin:50px;
+  
   }
 }
+
+th {
+  div p {
+ margin: 0 0 0px;
+  }
+} 
 
 .parent-table-header {
   th {
@@ -70,7 +78,6 @@
 }
 
 .parent-table-body{
-
   tr{
     td{
      padding: 0px 0px 0px 0px !important;
@@ -109,10 +116,11 @@
 }
 
 .table-container{
-  width:5600px;
+  width:2100px;
   height:150px;
   overflow:auto;
-  background-color: lightgray;
+  background-color: #fff;
+  border:1px solid #D3DAE3; 
 }
 
 .card-large-img {
@@ -123,17 +131,15 @@
     height:3vw;
     >  a{
           padding:10px;
-          background:red;
+        
           color:white;
      }
   }
-
   img {
      padding:10px;
      height:8vw ;
      width:10.33vw ;
   }
-
 }
 
 #nvidiaLogo {
@@ -153,4 +159,3 @@ table[style] {
   overflow-x: scroll;
 
 }
-

@@ -25,6 +25,11 @@
     text-transform: uppercase;
     vertical-align: middle;
     -webkit-tap-highlight-color: transparent;
+    &:hover {
+        color: #171717;
+        background-color: #286090;
+        border-color: #204d74;
+      }
   }
 
   .btnaction {
