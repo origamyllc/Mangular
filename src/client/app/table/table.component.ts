@@ -30,18 +30,21 @@ export class TableComponent implements OnInit {
                private socketService:SocketService,
                public http: Http
   ) {
-    this.rows =[];
+
     this.elementRef = elementRef;
     let query = MemoryParamsService.getQueryParams();
+    this.MemoryParamsService.clearTableRows();
 
        this.http.post('http://localhost:9000/memorytable/records',query ) // ...using post request
         .map((res) => res.text()) // ...and calling .json() on the response to return data
         .subscribe()
 
         this.connection = this.socketService.getMessages().subscribe(message => {
-          this.rows.push(JSON.parse(message.record));
-          console.log(this.rows)
+          MemoryParamsService.setTableRows(JSON.parse(message.record));
         });
+
+        this.rows = MemoryParamsService.getTableRows();
+
   }
 
   ngOnInit() {
@@ -99,9 +102,13 @@ export class TableComponent implements OnInit {
 
   }
 
+  getData(){
+
+  }
 
   ngOnDestroy(){
     this.connection.unsubscribe();
+
   }
 }
 

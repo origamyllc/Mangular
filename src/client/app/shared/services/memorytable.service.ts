@@ -10,6 +10,7 @@ export class MemoryParamsService  {
 
   static instance: MemoryParamsService;
   private obj: Object;
+  private records:any = [];
 
   constructor() {
     return MemoryParamsService.instance = MemoryParamsService.instance || this;
@@ -22,4 +23,17 @@ export class MemoryParamsService  {
    getQueryParams() {
      return this.obj;
    }
+
+   setTableRows(records:any):void{
+      this.records.push(records);
+   }
+
+   getTableRows(){
+      return this.records;
+   }
+
+   clearTableRows(){
+     this.records = []  ;
+   }
+
 }

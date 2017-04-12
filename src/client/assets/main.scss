@@ -42,10 +42,10 @@
 
 .table-header{
   display: flex;
- 
+
   i{
     margin:50px;
-  
+
   }
 }
 
@@ -53,7 +53,7 @@ th {
   div p {
  margin: 0 0 0px;
   }
-} 
+}
 
 .parent-table-header {
   th {
@@ -117,10 +117,10 @@ th {
 
 .table-container{
   width:2100px;
-  height:150px;
+  height:1000px;
   overflow:auto;
   background-color: #fff;
-  border:1px solid #D3DAE3; 
+  border:1px solid #D3DAE3;
 }
 
 .card-large-img {
@@ -131,7 +131,7 @@ th {
     height:3vw;
     >  a{
           padding:10px;
-        
+
           color:white;
      }
   }

@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit  {
         this.hideSku = true;
         this.hideRevision =true;
         this.hideSubmit=true;
+        this.MemoryParamsService.clearTableRows();
   }
 
   getChips() {
