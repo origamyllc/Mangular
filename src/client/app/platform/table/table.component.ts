@@ -40,7 +40,7 @@ export class TableComponent implements OnInit {
     paging: true,
     sorting: {columns: this.columns},
     filtering: {filterString: ''},
-    className: ['table-striped', 'table-bordered']
+    className: ['tables-striped', 'tables-bordered']
   };
 
   private data:Array<any> = TableData;

@@ -4,7 +4,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from './table.component';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { Ng2TableModule } from 'ng2-tables/ng2-tables';
 
 @NgModule({
   imports: [CommonModule,Ng2TableModule ],

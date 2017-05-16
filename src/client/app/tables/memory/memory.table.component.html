@@ -7,19 +7,29 @@
        <table class="table">
           <thead>
           <tr>
+            <th></th>
             <th *ngFor="let column of config[groups[0]].columns">
               <div class="table-header">
                 <p>{{column.name}}</p>
+              </div>
+              <div class="table-header">
+                <p><input
+                  type="text" name={{column.name}}
+                   placeholder={{column.name}}
+                  (input)="filterText ={value: $event.target.value, column: column.name }"
+                /></p>
               </div>
             </th>
           </tr>
           </thead>
           <tbody class="child-table-body">
-          <tr *ngFor="let row of rows">
-            <td>{{row.chipSKU}}</td>
+          <tr *ngFor="let row of rows | filter:filterText;let i = index " >
+            <td class="pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
+            <td>{{row.chipSku}}</td>
             <td>{{row.chipRevision}}</td>
             <td>{{row.chipPackageinfo}}</td>
           </tr>
+          </tbody>
         </table>
       </td>
       <td>
@@ -30,12 +40,17 @@
               <div class="table-header">
                 <p>{{column.name}}</p>
               </div>
+              <div class="table-header">
+                <p><input
+                  type="text" name={{column.name}}
+                  placeholder={{column.name}}
+                  (input)="filterText ={value: $event.target.value, column: column.name }"></p>
+              </div>
             </th>
           </tr>
           </thead>
           <tbody class="child-table-body">
-
-          <tr *ngFor="let row of rows">
+          <tr *ngFor="let row of rows | filter:filterText;">
             <td>{{row.platform}}</td>
             <td>{{row.program}}</td>
           </tr>
@@ -47,14 +62,20 @@
           <thead>
           <tr>
             <th *ngFor="let column of config[groups[2]].columns">
-              <div>
+              <div class="table-header">
                 <p>{{column.name}}</p>
+              </div>
+              <div class="table-header">
+                <p><input
+                  type="text" name={{column.name}}
+                  placeholder={{column.name}}
+                  (input)="filterText ={value: $event.target.value, column: column.name }"></p>
               </div>
             </th>
           </tr>
           </thead>
           <tbody class="child-table-body">
-          <tr *ngFor="let row of rows">
+          <tr *ngFor="let row of rows | filter:filterText; ">
             <td>{{row.blockName}}</td>
             <td>{{row.blockRevision}}</td>
             <td>{{row.manualName}}</td>
@@ -70,15 +91,21 @@
               <div>
                 <p>{{column.name}}</p>
               </div>
+              <div class="table-header">
+                <p><input
+                  type="text" name={{column.name}}
+                  placeholder={{column.name}}
+                  (input)="filterText ={value: $event.target.value, column: column.name }"></p>
+              </div>
             </th>
           </tr>
           </thead>
           <tbody class="child-table-body">
-          <tr *ngFor="let row of rows">
+          <tr *ngFor="let row of rows | filter:filterText">
             <td>{{row.registertype}}</td>
             <td>{{row.address}}</td>
             <td>{{row.name}}</td>
-            <td>{{row.fieldName}}</td>
+            <td>{{row.field}}</td>
             <td>{{row.mask}}</td>
             <td>{{row.value}}</td>
             <td>{{row.asic}}</td>

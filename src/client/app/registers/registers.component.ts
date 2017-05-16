@@ -32,6 +32,10 @@ export class RegistersComponent {
   query:any ;
   connection:any;
   rows:any;
+  hideModules:boolean;
+  hideSku:boolean;
+  hideRevision:boolean;
+  hideSubmit:boolean;
 
   constructor(
     private ChipService : ChipService,
@@ -42,6 +46,10 @@ export class RegistersComponent {
     private socketService:SocketService,
     public http: Http,
     private router:Router) {
+      this.hideModules = true;
+      this.hideSku = true;
+      this.hideRevision =true;
+      this.hideSubmit=true;
      this.query = MemoryParamsService.getQueryParams();
   }
 
@@ -72,12 +80,12 @@ export class RegistersComponent {
   selectedChip(chipname:string) {
     this.MemoryParamsService.clearTableRows();
     this.query.chip = chipname;
-
-    this.http.get('http://localhost:9000/memorytable/records/chip/' + this.query.chip.toString()) // ...using post request
+    this.hideModules = false;
+    this.http.get('http://172.17.175.38:9000/memorytable/records/chip/' + this.query.chip.toString()) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
-          this.MemoryParamsService.setTableRows(result);
+          this.MemoryParamsService.setTableRows(JSON.parse(result));
         });
       });
   }
@@ -85,11 +93,12 @@ export class RegistersComponent {
   selectedModule(modulename:string){
     this.MemoryParamsService.clearTableRows();
      this.query.module = modulename;
-    this.http.get('http://localhost:9000/memorytable/records/module/' + this.query.module.toString() ) // ...using post request
+     this.hideSku = false;
+    this.http.get('http://172.17.175.38:9000/memorytable/records/module/' + this.query.module.toString() ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
-          this.MemoryParamsService.setTableRows(result);
+          this.MemoryParamsService.setTableRows(JSON.parse(result));
         });
       });
   }
@@ -97,16 +106,38 @@ export class RegistersComponent {
   selectedSku(skunumber:string){
     this.MemoryParamsService.clearTableRows();
     this.query.sku = skunumber;
-    this.http.get('http://localhost:9000/memorytable/records/sku/' +  this.query.sku.toString() ) // ...using post request
+    this.hideRevision =false;
+    this.http.get('http://172.17.175.38:9000/memorytable/records/sku/' +  this.query.sku.toString() ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
-          this.MemoryParamsService.setTableRows(result);
+          this.MemoryParamsService.setTableRows(JSON.parse(result));
         });
       });
   }
 
+  selectedRevision(revision:any){
+    this.MemoryParamsService.clearTableRows();
+    this.query.revision = revision ;
+    this.hideSubmit=false;
+    this.http.get('http://172.17.175.38:9000/memorytable/records/revisions/' +  this.query.revision.toString() ) // ...using post request
+      .map((res) => res.json()) // ...and calling .json() on the response to return data
+      .subscribe( message => {
+        message.results.forEach((result:any) => {
+          this.MemoryParamsService.setTableRows(JSON.parse(result));
+        });
+      });
+  }
 
+  getData(){
+    this.http.post('http://172.17.175.38:9000/memorytable/records',this.query ) // ...using post request
+      .map((res) => res.json()) // ...and calling .json() on the response to return data
+      .subscribe( message => {
+        message.results.forEach((result:any) => {
+          this.MemoryParamsService.setTableRows(JSON.parse(result));
+        });
+      });
+  }
 
   /**
    * Get the names OnInit
@@ -116,6 +147,7 @@ export class RegistersComponent {
     this.getModules();
     this.getModuleSkus();
     this.getRevision();
+    this.getData();
   }
 
 

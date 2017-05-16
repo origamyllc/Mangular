@@ -13,6 +13,8 @@ import { Chip } from '../shared/models/chip.model';
 import { Module } from '../shared/models/module.model';
 import { ModuleSku } from '../shared/models/moduleSku.model';
 import { Revision } from '../shared/models/revision.model';
+
+
 /**
  * This class represents the lazy loaded AboutComponent.
  */

@@ -8,18 +8,16 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SocketService {
-  private url = 'http://localhost:9010';
-  private socket:any;
+  private url = 'http://172.17.175.38:9010';
+  private socket:any =io(this.url);
 
   sendMessage(message:any){
-    this.socket.emit('add-message', message);
+    this.socket.emit('message', message);
   }
 
   getMessages():Observable<any> {
-
     return Observable.create((observer: any) => {
-      this.socket = io(this.url);
-      this.socket.on('record', (data:any) => {
+      this.socket.on('message', (data:any) => {
         observer.next(data);
       });
       return () => this.socket.close();

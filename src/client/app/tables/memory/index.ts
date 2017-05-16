@@ -1,4 +1,4 @@
 /**
  * Created by osboxes on 24/02/17.
  */
-export * from './table.component';
+export * from './memory.table.component';

@@ -3,7 +3,10 @@
  */
 
 
-import { Injectable } from '@angular/core';
+import { Injectable,Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subject }    from 'rxjs/Subject';
+
 
 @Injectable()
 export class MemoryParamsService  {
@@ -11,6 +14,10 @@ export class MemoryParamsService  {
   static instance: MemoryParamsService;
   private obj: Object;
   private records:any = [];
+
+  public _subject = new Subject<any>();
+  public event = this._subject.asObservable();
+
 
   constructor() {
     return MemoryParamsService.instance = MemoryParamsService.instance || this;
@@ -25,11 +32,12 @@ export class MemoryParamsService  {
    }
 
    setTableRows(records:any):void{
-      this.records.push(records);
+     this.records.push(records);
+     this._subject.next( this.records);
    }
 
-   getTableRows(){
-      return this.records;
+   getTableRows() {
+      return this.event;
    }
 
    clearTableRows(){

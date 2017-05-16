@@ -94,7 +94,7 @@ export function main() {
       expect(elementArray[3].children.length).not.toBe(0);
     });
 
-    it('should have a button to redirect to memory table ', () => {
+    it('should have a button to redirect to memory tables ', () => {
       fixture.detectChanges();
       let  domElements = el.querySelectorAll('.go');
       expect(domElements.length).toBe(1);

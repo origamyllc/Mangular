@@ -31,7 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
             UserModule,
             RegistersModule,
             SharedModule.forRoot()],
-  declarations: [AppComponent ],
+  declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,
     useValue: '<%= APP_BASE %>'

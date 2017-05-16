@@ -1,18 +1,19 @@
 /**
  * Created by osboxes on 13/02/17.
  */
-import { Component, ElementRef,OnInit } from '@angular/core';
-import { SocketService } from '../shared/services/socket.service';
+import { Component, ElementRef,OnInit,Input } from '@angular/core';
+import { SocketService } from '../../shared/services/socket.service';
 import {Http, Headers} from '@angular/http';
-import { MemoryParamsService } from '../shared/services/memorytable.service';
+import { MemoryParamsService } from '../../shared/services/memorytable.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 declare var $:any;
 
 
 @Component({
   moduleId: module.id,
-  selector: 'sd-table',
-  templateUrl: 'table.component.html',
+  selector: 'sd-memory-table',
+  templateUrl: 'memory.table.component.html',
   providers: [SocketService]
 })
 
@@ -20,8 +21,9 @@ export class TableComponent implements OnInit {
   elementRef: ElementRef;
   config: any;
   groups : Array<string>;
-  connection:any;
   rows:any;
+  query:any;
+  filterText:any;
 
 
   constructor(
@@ -32,19 +34,8 @@ export class TableComponent implements OnInit {
   ) {
 
     this.elementRef = elementRef;
-    let query = MemoryParamsService.getQueryParams();
     this.MemoryParamsService.clearTableRows();
-
-       this.http.post('http://localhost:9000/memorytable/records',query ) // ...using post request
-        .map((res) => res.text()) // ...and calling .json() on the response to return data
-        .subscribe()
-
-        this.connection = this.socketService.getMessages().subscribe(message => {
-          MemoryParamsService.setTableRows(JSON.parse(message.record));
-        });
-
-        this.rows = MemoryParamsService.getTableRows();
-
+    this.query = MemoryParamsService.getQueryParams();
   }
 
   ngOnInit() {
@@ -68,7 +59,7 @@ export class TableComponent implements OnInit {
       Block: {
         columns: [
           {name: "Name", isVisible: true},
-          {name: "Revision", isVisible: true},
+          {name: "Block Revision", isVisible: true},
           {name: "Manual", isVisible: true}
         ],
         isVisible: true
@@ -99,15 +90,25 @@ export class TableComponent implements OnInit {
     }
 
     this.groups = Object.keys(this.config);
-
+    this.getData();
   }
 
-  getData(){
+ getData(){
+    this.MemoryParamsService.getTableRows().subscribe((data) => {
+      this.rows = data;
+    });
+  }
 
+  pinHandler(event:any,index:number){
+    let target = event.target || event.srcElement || event.currentTarget;
+    let row = target.parentNode;
+    row.style.color = '#76b900';
+    let table = row.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+    table.style.marginTop = '300px';
+    this.socketService.sendMessage(this.rows[index]);
   }
 
   ngOnDestroy(){
-    this.connection.unsubscribe();
 
   }
 }

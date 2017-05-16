@@ -10,5 +10,26 @@ x-dashboard{
     padding: 10px;
     @include dropdown();
   }
+
+  .dropdown{
+    button{
+      width:160px;
+      text-align:left;
+      span{
+        margin-top:5px;
+        float:right;
+      }
+    }
+
+    #submit{
+      width:50px;
+    }
+  }
+  .dropdown-menu{
+      li:hover {
+        background-color: #76b900;
+      }
+    }
+
 }
 
