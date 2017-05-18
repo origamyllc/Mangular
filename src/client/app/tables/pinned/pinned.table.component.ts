@@ -145,7 +145,6 @@ export class PinnedTableComponent implements OnInit {
 
   onSubmit(event:any){
     let data =  this.PinnedTableParamsService.getTableRows();
-
     this.PinnedTableParamsService.submit(data);
   }
 

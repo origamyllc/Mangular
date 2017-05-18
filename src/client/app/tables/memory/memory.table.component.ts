@@ -6,8 +6,7 @@ import { SocketService } from '../../shared/services/socket.service';
 import {Http, Headers} from '@angular/http';
 import { MemoryParamsService } from '../../shared/services/memorytable.service';
 import { FormGroup, FormControl } from '@angular/forms';
-
-declare var $:any;
+let $ = require('jquery/dist/jquery')
 
 
 @Component({
@@ -24,8 +23,7 @@ export class TableComponent implements OnInit {
   rows:any;
   query:any;
   filterText:any;
-
-
+  pinned:any = [];
   constructor(
                elementRef: ElementRef,
                private MemoryParamsService:MemoryParamsService,
@@ -91,6 +89,8 @@ export class TableComponent implements OnInit {
 
     this.groups = Object.keys(this.config);
     this.getData();
+    this.getPinnedData();
+
   }
 
  getData(){
@@ -100,16 +100,29 @@ export class TableComponent implements OnInit {
   }
 
   pinHandler(event:any,index:number){
-    let target = event.target || event.srcElement || event.currentTarget;
-    let row = target.parentNode;
-    row.style.color = '#76b900';
-    let table = row.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-    table.style.marginTop = '300px';
-    this.socketService.sendMessage(this.rows[index]);
+       this.pinned.forEach((results:any) => {
+         if (results.results.indexOf(index) === -1) {
+           let target = event.target || event.srcElement || event.currentTarget;
+           let row = target.parentNode;
+           row.style.color = '#76b900';
+           let table = row.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+           table.style.marginTop = '300px';
+           this.socketService.sendMessage({row: this.rows[index], index: index})
+         }
+       });
   }
 
-  ngOnDestroy(){
-
+  getPinnedData(){
+    this.http.get('http://172.17.175.38:9000/memorytable/pinned' ) // ...using post request
+      .map((res) => res.json()) // ...and calling .json() on the response to return data
+      .subscribe( message => {
+        message.results.forEach((index:any) => {
+          this.pinned.push(message)
+          let x= $(this.elementRef.nativeElement).children();
+          x.find('tr.prime').eq(index).find('td').eq(0).css("color","red")
+        });
+      });
   }
+
 }
 

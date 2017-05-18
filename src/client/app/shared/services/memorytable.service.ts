@@ -18,7 +18,6 @@ export class MemoryParamsService  {
   public _subject = new Subject<any>();
   public event = this._subject.asObservable();
 
-
   constructor() {
     return MemoryParamsService.instance = MemoryParamsService.instance || this;
   }
@@ -43,5 +42,8 @@ export class MemoryParamsService  {
    clearTableRows(){
      this.records = []  ;
    }
+
+
+
 
 }
