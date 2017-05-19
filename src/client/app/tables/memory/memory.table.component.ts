@@ -100,20 +100,21 @@ export class TableComponent implements OnInit {
   }
 
   pinHandler(event:any,index:number){
-       this.pinned.forEach((results:any) => {
-         if (results.results.indexOf(index) === -1) {
+  console.log('gere')
+      // this.pinned.forEach((results:any) => {
+         //if (results.results.indexOf(index) === -1) {
            let target = event.target || event.srcElement || event.currentTarget;
            let row = target.parentNode;
            row.style.color = '#76b900';
            let table = row.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
            table.style.marginTop = '300px';
            this.socketService.sendMessage({row: this.rows[index], index: index})
-         }
-       });
+        // }
+       //});
   }
 
   getPinnedData(){
-    this.http.get('http://172.17.175.38:9000/memorytable/pinned' ) // ...using post request
+    this.http.get('http://localhost:9000/memorytable/pinned' ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((index:any) => {

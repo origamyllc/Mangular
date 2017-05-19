@@ -21,11 +21,11 @@ export class ChipDetailsService {
   getChipDetailsByName(name:string):Observable<Chip[]>  {
 
        if(name === 'T186') {
-         this.modulesUrl = 'http://172.17.175.38:3000/chips/t186';
+         this.modulesUrl = 'http://localhost:3000/chips/t186';
        }
 
        if(name === 'T124') {
-         this.modulesUrl = 'http://172.17.175.38:3000/chips/t124';
+         this.modulesUrl = 'http://localhost:3000/chips/t124';
        }
 
       return this.http.get(this.modulesUrl)
@@ -35,7 +35,7 @@ export class ChipDetailsService {
   }
 
 
-  private chipsUrl = 'http://172.17.175.38:3000/chips';  // URL to web API
+  private chipsUrl = 'http://localhost:3000/chips';  // URL to web API
 
   getChipDetails():Observable<Chip[]>  {
     return this.http.get(this.chipsUrl)

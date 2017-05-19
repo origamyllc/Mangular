@@ -6,6 +6,12 @@
     vertical-align: bottom;
 
 }
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0px
+}
 .nowrap{
    white-space: nowrap
 }
@@ -24,7 +30,7 @@
     .filter-container{
       display: flex;
       position:absolute;
-      top:20px;
+      top:0px;
       button{
         width:160px;
         text-align:left;
@@ -50,7 +56,7 @@
       }
 
       p {
-        margin-top: 17px;
+        margin: 0px;
       }
     }
 
@@ -78,7 +84,7 @@
             thead{
               background-color:#EAEDF1;
               tr{
-                height:159px;
+                height:70px;
                 th{
                   max-height:40px;
                   font-size: 12px;
@@ -91,12 +97,13 @@
       }
     }
     .child-table-body{
+      font-size: 11px;
       tr:first-child{
         border:none;
       }
       tr{
-        border-top:2px black solid;
-        border-bottom:2px black solid;
+      //  border-top:2px black solid;
+      //  border-bottom:2px black solid;
         .pin{
           i {
             padding: 2px;
@@ -111,7 +118,7 @@
     .table-container{
       background-color: #fff;
       border:1px solid #D3DAE3;
-      margin-top: 50px;
+      margin-top: 1px;
     }
 
   }
@@ -119,7 +126,7 @@
 
 
  sd-pinned-table{
-   margin-top:15px;
+   margin-top:0px;
    max-height:400px;
    max-width:1800px;
    position:absolute;
@@ -178,6 +185,7 @@
              input {
                height: 8px;
                margin:2px;
+               
              }
            }
          }

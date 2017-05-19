@@ -81,7 +81,7 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
     this.query.chip = chipname;
     this.hideModules = false;
-    this.http.get('http://172.17.175.38:9000/memorytable/records/chip/' + this.query.chip.toString()) // ...using post request
+    this.http.get('http://localhost:9000/memorytable/records/chip/' + this.query.chip.toString()) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
@@ -94,7 +94,7 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
      this.query.module = modulename;
      this.hideSku = false;
-    this.http.get('http://172.17.175.38:9000/memorytable/records/module/' + this.query.module.toString() ) // ...using post request
+    this.http.get('http://localhost:9000/memorytable/records/module/' + this.query.module.toString() ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
@@ -120,7 +120,7 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
     this.query.revision = revision ;
     this.hideSubmit=false;
-    this.http.get('http://172.17.175.38:9000/memorytable/records/revisions/' +  this.query.revision.toString() ) // ...using post request
+    this.http.get('http://localhost:9000/memorytable/records/revisions/' +  this.query.revision.toString() ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
@@ -130,7 +130,7 @@ export class RegistersComponent {
   }
 
   getData(){
-    this.http.post('http://172.17.175.38:9000/memorytable/records',this.query ) // ...using post request
+    this.http.post('http://localhost:9000/memorytable/records',this.query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
