@@ -24,6 +24,8 @@ export class TableComponent implements OnInit {
   query:any;
   filterText:any;
   pinned:any = [];
+  height:any = 0;
+
   constructor(
                elementRef: ElementRef,
                private MemoryParamsService:MemoryParamsService,
@@ -103,11 +105,13 @@ export class TableComponent implements OnInit {
   console.log('gere')
       // this.pinned.forEach((results:any) => {
          //if (results.results.indexOf(index) === -1) {
+  
+           this.height =  this.height + 100;
            let target = event.target || event.srcElement || event.currentTarget;
            let row = target.parentNode;
            row.style.color = '#76b900';
            let table = row.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-           table.style.marginTop = '300px';
+           table.style.marginTop = this.height + 'px';
            this.socketService.sendMessage({row: this.rows[index], index: index})
         // }
        //});

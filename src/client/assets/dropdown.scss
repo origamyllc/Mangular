@@ -1,7 +1,7 @@
 @mixin dropdown()
 {
   .dropdown {
-    margin: 0px;
+    margin: 3px;
   }
 
   .btn, ul {
@@ -9,7 +9,26 @@
   }
 
   .go {
-    margin: 0 0 0 20px;
+    margin: 0 0 0 4px;
+  }
+
+  .open>.dropdown-menu {
+    display: block;
+    border-left: solid 1px;
+    border-right: solid 1px;
+    min-width: 120px;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    border-radius: 0px 0px 4px 4px;
+    border-color: #286090;
+    font-size: 12px;
+    padding-left: 0px;
+  }
+
+  .x-dashboard .container .dropdown-menu ul li {
+    padding-left: 10px;
   }
 
   .btn {
@@ -48,4 +67,9 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+}
+
+x-dashboard .dropdown button span {
+    margin-top: 8px;
+    float: right;
 }

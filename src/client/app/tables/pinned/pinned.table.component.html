@@ -6,7 +6,7 @@
       <td>
         <table class="table">
           <thead>
-          <tr>
+          <tr>     
             <th *ngFor="let column of config[groups[0]].columns">
               <div class="table-header">
                 <p>{{column.name}}</p>
@@ -67,7 +67,7 @@
           <thead>
           <tr>
             <th *ngFor="let column of config[groups[3]].columns">
-              <div>
+              <div class="table-header">
                 <p>{{column.name}}</p>
               </div>
             </th>
@@ -92,11 +92,11 @@
              <td (click)="editTableCellHandler($event,'mode',i)">{{row.mode}}</td>
              <td (click)="editTableCellHandler($event,'phase',i)" >{{row.phase}}</td>
              <td (click)="editTableCellHandler($event,'state',i)">{{row.state}}</td>
-             <td (click)="editTableCellHandler($event,'comments',i)" style="min-width:1500px;">{{row.comments}}</td>
+             <td (click)="editTableCellHandler($event,'comments',i)" style="min-width:1050px;">{{row.comments}}</td>
              <td>N/A</td>
              <td>N/A</td>
              <td>N/A</td>
-             <td><div type="button" class="btn btn-primary" (click)="onDelete($event,i)">DELETE</div></td>
+             <td><div type="button" class="btn btn-primary" (click)="onDelete($event,i)">Delete</div></td>
            </tr>
           </tbody>
         </table>
@@ -105,4 +105,4 @@
     </tbody>
   </table>
 </div>
-<div type="button" class="btn btn-primary"  *ngIf="editable"  (click)="onSubmit($event)" >SUBMIT</div>
+<div type="button" class="btn btn-primary"  *ngIf="editable"  (click)="onSubmit($event)" >Submit</div>

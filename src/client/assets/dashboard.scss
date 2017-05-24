@@ -13,7 +13,7 @@ x-dashboard{
 
   .dropdown{
     button{
-      width:160px;
+      width:120px;
       text-align:left;
       span{
         margin-top:5px;
@@ -22,10 +22,11 @@ x-dashboard{
     }
 
     #submit{
-      width:50px;
+      width:44px;
     }
   }
   .dropdown-menu{
+    
       li:hover {
         background-color: #76b900;
       }

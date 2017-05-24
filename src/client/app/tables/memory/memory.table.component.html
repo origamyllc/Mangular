@@ -1,10 +1,10 @@
 
 <div class="table-container">
-  <table class="table data-table" >
+  <table class="table data-table " >
     <tbody class="parent-table-body">
     <tr>
       <td>
-       <table class="table">
+       <table class="table" cellpadding="2">
           <thead>
           <tr>
             <th></th>
@@ -13,11 +13,9 @@
                 <p>{{column.name}}</p>
               </div>
               <div class="table-header">
-                <p><input
-                  type="text" name={{column.name}}
-                   placeholder={{column.name}}
-                  (input)="filterText ={value: $event.target.value, column: column.name }"
-                /></p>
+                <p><input type="text" name={{column.name}}
+                   placeholder={{column.dname}}
+                  (input)="filterText ={value: $event.target.value, column: column.name }"/></p>
               </div>
             </th>
           </tr>
@@ -88,7 +86,7 @@
           <thead>
           <tr>
             <th *ngFor="let column of config[groups[3]].columns">
-              <div>
+              <div class="table-header">
                 <p>{{column.name}}</p>
               </div>
               <div class="table-header">
@@ -116,7 +114,7 @@
             <td>{{row.mode}}</td>
             <td>{{row.phase}}</td>
             <td>{{row.state}}</td>
-            <td style="min-width:1500px;">{{row.comments}}</td>
+            <td style="min-width:1050px;">{{row.comments}}</td>
             <td>N/A</td>
             <td>N/A</td>
             <td>N/A</td>
