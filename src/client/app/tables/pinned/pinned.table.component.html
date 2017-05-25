@@ -6,7 +6,7 @@
       <td>
         <table class="table">
           <thead>
-          <tr>     
+          <tr>
             <th *ngFor="let column of config[groups[0]].columns">
               <div class="table-header">
                 <p>{{column.name}}</p>
@@ -89,14 +89,14 @@
              <td (click)="editTableCellHandler($event,'maxtemp',i)" >{{row.maxtemp}}</td>
              <td (click)="editTableCellHandler($event,'thermalSensor',i)" >{{row.thermalSensor}}</td>
              <td (click)="editTableCellHandler($event,'frequency',i)">{{row.frequency}}</td>
-             <td (click)="editTableCellHandler($event,'mode',i)">{{row.mode}}</td>
+             <td (click)="editTableCellHandler($event,'mode',i)" style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
              <td (click)="editTableCellHandler($event,'phase',i)" >{{row.phase}}</td>
              <td (click)="editTableCellHandler($event,'state',i)">{{row.state}}</td>
-             <td (click)="editTableCellHandler($event,'comments',i)" style="min-width:1050px;">{{row.comments}}</td>
+             <td (click)="editTableCellHandler($event,'comments',i)" style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
              <td>N/A</td>
              <td>N/A</td>
              <td>N/A</td>
-             <td><div type="button" class="btn btn-primary" (click)="onDelete($event,i)">Delete</div></td>
+             <td><div type="button" class="btn btn-primary delete-btn" (click)="onDelete($event,i)">Delete</div></td>
            </tr>
           </tbody>
         </table>
