@@ -6,6 +6,7 @@ import { SocketService } from '../../shared/services/socket.service';
 import {Http} from '@angular/http';
 import { MemoryParamsService } from '../../shared/services/memorytable.service';
 import { PinnedTableParamsService } from '../../shared/services/pinnedtable.service';
+import { Router } from '@angular/router';
 
 let $ = require('jquery/dist/jquery.js');
 
@@ -33,7 +34,8 @@ export class PinnedTableComponent implements OnInit {
     private MemoryParamsService:MemoryParamsService,
     private PinnedTableParamsService:PinnedTableParamsService,
     private socketService:SocketService,
-    public http: Http
+    public http: Http,
+    private router:Router
   ) {
 
     this.elementRef = elementRef;
@@ -146,6 +148,7 @@ export class PinnedTableComponent implements OnInit {
   onSubmit(event:any){
     let data =  this.PinnedTableParamsService.getTableRows();
     this.PinnedTableParamsService.submit(data);
+    this.router.navigate(["/dashboard"]);
   }
 
 

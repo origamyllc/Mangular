@@ -59,6 +59,34 @@
       }
     }
 
+    .filter-dropdown {
+      border: none;
+      background-color: white;
+      z-index: 100;
+      height:500px;
+      thead {
+        tr {
+          background-color: white;
+
+          th {
+            position: absolute;
+            top: 72px;
+            border: none;
+            background-color: white;
+            margin-top: 1px;
+            width:300px;
+            max-height: 300px;
+            overflow-y: auto;
+            li {
+              &:hover {
+                background-color: #76b900;
+              }
+            }
+          }
+        }
+      }
+    }
+
     .table-header{
       display: flex;
      // width:75px;
@@ -201,7 +229,6 @@
              input {
                height: 8px;
                margin:2px;
-               
              }
            }
          }

@@ -21,14 +21,14 @@ export class ModuleService {
   constructor (private http: Http) {}
 
   getModuleByName(name:string):Observable<Module[]>  {
-    this.modulesUrl = 'http://localhost:3000/modules/'+name;
+    this.modulesUrl = 'http://172.17.175.38:3000/modules/'+name;
     return this.http.get(this.modulesUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   getModule():Observable<Module[]>  {
-    this.modulesUrl = 'http://localhost:3000/modules';
+    this.modulesUrl = 'http://172.17.175.38:3000/modules';
     return this.http.get(this.modulesUrl)
       .map(this.extractData)
       .catch(this.handleError);

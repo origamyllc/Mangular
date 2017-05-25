@@ -40,6 +40,7 @@ export class MemoryParamsService  {
    }
 
    clearTableRows(){
+     this.records.length = 0  ;
      this.records = []  ;
    }
 

@@ -1,11 +1,11 @@
 /**
  * Created by osboxes on 13/02/17.
  */
-import { Component, ElementRef,OnInit,Input } from '@angular/core';
-import { SocketService } from '../../shared/services/socket.service';
+import {Component, ElementRef, OnInit, Input} from '@angular/core';
+import {SocketService} from '../../shared/services/socket.service';
 import {Http, Headers} from '@angular/http';
-import { MemoryParamsService } from '../../shared/services/memorytable.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import {MemoryParamsService} from '../../shared/services/memorytable.service';
+import {FormGroup, FormControl} from '@angular/forms';
 let $ = require('jquery/dist/jquery')
 
 
@@ -19,19 +19,18 @@ let $ = require('jquery/dist/jquery')
 export class TableComponent implements OnInit {
   elementRef: ElementRef;
   config: any;
-  groups : Array<string>;
-  rows:any;
-  query:any;
-  filterText:any;
-  pinned:any = [];
-  height:any = 0;
+  groups: Array<string>;
+  rows: any;
+  query: any;
+  filterText: any;
+  pinned: any = [];
+  searchresults: any = [];
 
-  constructor(
-               elementRef: ElementRef,
-               private MemoryParamsService:MemoryParamsService,
-               private socketService:SocketService,
-               public http: Http
-  ) {
+
+  constructor(elementRef: ElementRef,
+              private MemoryParamsService: MemoryParamsService,
+              private socketService: SocketService,
+              public http: Http) {
 
     this.elementRef = elementRef;
     this.MemoryParamsService.clearTableRows();
@@ -43,9 +42,9 @@ export class TableComponent implements OnInit {
     this.config = {
       Chip: {
         columns: [
-          {name: "SKU", isVisible: true},
-          {name: "Revision", isVisible: true},
-          {name: "Package Info", isVisible: true}
+          {name: "SKU", isVisible: false},
+          {name: "Revision", isVisible: false},
+          {name: "Package Info", isVisible: false}
         ],
         isVisible: true
       },
@@ -66,24 +65,24 @@ export class TableComponent implements OnInit {
       },
       Registers: {
         columns: [
-          {name: "Reg Type", isVisible: true},
-          {name: "Reg Address", isVisible: true},
-          {name: "Reg Name", isVisible: true},
-          {name: "Field Name", isVisible: true},
-          {name: "Mask", isVisible: true},
-          {name: "Value", isVisible: true},
-          {name: "ASIC", isVisible: true},
-          {name: "Min Temp", isVisible: true},
-          {name: "Max Temp", isVisible: true},
-          {name: "Thermal Sen", isVisible: true},
-          {name: "Frequency", isVisible: true},
-          {name: "Mode", isVisible: true},
-          {name: "Phase", isVisible: true},
-          {name: "State", isVisible: true},
-          {name: "Comments", isVisible: true},
-          {name: "Version", isVisible: true},
-          {name: "Update By", isVisible: true},
-          {name: "Effectivity Date", isVisible: true},
+          {name: "Reg Type", isVisible: false},
+          {name: "Reg Address", isVisible: false},
+          {name: "Reg Name", isVisible: false},
+          {name: "Field Name", isVisible: false},
+          {name: "Mask", isVisible: false},
+          {name: "Value", isVisible: false},
+          {name: "ASIC", isVisible: false},
+          {name: "Min Temp", isVisible: false},
+          {name: "Max Temp", isVisible: false},
+          {name: "Thermal Sen", isVisible: false},
+          {name: "Frequency", isVisible: false},
+          {name: "Mode", isVisible: false},
+          {name: "Phase", isVisible: false},
+          {name: "State", isVisible: false},
+          {name: "Comments", isVisible: false},
+          {name: "Version", isVisible: false},
+          {name: "Update By", isVisible: false},
+          {name: "Effectivity Date", isVisible: false},
         ],
         isVisible: true
       }
@@ -95,39 +94,114 @@ export class TableComponent implements OnInit {
 
   }
 
- getData(){
+  getData() {
+    this.MemoryParamsService.clearTableRows();
     this.MemoryParamsService.getTableRows().subscribe((data) => {
       this.rows = data;
     });
   }
 
   pinHandler(event:any,index:number){
-  console.log('gere')
-      // this.pinned.forEach((results:any) => {
-         //if (results.results.indexOf(index) === -1) {
-  
-           this.height =  this.height + 100;
-           let target = event.target || event.srcElement || event.currentTarget;
-           let row = target.parentNode;
-           row.style.color = '#76b900';
-           let table = row.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-           table.style.marginTop = this.height + 'px';
-           this.socketService.sendMessage({row: this.rows[index], index: index})
-        // }
-       //});
+
   }
 
-  getPinnedData(){
-    this.http.get('http://localhost:9000/memorytable/pinned' ) // ...using post request
+  getPinnedData() {
+    this.http.get('http://172.17.175.38:9000/memorytable/pinned') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
-      .subscribe( message => {
-        message.results.forEach((index:any) => {
+      .subscribe(message => {
+        message.results.forEach((index: any) => {
           this.pinned.push(message)
-          let x= $(this.elementRef.nativeElement).children();
-          x.find('tr.prime').eq(index).find('td').eq(0).css("color","red")
+          let x = $(this.elementRef.nativeElement).children();
+          x.find('tr.prime').eq(index).find('td').eq(0).css("color", "red")
         });
       });
   }
 
+  onSearchChange(searchValue: string, column: string) {
+    let searchresults: any = [];
+    if (column === 'SKU' && searchValue !=='') {
+      this.http.get('http://172.17.175.38:9000/search/sku/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (searchresults.indexOf(message.chipSKU) === -1) {
+              searchresults.push(message.chipSKU)
+            }
+          });
+        });
+      searchresults.forEach((filterBy: any) => {
+        this.http.get('http://172.17.175.38:9000/memorytable/records/sku/' + filterBy) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            this.MemoryParamsService.clearTableRows();
+            if (message.results) {
+              message.results.forEach((result: any) => {
+                this.MemoryParamsService.setTableRows(JSON.parse(result));
+              });
+            }
+          });
+      });
+    }
+
+    if (column === "Reg Name"  && searchValue !=='') {
+      let rows: any =[];
+      this.http.get('http://172.17.175.38:9000/register/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (searchresults.indexOf(message.name) === -1) {
+              searchresults.push(message.name);
+              this.filterByRegisterName(message.name)
+            }
+          });
+        });
+    }
+
+    if(column === "Name"  && searchValue !==''){
+      console.log(searchresults)
+      this.http.get('http://172.17.175.38:9000/blocks/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {;
+           if (searchresults.indexOf(message.name) === -1) {
+              searchresults.push(message.name);
+             this.filterByBlockName(message.name)
+            }
+          });
+        });
+    }
+  }
+
+filterByRegisterName(name:any) {
+  this.MemoryParamsService.clearTableRows();
+  if (this.query && typeof    this.query !== 'undefined') {
+    this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+      .map((res) => res.json()) // ...and calling .json() on the response to return data
+      .subscribe(message => {
+        message.results.forEach((result: any) => {
+          let json = JSON.parse(result);
+          if (name === json.register) {
+            this.MemoryParamsService.setTableRows(json);
+          }
+        });
+      });
+  }
+}
+
+  filterByBlockName(name:any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+              let json = JSON.parse(result);
+              if(json.blockName === name) {
+                console.log(json)
+              }
+            });
+        });
+    }
+  }
 }
 

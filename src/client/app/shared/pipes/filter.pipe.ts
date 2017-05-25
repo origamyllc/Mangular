@@ -16,7 +16,7 @@ export class Filter implements PipeTransform  {
 
     // filter by chip sku
     if (args  && args.column === "SKU") {
-      filteredData  =   values.filter((value:any) => value.chipSKU === args.value );
+      filteredData  =   values.filter((value:any) => value.chipSku === args.value );
       if(args.value === '' ){
         return this.rows;
       }
