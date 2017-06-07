@@ -124,7 +124,6 @@
       thead {
         tr {
           background-color: white;
-
           th {
             position: absolute;
             top: 72px;
@@ -148,15 +147,14 @@
 
  sd-pinned-table{
     position:absolute;
-   top:50px;
+    top:50px;
    .table-container{
-     background-color: #EFEFEF;
-     border:1px solid #D3DAE3;
-     width: 100%;
+    width:100%;
      z-index: 10;
      .parent-table-body{
        tr{
          td{
+           padding: 1px 10px 0px 0px !important;
            .table{
              thead{
                background-color:#EAEDF1;
@@ -165,18 +163,20 @@
                  min-width:100px !important;
                  th{
                    max-height:40px;
-                   font-size: 8px;
+                   font-size: 11px;
                    font-weight: 400;
+                   padding: 0px;
                  }
                }
              }
              .child-table-body{
-               font-size :8px;
+               font-size :11px;
                tr:first-child{
                  border:none;
                }
                tr {
                  td {
+                   margin:2px;
                    .delete-btn{
                      font-size:10px;
                    }

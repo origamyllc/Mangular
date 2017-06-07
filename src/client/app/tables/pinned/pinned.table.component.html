@@ -7,6 +7,7 @@
         <table class="table">
           <thead>
           <tr>
+            <th></th>
             <th *ngFor="let column of config[groups[0]].columns">
               <div class="table-header">
                 <p>{{column.name}}</p>
@@ -16,6 +17,7 @@
           </thead>
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows; let i = index" >
+            <td></td>
             <td (click)="editTableCellHandler($event,'chipSku',i)">{{row.chipSku}}</td>
             <td (click)="editTableCellHandler($event,'chipRevision',i)">{{row.chipRevision}}</td>
             <td (click)="editTableCellHandler($event,'chipPackageinfo',i)" >{{row.chipPackageinfo}}</td>

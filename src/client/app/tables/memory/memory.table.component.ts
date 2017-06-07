@@ -8,7 +8,6 @@ import {MemoryParamsService} from '../../shared/services/memorytable.service';
 import {FormGroup, FormControl} from '@angular/forms';
 let $ = require('jquery/dist/jquery')
 
-
 @Component({
   moduleId: module.id,
   selector: 'sd-memory-table',
@@ -26,15 +25,14 @@ export class TableComponent implements OnInit {
   pinned: any = [];
   searchresults: any = [];
 
-
   constructor(elementRef: ElementRef,
               private MemoryParamsService: MemoryParamsService,
               private socketService: SocketService,
               public http: Http) {
 
     this.elementRef = elementRef;
-    this.MemoryParamsService.clearTableRows();
     this.query = MemoryParamsService.getQueryParams();
+
   }
 
   ngOnInit() {
@@ -95,113 +93,776 @@ export class TableComponent implements OnInit {
   }
 
   getData() {
-    this.MemoryParamsService.clearTableRows();
     this.MemoryParamsService.getTableRows().subscribe((data) => {
       this.rows = data;
     });
   }
 
-  pinHandler(event:any,index:number){
+  pinHandler(event: any, index: number) {
+    let target = event.target || event.srcElement || event.currentTarget;
+    let row = target.parentNode;
+    let table = row.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+    if (this.pinned.indexOf(index) === -1) {
+      row.style.color = '#76b900';
+      table.style.marginTop = '300px';
+    }
+    this.socketService.sendMessage({row: this.rows[index], index: index});
 
   }
 
   getPinnedData() {
+
     this.http.get('http://172.17.175.38:9000/memorytable/pinned') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         message.results.forEach((index: any) => {
-          this.pinned.push(message)
+          this.pinned.push(index);
           let x = $(this.elementRef.nativeElement).children();
-          x.find('tr.prime').eq(index).find('td').eq(0).css("color", "red")
+          x.find('tr.prime:nth-child(' + index + ')').find('td:first-child').css("color", "red")
         });
       });
   }
 
   onSearchChange(searchValue: string, column: string) {
-    let searchresults: any = [];
-    if (column === 'SKU' && searchValue !=='') {
-      this.http.get('http://172.17.175.38:9000/search/sku/' + searchValue) // ...using post request
+    if (searchValue === '') {
+
+      this.MemoryParamsService.clearTableRows();
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (searchresults.indexOf(message.chipSKU) === -1) {
-              searchresults.push(message.chipSKU)
-            }
+          message.results.forEach((result: any) => {
+            this.MemoryParamsService.setTableRows(JSON.parse(result));
           });
         });
-      searchresults.forEach((filterBy: any) => {
-        this.http.get('http://172.17.175.38:9000/memorytable/records/sku/' + filterBy) // ...using post request
+    }
+
+    let searchresults: any = [];
+    if (column === 'SKU' && searchValue !== '') {
+      setTimeout(() => {
+        this.MemoryParamsService.clearTableRows();
+        this.http.get('http://172.17.175.38:9000/search/sku/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
+            message.forEach((message: any) => {
+              if (searchresults.indexOf(message.chipSKU) === -1) {
+                searchresults.push(message.chipSKU);
+                this.filterByChipSKU(message.chipSKU);
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === 'Revision' && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/chips/revision/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              if (searchresults.indexOf(message.revision) === -1) {
+                searchresults.push(message.revision);
+                this.filterBychipRevision(message.revision);
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Package Info" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/chips/packageinfo/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              if (searchresults.indexOf(message.packageinfo) === -1) {
+                searchresults.push(message.packageinfo);
+                this.filterByChipPackageInfo(message.packageinfo)
+              }
+            });
+          });
+      }, 3000);
+    }
+
+
+    if (column === "Platform" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/sku/platforms/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              if (searchresults.indexOf(message.platform) === -1) {
+                searchresults.push(message.platform);
+                this.filterByPlatform(message.platform)
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Programs" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/sku/programs/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              if (searchresults.indexOf(message.program) === -1) {
+                searchresults.push(message.program);
+                this.filterByProgram(message.program);
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Reg Name" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/register/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              if (searchresults.indexOf(message.name) === -1) {
+                searchresults.push(message.name);
+                this.filterByRegisterName(message.name)
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Name" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/blocks/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              ;
+              if (searchresults.indexOf(message.name) === -1) {
+                searchresults.push(message.name);
+                this.filterByBlockName(message.name)
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Reg Address" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/register/search/address/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              ;
+              if (searchresults.indexOf(message.address) === -1) {
+                searchresults.push(message.address);
+                this.filterByRegisterAddress(message.address)
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Block Revision" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/block/revision/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(revisions => {
+            revisions.forEach((revision: any) => {
+              ;
+              if (searchresults.indexOf(revision) === -1) {
+                searchresults.push(revision);
+                this.filterByBlockRevision(revision);
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Reg Type" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/registerfields/type/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(registerfields => {
             this.MemoryParamsService.clearTableRows();
-            if (message.results) {
-              message.results.forEach((result: any) => {
-                this.MemoryParamsService.setTableRows(JSON.parse(result));
-              });
-            }
+            registerfields.forEach((registerfield: any) => {
+              if (searchresults.indexOf(registerfield.registertype) === -1) {
+                searchresults.push(registerfield.registertype);
+                this.filterByRegisterType(registerfield.registertype);
+              }
+            });
           });
-      });
+      }, 3000);
     }
 
-    if (column === "Reg Name"  && searchValue !=='') {
-      let rows: any =[];
-      this.http.get('http://172.17.175.38:9000/register/search/' + searchValue) // ...using post request
+    if (column === "Field Name" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/registerfields/name/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(registerfields => {
+            // console.log(registerfields.name)
+            this.MemoryParamsService.clearTableRows();
+            registerfields.forEach((registerfield: any) => {
+              if (searchresults.indexOf(registerfield.name) === -1) {
+                searchresults.push(registerfield.name);
+                this.filterByFieldName(registerfield.name);
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Mask" && searchValue !== '') {
+      setTimeout(() => {
+        this.http.get('http://172.17.175.38:9000/registerfields/mask/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(registerfields => {
+            this.MemoryParamsService.clearTableRows();
+            registerfields.forEach((registerfield: any) => {
+              if (searchresults.indexOf(registerfield.mask) === -1) {
+                searchresults.push(registerfield.mask);
+                this.filterByMask(registerfield.mask);
+              }
+            });
+          });
+      }, 3000);
+    }
+
+    if (column === "Value" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/registerfields/value/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
-        .subscribe(message => {
-          message.forEach((message: any) => {
-            if (searchresults.indexOf(message.name) === -1) {
-              searchresults.push(message.name);
-              this.filterByRegisterName(message.name)
+        .subscribe(registerfields => {
+          this.MemoryParamsService.clearTableRows();
+          registerfields.forEach((registerfield: any) => {
+            if (searchresults.indexOf(registerfield.value) === -1) {
+              searchresults.push(registerfield.value);
+              this.filterByRegisterFieldValue(registerfield.value);
             }
           });
         });
+      }, 3000);
     }
 
-    if(column === "Name"  && searchValue !==''){
-      console.log(searchresults)
-      this.http.get('http://172.17.175.38:9000/blocks/search/' + searchValue) // ...using post request
+    if (column === "ASIC" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/registerfields/asic/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
-        .subscribe(message => {
-          message.forEach((message: any) => {;
-           if (searchresults.indexOf(message.name) === -1) {
-              searchresults.push(message.name);
-             this.filterByBlockName(message.name)
+        .subscribe(registerfields => {
+          this.MemoryParamsService.clearTableRows();
+          registerfields.forEach((registerfield: any) => {
+            if (searchresults.indexOf(registerfield.asic) === -1) {
+              searchresults.push(registerfield.asic);
+              this.filterByRegisterASIC(registerfield.asic);
             }
           });
         });
+      }, 3000);
+    }
+
+    if (column === "Comments" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/registerfields/comments/search/' + searchValue) // ...using post request
+        .map((res) => res.json())
+        .subscribe(registerfields => {
+          this.MemoryParamsService.clearTableRows();
+          registerfields.forEach((registerfield: any) => {
+            if (searchresults.indexOf(registerfield.comments) === -1) {
+              searchresults.push(registerfield.comments);
+              this.filterByRegisterComments(registerfield.comments);
+            }
+          });
+        });
+      }, 3000);
+    }
+
+    if (column === "Min Temp" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/conditions/mintemp/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (searchresults.indexOf(condition.mintemp) === -1) {
+              searchresults.push(condition.mintemp);
+              this.filterByMintemp(condition.mintemp);
+            }
+          });
+        });
+      }, 3000);
+    }
+
+    if (column === "Max Temp" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/conditions/maxtemp/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (searchresults.indexOf(condition.maxtemp) === -1) {
+              searchresults.push(condition.maxtemp);
+              this.filterByMaxtemp(condition.maxtemp);
+            }
+          });
+        });
+      }, 3000);
+    }
+
+    if (column === "Thermal Sen" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/conditions/sensor/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (searchresults.indexOf(condition.thermalSensor) === -1) {
+              searchresults.push(condition.thermalSensor);
+              this.filterBythermalSensor(condition.thermalSensor);
+            }
+          });
+        });
+      }, 3000);
+    }
+
+    if (column === "Frequency" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/conditions/frequency/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (searchresults.indexOf(condition.frequency) === -1) {
+              searchresults.push(condition.frequency);
+              this.filterByFrequency(condition.frequency);
+            }
+          });
+        });
+      }, 3000);
+    }
+
+    if (column === "Mode" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/conditions/mode/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (searchresults.indexOf(condition.mode) === -1) {
+              searchresults.push(condition.mode);
+              this.filterByMode(condition.mode);
+            }
+          });
+        });
+      }, 3000);
+    }
+
+    if (column === "Phase" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/conditions/phase/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (searchresults.indexOf(condition.phase) === -1) {
+              searchresults.push(condition.phase);
+              this.filterByPhase(condition.phase);
+            }
+          });
+        });
+      }, 3000);
+    }
+
+    if (column === "State" && searchValue !== '') {
+      setTimeout(() => {
+      this.http.get('http://172.17.175.38:9000/conditions/state/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (searchresults.indexOf(condition.state) === -1) {
+              searchresults.push(condition.state);
+              this.filterByState(condition.state);
+            }
+          });
+        });
+      }, 3000);
     }
   }
 
-filterByRegisterName(name:any) {
-  this.MemoryParamsService.clearTableRows();
-  if (this.query && typeof    this.query !== 'undefined') {
-    this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
-      .map((res) => res.json()) // ...and calling .json() on the response to return data
-      .subscribe(message => {
-        message.results.forEach((result: any) => {
-          let json = JSON.parse(result);
-          if (name === json.register) {
-            this.MemoryParamsService.setTableRows(json);
-          }
-        });
-      });
-  }
-}
-
-  filterByBlockName(name:any) {
+  filterByRegisterName(name: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
       this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
-              let json = JSON.parse(result);
-              if(json.blockName === name) {
-                console.log(json)
-              }
-            });
+            let json = JSON.parse(result);
+            if (name === json.register) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
         });
     }
   }
+
+  filterByBlockName(name: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.blockName === name) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
+        });
+    }
+  }
+
+  filterByChipSKU(name: any) {
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.chipSku === name) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
+        });
+    }
+  }
+
+  filterBychipRevision(revision: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.chipRevision === revision) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
+        });
+    }
+  }
+
+  filterByRegisterAddress(address: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.address === address) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
+        });
+    }
+  }
+
+  filterByChipPackageInfo(packageinfo: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.chipPackageinfo === packageinfo) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
+        });
+    }
+  }
+
+  filterByPlatform(platform: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.platform === platform) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
+        });
+    }
+  }
+
+  filterByProgram(program: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.program === program) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
+        });
+    }
+  }
+
+  filterByBlockRevision(revision: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.blockRevision === revision) {
+              this.MemoryParamsService.setTableRows(json);
+            }
+          });
+        });
+    }
+  }
+
+  filterByRegisterType(registertype: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.registertype === registertype) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByFieldName(name: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.field === name) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByMask(mask: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.mask === mask) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByRegisterFieldValue(value: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.value === value) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByRegisterASIC(asic: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.asic === asic) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByRegisterComments(comments: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.comments === comments) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByMintemp(mintemp: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.mintemp === mintemp) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByMaxtemp(maxtemp: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.maxtemp === maxtemp) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterBythermalSensor(thermalSensor: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.thermalSensor === thermalSensor) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByMode(mode: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.mode === mode) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByPhase(phase: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.phase === phase) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByState(state: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.state === state) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
+  filterByFrequency(frequency: any) {
+    this.MemoryParamsService.clearTableRows();
+    if (this.query && typeof    this.query !== 'undefined') {
+      this.http.post('http://172.17.175.38:9000/memorytable/records', this.query) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.results.forEach((result: any) => {
+            let json = JSON.parse(result);
+            if (json.frequency === frequency) {
+              setTimeout(() => {
+                this.MemoryParamsService.setTableRows(json);
+              }, 1000)
+            }
+          });
+        });
+    }
+  }
+
 }
 
