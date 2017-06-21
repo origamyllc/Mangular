@@ -9,8 +9,8 @@
           <p *ngIf="!hideModules" >{{query.chip}}</p>
         </button>
         <ul class="dropdown-menu chips">
-          <li *ngFor="let chip of chips" (click)="selectedChip(chip.name)">
-            <span>{{chip.name}}</span>
+          <li *ngFor="let chip of chips" (click)="selectedChip(chip.chip_name)">
+            <span>{{chip.chip_name}}</span>
           </li>
         </ul>
       </div>

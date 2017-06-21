@@ -16,13 +16,13 @@ export class Filter implements PipeTransform  {
 
     // filter by chip sku
     if (args  && args.column === "SKU") {
-      filteredData  =   values.filter((value:any) => value.chipSku === args.value );
+      filteredData  =   values.filter((value:any) => { console.log(value)} );
       if(args.value === '' ){
         return this.rows;
       }
-      else{
+
         return  filteredData;
-      }
+
     }
 
     // filter by chip revision

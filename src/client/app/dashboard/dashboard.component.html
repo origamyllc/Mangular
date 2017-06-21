@@ -11,7 +11,7 @@
       <p *ngIf="!hideModules" >{{chipName}}</p>
     </button>
      <ul class="dropdown-menu chips">
-      <li *ngFor="let chip of chips" (click)="selectedChip(chip.name)">{{chip.name}}</li>
+      <li *ngFor="let chip of chips" (click)="selectedChip(chip.chip_name)">{{chip.chip_name}}</li>
     </ul>
   </div>
   <div class="dropdown" *ngIf="!hideModules">

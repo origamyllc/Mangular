@@ -18,9 +18,10 @@
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows; let i = index" >
             <td></td>
-            <td (click)="editTableCellHandler($event,'chipSku',i)">{{row.chipSku}}</td>
-            <td (click)="editTableCellHandler($event,'chipRevision',i)">{{row.chipRevision}}</td>
-            <td (click)="editTableCellHandler($event,'chipPackageinfo',i)" >{{row.chipPackageinfo}}</td>
+            <td>{{row.record_id}}</td>
+            <td (click)="editTableCellHandler($event,'chipSku',i)">{{row.chip_sku}}</td>
+            <td (click)="editTableCellHandler($event,'chipRevision',i)">{{row.chip_revision}}</td>
+            <td (click)="editTableCellHandler($event,'chipPackageinfo',i)" >{{row.chip_package_info}}</td>
           </tr>
           </tbody>
         </table>
@@ -57,9 +58,9 @@
           </thead>
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows; let i = index" >
-            <td (click)="editTableCellHandler($event,'blockName',i)">{{row.blockName}}</td>
-            <td (click)="editTableCellHandler($event,'blockRevision',i)" >{{row.blockRevision}}</td>
-            <td (click)="editTableCellHandler($event,'manualName',i)">{{row.manualName}}</td>
+            <td (click)="editTableCellHandler($event,'blockName',i)">{{row.block_name}}</td>
+            <td (click)="editTableCellHandler($event,'blockRevision',i)" >{{row.block_revision}}</td>
+            <td (click)="editTableCellHandler($event,'manualName',i)">{{row.manual_name}}</td>
           </tr>
           </tbody>
         </table>
@@ -82,14 +83,14 @@
            <tr *ngFor="let row of rows; let i = index" >
              <td (click)="editTableCellHandler($event,'registertype',i)">{{row.registertype}}</td>
              <td (click)="editTableCellHandler($event,'address',i)">{{row.address}}</td>
-             <td (click)="editTableCellHandler($event,'name',i)" >{{row.name}}</td>
+             <td (click)="editTableCellHandler($event,'name',i)" >{{row.register}}</td>
              <td (click)="editTableCellHandler($event,'field',i)"  >{{row.field}}</td>
              <td (click)="editTableCellHandler($event,'mask',i)" >{{row.mask}}</td>
              <td (click)="editTableCellHandler($event,'value',i)" >{{row.value}}</td>
              <td (click)="editTableCellHandler($event,'asic',i)" >{{row.asic}}</td>
-             <td (click)="editTableCellHandler($event,'mintemp',i)" >{{row.mintemp}}</td>
-             <td (click)="editTableCellHandler($event,'maxtemp',i)" >{{row.maxtemp}}</td>
-             <td (click)="editTableCellHandler($event,'thermalSensor',i)" >{{row.thermalSensor}}</td>
+             <td (click)="editTableCellHandler($event,'mintemp',i)" >{{row.min_temp}}</td>
+             <td (click)="editTableCellHandler($event,'maxtemp',i)" >{{row.max_temp}}</td>
+             <td (click)="editTableCellHandler($event,'thermalSensor',i)" >{{row.thermal_sensor}}</td>
              <td (click)="editTableCellHandler($event,'frequency',i)">{{row.frequency}}</td>
              <td (click)="editTableCellHandler($event,'mode',i)" style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
              <td (click)="editTableCellHandler($event,'phase',i)" >{{row.phase}}</td>

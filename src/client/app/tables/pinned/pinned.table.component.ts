@@ -51,6 +51,7 @@ export class PinnedTableComponent implements OnInit {
     this.config = {
       Chip: {
         columns: [
+          {name: "Record Id", isVisible: false},
           {name: "SKU", isVisible: true},
           {name: "Revision", isVisible: true},
           {name: "Package Info", isVisible: true}

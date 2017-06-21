@@ -26,9 +26,10 @@
            <tbody class="child-table-body">
            <tr *ngFor="let row of rows | filter:filterText;let i = index " class="prime" >
              <td class = "pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
-             <td>{{row.chipSku}}</td>
-             <td>{{row.chipRevision}}</td>
-             <td>{{row.chipPackageinfo}}</td>
+             <td>{{row.record_id}}</td>
+             <td>{{row.chip_sku}}</td>
+             <td>{{row.chip_revision}}</td>
+             <td>{{row.chip_package_info}}</td>
            </tr>
            </tbody>
         </table>
@@ -77,9 +78,9 @@
           </thead>
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows | filter:filterText; ">
-            <td>{{row.blockName}}</td>
-            <td>{{row.blockRevision}}</td>
-            <td>{{row.manualName}}</td>
+            <td>{{row.block_name}}</td>
+            <td>{{row.block_revision}}</td>
+            <td>{{row.manual_name}}</td>
           </tr>
           </tbody>
         </table>
@@ -105,14 +106,14 @@
           <tr *ngFor="let row of rows | filter:filterText">
             <td>{{row.registertype}}</td>
             <td>{{row.address}}</td>
-            <td>{{row.name}}</td>
-            <td>{{row.field}}</td>
+            <td>{{row.register}}</td>
+            <td>{{row.field_name}}</td>
             <td>{{row.mask}}</td>
             <td>{{row.value}}</td>
             <td>{{row.asic}}</td>
-            <td>{{row.mintemp}}</td>
-            <td>{{row.maxtemp}}</td>
-            <td>{{row.thermalSensor}}</td>
+            <td>{{row.min_temp}}</td>
+            <td>{{row.max_temp}}</td>
+            <td>{{row.thermal_sensor}}</td>
             <td>{{row.frequency}}</td>
             <td style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
             <td>{{row.phase}}</td>

@@ -14,9 +14,10 @@ export class MemoryParamsService  {
   static instance: MemoryParamsService;
   private obj: Object;
   private records:any = [];
-
+  private set = new Set<any>() ;
   public _subject = new Subject<any>();
   public event = this._subject.asObservable();
+  private seen:any = {} ;
 
   constructor() {
     return MemoryParamsService.instance = MemoryParamsService.instance || this;
@@ -30,9 +31,14 @@ export class MemoryParamsService  {
      return this.obj;
    }
 
-   setTableRows(records:any):void{
-     this.records.push(records);
-     this._subject.next( this.records);
+   setTableRows(records:any):void {
+         this.records.push(records);
+         this.records.map( (item:any) => { return item }).filter((x:any,i:any) => {;
+           if( !this.seen[x.record_id]){
+               this.seen[x.record_id] = x;
+           }
+         });
+         this._subject.next( Object.values(this.seen));
    }
 
    getTableRows() {
@@ -40,11 +46,7 @@ export class MemoryParamsService  {
    }
 
    clearTableRows(){
-     this.records.length = 0  ;
-     this.records = []  ;
+     this.records = [];
    }
-
-
-
 
 }
