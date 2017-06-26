@@ -6,7 +6,8 @@ import {SocketService} from '../../shared/services/socket.service';
 import {Http, Headers} from '@angular/http';
 import {MemoryParamsService} from '../../shared/services/memorytable.service';
 import {FormGroup, FormControl} from '@angular/forms';
-let $ = require('jquery/dist/jquery')
+let $ = require('jquery/dist/jquery');
+let querystring = require('querystring/index.js');
 
 @Component({
   moduleId: module.id,
@@ -26,6 +27,8 @@ export class TableComponent implements OnInit {
   searchresults: any = [];
   latch = 0;
   skus: any = [];
+  revisions: any = [];
+  filterQuery:any = {} ;
 
   constructor(elementRef: ElementRef,
               private MemoryParamsService: MemoryParamsService,
@@ -129,6 +132,33 @@ export class TableComponent implements OnInit {
       });
   }
 
+  onSkuSelect(sku:string){
+    this.filterQuery['chip_name'] = this.query.chip;
+    Object.assign( this.filterQuery,{'chip_sku':sku});
+    let query = querystring.stringify(this.filterQuery);
+    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+      .map((res) => res.json()) // ...and calling .json() on the response to return data
+      .subscribe(message => {
+          this.MemoryParamsService.clearTableRows();
+          this.rows = [];
+          this.rows = message;
+        });
+
+  }
+
+  onRevisionSelect(chip_revision:string){
+    this.filterQuery['chip_name'] = this.query.chip;
+    Object.assign( this.filterQuery,{chip_revision});
+    let query = querystring.stringify(this.filterQuery);
+    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+      .map((res) => res.json()) // ...and calling .json() on the response to return data
+      .subscribe(message => {
+        this.MemoryParamsService.clearTableRows();
+        this.rows = [];
+        this.rows = message;
+      });
+  }
+
   onSearchChange(searchValue: string, column: string) {
     if (searchValue === '') {
       this.MemoryParamsService.clearTableRows();
@@ -141,10 +171,8 @@ export class TableComponent implements OnInit {
         });
     }
 
-
     if (column === 'SKU' && searchValue !== '') {
       let skus: any = [];
-      setTimeout(() => {
         this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
@@ -153,33 +181,30 @@ export class TableComponent implements OnInit {
                 skus.push(message.chip_sku)
               }
             });
-            // for the given serach results display the results
             this.skus = skus;
-
           });
-      }, 3000);
+       }
+
+    if (column === 'Revision' && searchValue !== '') {
+      let revisions: any = [];
+        this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
+          .map((res) => res.json()) // ...and calling .json() on the response to return data
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              if (this.revisions.indexOf(message.revision) === -1) {
+                  this.revisions.push(message.revision);
+              }
+            });
+          });
+        }
     }
-  }
+
+
 }
 
 
 
  /**
-    if (column === 'Revision' && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
-          .map((res) => res.json()) // ...and calling .json() on the response to return data
-          .subscribe(message => {
-            message.forEach((message: any) => {
-              if (searchresults.indexOf(message.revision) === -1) {
-                searchresults.push(message.revision);
-                this.filterBychipRevision(message.revision);
-              }
-            });
-          });
-      }, 3000);
-    }
-
     if (column === "Package Info" && searchValue !== '') {
       setTimeout(() => {
         this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/packageinfo/search/' + searchValue) // ...using post request
@@ -879,3 +904,4 @@ export class TableComponent implements OnInit {
 
 }
 
+*/

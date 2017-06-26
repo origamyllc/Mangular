@@ -38,6 +38,7 @@ export class MemoryParamsService  {
                this.seen[x.record_id] = x;
            }
          });
+
          this._subject.next( Object.values(this.seen));
    }
 

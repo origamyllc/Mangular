@@ -21,7 +21,10 @@
                 /></p>
               </div>
               <div *ngIf=" j == 1 ">
-                <span *ngFor="let sku of skus">{{sku}}</span>
+                <span *ngFor="let sku of skus" (click)="onSkuSelect(sku)">{{sku}}</span>
+              </div>
+              <div *ngIf=" j == 2 ">
+                <span *ngFor="let revision of revisions" (click)="onRevisionSelect(revision )">{{revision }}</span>
               </div>
             </th>
           </tr>
@@ -133,4 +136,5 @@
     </tbody>
   </table>
 </div>
+
 
