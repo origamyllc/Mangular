@@ -24,7 +24,8 @@ export class TableComponent implements OnInit {
   filterText: any;
   pinned: any = [];
   searchresults: any = [];
-  latch = 0 ;
+  latch = 0;
+  skus: any = [];
 
   constructor(elementRef: ElementRef,
               private MemoryParamsService: MemoryParamsService,
@@ -94,8 +95,7 @@ export class TableComponent implements OnInit {
 
   getData() {
     this.MemoryParamsService.getTableRows().subscribe((data) => {
-        console.log(data)
-        this.rows = data;
+      this.rows = data;
     });
   }
 
@@ -129,7 +129,7 @@ export class TableComponent implements OnInit {
       });
   }
 
-  /*onSearchChange(searchValue: string, column: string) {
+  onSearchChange(searchValue: string, column: string) {
     if (searchValue === '') {
       this.MemoryParamsService.clearTableRows();
       this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
@@ -141,23 +141,30 @@ export class TableComponent implements OnInit {
         });
     }
 
-    let searchresults: any = [];
+
     if (column === 'SKU' && searchValue !== '') {
+      let skus: any = [];
       setTimeout(() => {
         this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
-            this.MemoryParamsService.clearTableRows();
             message.forEach((message: any) => {
-              if (searchresults.indexOf(message.chip_sku) === -1) {
-                searchresults.push(message.chip_sku);
-                this.filterByChipSKU(message.chip_sku);
+              if (skus.indexOf(message.chip_sku) === -1) {
+                skus.push(message.chip_sku)
               }
             });
+            // for the given serach results display the results
+            this.skus = skus;
+
           });
       }, 3000);
     }
+  }
+}
 
+
+
+ /**
     if (column === 'Revision' && searchValue !== '') {
       setTimeout(() => {
         this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
@@ -532,6 +539,7 @@ export class TableComponent implements OnInit {
           message.results.forEach((result: any) => {
             let json = JSON.parse(result);
             if (json.chip_sku === name) {
+
               this.MemoryParamsService.setTableRows(json);
             }
           });
@@ -867,7 +875,7 @@ export class TableComponent implements OnInit {
           });
         });
     }
-  }*/
+  }
 
 }
 

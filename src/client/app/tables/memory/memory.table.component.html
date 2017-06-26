@@ -20,6 +20,9 @@
                   (input)="onSearchChange($event.target.value,column.name)"
                 /></p>
               </div>
+              <div *ngIf=" j == 1 ">
+                <span *ngFor="let sku of skus">{{sku}}</span>
+              </div>
             </th>
           </tr>
           </thead>
@@ -130,3 +133,4 @@
     </tbody>
   </table>
 </div>
+
