@@ -34,6 +34,7 @@ export class TableComponent implements OnInit {
   packageInfos: any = [];
   programs: any = [];
   platforms : any = [];
+  manualNames: any = [];
   regNames: any =[];
   blockNames: any = [];
   regAddresses: any =[];
@@ -138,7 +139,7 @@ export class TableComponent implements OnInit {
   }
 
   getPinnedData() {
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/pinned') // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/memorytable/pinned') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         message.results.forEach((index: any) => {
@@ -160,7 +161,7 @@ export class TableComponent implements OnInit {
     this.filterQuery['chip_name'] = this.query.chip;
     Object.assign( this.filterQuery,{'chip_sku':sku});
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
           this.MemoryParamsService.clearTableRows();
@@ -173,7 +174,7 @@ export class TableComponent implements OnInit {
   makeFilterQuery(param:any){
     Object.assign( this.filterQuery,param);
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.MemoryParamsService.clearTableRows();
@@ -198,11 +199,14 @@ export class TableComponent implements OnInit {
     this.makeFilterQuery({block_name});
   }
 
+  onManualNameSelect(manual_name:string){
+    this.makeFilterQuery({manual_name});
+  }
   onPlatformSelect(platform:string){
     this.filterQuery['chip_name'] = this.query.chip;
     Object.assign( this.filterQuery,{platform});
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.MemoryParamsService.clearTableRows();
@@ -213,7 +217,7 @@ export class TableComponent implements OnInit {
   onSearchChange(searchValue: string, column: string) {
     if (searchValue === '') {
       this.MemoryParamsService.clearTableRows();
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -223,7 +227,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === 'SKU' && searchValue !== '') {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/search/' + searchValue) // ...using post request
+        this.http.get('http://localhost:9000/goldenregister/v1/sku/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
@@ -235,7 +239,7 @@ export class TableComponent implements OnInit {
        }
 
     if (column === 'Revision' && searchValue !== '') {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
+        this.http.get('http://localhost:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
@@ -247,7 +251,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Package Info" && searchValue !== '') {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/packageinfo/search/' + searchValue) // ...using post request
+        this.http.get('http://localhost:9000/goldenregister/v1/chips/packageinfo/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
@@ -260,7 +264,7 @@ export class TableComponent implements OnInit {
 
 
     if (column === "Platform" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/platforms/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:9000/goldenregister/v1/sku/platforms/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -272,7 +276,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Programs" && searchValue !== '') {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/programs/search/' + searchValue) // ...using post request
+        this.http.get('http://localhost:9000/goldenregister/v1/sku/programs/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
@@ -284,7 +288,7 @@ export class TableComponent implements OnInit {
        }
 
       if (column === "Name" && searchValue !== '') {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/blocks/search/' + searchValue) // ...using post request
+        this.http.get('http://localhost:9000/goldenregister/v1/blocks/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
@@ -294,12 +298,50 @@ export class TableComponent implements OnInit {
             });
           });
       }
+    if (column === "Manual" && searchValue !== '') {
+      this.http.get('http://localhost:9000/goldenregister/v1/manual/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.manualNames.indexOf(message.name) === -1) {
+              this.manualNames.push(message.name);
+            }
+          });
+        });
+    }
 
-  }
-
-
+if (column === "Phase" && searchValue !== '') {
+  this.phases= [];
+  this.http.get('http://localhost:9000/goldenregister/v1/conditions/phase/search/' + searchValue) // ...using post request
+    .map((res) => res.json()) // ...and calling .json() on the response to return data
+    .subscribe(conditions => {
+      this.MemoryParamsService.clearTableRows();
+      conditions.forEach((condition: any) => {
+        if (this.phases.indexOf(condition.phase) === -1) {
+          this.states.push(condition.phase);
+        }
+      });
+    });
 
 }
+
+if (column === "State" && searchValue !== '') {
+  this.states = [];
+  this.http.get('http://localhost:9000/goldenregister/v1/conditions/state/search/' + searchValue) // ...using post request
+    .map((res) => res.json()) // ...and calling .json() on the response to return data
+    .subscribe(conditions => {
+      this.MemoryParamsService.clearTableRows();
+      conditions.forEach((condition: any) => {
+        if (this.states.indexOf(condition.state) === -1) {
+          this.states.push(condition.state);
+        }
+      });
+    });
+}
+}
+}
+
+
 
 
 
