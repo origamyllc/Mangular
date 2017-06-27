@@ -24,7 +24,10 @@
                 <span *ngFor="let sku of skus" (click)="onSkuSelect(sku)">{{sku}}</span>
               </div>
               <div *ngIf=" j == 2 ">
-                <span *ngFor="let revision of revisions" (click)="onRevisionSelect(revision )">{{revision }}</span>
+                <span *ngFor="let revision of revisions" (click)="onRevisionSelect(revision)">{{revision }}</span>
+              </div>
+              <div *ngIf=" j == 3 ">
+                <span *ngFor="let packageInfo of packageInfos" (click)="onPackageInfoSelect(packageInfo)">{{packageInfo}}</span>
               </div>
             </th>
           </tr>
@@ -44,7 +47,7 @@
         <table class="table" [hidden]="!config[groups[1]].isVisible">
           <thead>
           <tr>
-            <th *ngFor="let column of config[groups[1]].columns">
+            <th *ngFor="let column of config[groups[1]].columns;let j = index ">
               <div class="table-header">
                 <p>{{column.name}}</p>
               </div>
@@ -53,6 +56,12 @@
                   type="text" name={{column.name}}
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
+              </div>
+              <div *ngIf=" j == 0 ">
+                <span *ngFor="let platform of platforms" (click)="onPlatformSelect(platform)">{{platform}}</span>
+              </div>
+              <div *ngIf=" j == 1 ">
+                <span *ngFor="let program of programs" (click)="onProgramSelect(program)">{{program}}</span>
               </div>
             </th>
           </tr>
@@ -69,7 +78,7 @@
         <table class="table" [hidden]="!config[groups[2]].isVisible">
           <thead>
           <tr>
-            <th *ngFor="let column of config[groups[2]].columns">
+            <th *ngFor="let column of config[groups[2]].columns;let j = index ">
               <div class="table-header">
                 <p>{{column.name}}</p>
               </div>
@@ -78,6 +87,9 @@
                   type="text" name={{column.name}}
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
+              </div>
+              <div *ngIf=" j == 0 ">
+                <span *ngFor="let blockName of blockNames" (click)="onBlockNameSelect(blockName)">{{blockName}}</span>
               </div>
             </th>
           </tr>
