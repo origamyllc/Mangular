@@ -113,7 +113,7 @@
         <table class="table" [hidden]="!config[groups[3]].isVisible">
           <thead>
           <tr>
-            <th *ngFor="let column of config[groups[3]].columns">
+            <th *ngFor="let column of config[groups[3]].columns; let j=index">
               <div class="table-header">
                 <p>{{column.name}}</p>
               </div>
@@ -122,6 +122,27 @@
                   type="text" name={{column.name}}
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
+              </div>
+              <div *ngIf=" j == 7 ">
+                <span *ngFor="let minTemp of minTemps" (click)="onRegistersMinTempSelect(minTemp)">{{minTemp}}</span>
+              </div>
+              <div *ngIf=" j == 8 ">
+                <span *ngFor="let maxTemp of maxTemps" (click)="onRegistersMaxTempSelect(maxTemp)">{{maxTemp}}</span>
+              </div>
+              <div *ngIf=" j == 9 ">
+                <span *ngFor="let thermalSen of thermalsens" (click)="onRegistersThermalSenSelect(thermalSen)">{{thermalSen}}</span>
+              </div>
+              <div *ngIf=" j == 10 ">
+                <span *ngFor="let frequency of frequencies" (click)="onRegistersFrequencySelect(frequency)">{{frequency}}</span>
+              </div>
+              <div *ngIf=" j == 11 ">
+                <span *ngFor="let mode of modes" (click)="onRegistersModeSelect(mode)">{{mode}}</span>
+              </div>
+              <div *ngIf=" j == 12 ">
+                <span *ngFor="let phase of phases" (click)="onRegistersPhaseSelect(phase)">{{phase}}</span>
+              </div>
+              <div *ngIf=" j == 13 ">
+                <span *ngFor="let state of states" (click)="onRegistersStateSelect(state)">{{state}}</span>
               </div>
             </th>
           </tr>

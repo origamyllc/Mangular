@@ -202,10 +202,34 @@ export class TableComponent implements OnInit {
   onManualNameSelect(manual_name:string){
     this.makeFilterQuery({manual_name});
   }
-
   onBlockRevisionSelect(block_revision:string){
     this.makeFilterQuery({block_revision});
   }
+
+  onRegistersMinTempSelect(min_temp:string){
+    this.makeFilterQuery({min_temp});
+  }
+  onRegistersMaxTempSelect(max_temp:string){
+    this.makeFilterQuery({max_temp});
+  }
+  onRegistersThermalSenSelect(thermal_sen:string){
+    this.makeFilterQuery({thermal_sen});
+  }
+
+  onRegistersFrequencySelect(frequency:string){
+    this.makeFilterQuery({frequency});
+  }
+
+  onRegistersModeSelect(mode:string){
+    this.makeFilterQuery({mode});
+  }
+  onRegistersPhaseSelect(phase:string){
+    this.makeFilterQuery({phase});
+  }
+  onRegistersStateSelect(registers_state:string){
+    this.makeFilterQuery({registers_state});
+  }
+
   onPlatformSelect(platform:string){
     this.filterQuery['chip_name'] = this.query.chip;
     Object.assign( this.filterQuery,{platform});
@@ -315,7 +339,7 @@ export class TableComponent implements OnInit {
           });
         });
     }
-    
+
     if (column === "Manual" && searchValue !== '') {
       this.http.get('http://172.17.175.38:9000/goldenregister/v1/manual/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
@@ -328,6 +352,108 @@ export class TableComponent implements OnInit {
         });
     }
 
+    if (column === "Min Temp" && searchValue !== '') {
+      this.minTemps=[];
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mintemp/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (this.minTemps.indexOf(condition.min_temp) === -1) {
+              this.minTemps.push(condition.min_temp);
+            }
+          });
+        });
+    }
+
+    if (column === "Max Temp" && searchValue !== '') {
+      this.maxTemps=[];
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/maxtemp/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (this.maxTemps.indexOf(condition.max_temp) === -1) {
+              this.maxTemps.push(condition.max_temp);
+            }
+          });
+        });
+
+    }
+
+    if (column === "Thermal Sen" && searchValue !== '') {
+
+      this.thermalsens=[];
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/sensor/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (this.thermalsens.indexOf(condition.thermal_sensor) === -1) {
+              this.thermalsens.push(condition.thermal_sensor);
+            }
+          });
+        });
+    }
+
+    if (column === "Frequency" && searchValue !== '') {
+      this.frequencies=[];
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/frequency/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (this.frequencies.indexOf(condition.frequency) === -1) {
+              this.frequencies.push(condition.frequency);
+            }
+          });
+        });
+
+    }
+
+    if (column === "Mode" && searchValue !== '') {
+      this.modes=[];
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mode/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (this.modes.indexOf(condition.mode) === -1) {
+              this.modes.push(condition.mode);
+
+            }
+          });
+        });
+    }
+
+    if (column === "Phase" && searchValue !== '') {
+      this.phases= [];
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/phase/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (this.phases.indexOf(condition.phase) === -1) {
+              this.states.push(condition.phase);
+            }
+          });
+        });
+
+    }
+
+    if (column === "State" && searchValue !== '') {
+      this.states = [];
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/state/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (this.states.indexOf(condition.state) === -1) {
+              this.states.push(condition.state);
+            }
+          });
+        });
+    }
 
   }
 }
