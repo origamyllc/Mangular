@@ -91,6 +91,9 @@
               <div *ngIf=" j == 0 ">
                 <span *ngFor="let blockName of blockNames" (click)="onBlockNameSelect(blockName)">{{blockName}}</span>
               </div>
+              <div *ngIf=" j == 1 ">
+                <span *ngFor="let blockRevision of blockRevisions" (click)="onBlockRevisionSelect(blockRevision)">{{blockRevision}}</span>
+              </div>
               <div *ngIf=" j == 2 ">
                 <span *ngFor="let manualName of manualNames" (click)="onManualNameSelect(manualName)">{{manualName}}</span>
               </div>
