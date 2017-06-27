@@ -26,6 +26,18 @@
               <div *ngIf=" j == 2 ">
                 <span *ngFor="let revision of revisions" (click)="onRevisionSelect(revision )">{{revision }}</span>
               </div>
+              <div *ngIf=" j == 6 ">
+                <span *ngFor="let name of names" (click)="onNameSelect(name )">{{name }}</span>
+              </div>
+              <div *ngIf=" j == 7 ">
+                <span *ngFor="let blockRevision of blockRevisions" (click)="onBlockRevisionSelect(blockRevision )">{{blockRevision }}</span>
+              </div>
+              <div *ngIf=" j == 8 ">
+                <span *ngFor="let regType of regTypes" (click)="onRegTypeSelect(regType )">{{regType }}</span>
+              </div>
+              <div *ngIf=" j == 9 ">
+                <span *ngFor="let regAddress of regAddresses" (click)="onRegAddressSelect(regAddress )">{{regAddress }}</span>
+              </div>
             </th>
           </tr>
           </thead>

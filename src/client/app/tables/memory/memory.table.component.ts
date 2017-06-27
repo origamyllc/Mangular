@@ -28,7 +28,26 @@ export class TableComponent implements OnInit {
   latch = 0;
   skus: any = [];
   revisions: any = [];
-  filterQuery:any = {} ;
+
+  regNames: any =[];
+  names: any = [];
+  regAddresses: any =[];
+  blockRevisions: any = [];
+  regTypes: any = [];
+  fieldNames: any = [];
+  masks: any= [];
+  values: any =[];
+  asics: any =[];
+  comments: any = [];
+  minTemps: any = [];
+  maxTemps: any = [];
+  thermalsens: any = [];
+  frequencies: any = [];
+  modes: any = [];
+  phases: any= [];
+  states: any = [];
+
+  filterQuery: any = {};
 
   constructor(elementRef: ElementRef,
               private MemoryParamsService: MemoryParamsService,
@@ -61,7 +80,7 @@ export class TableComponent implements OnInit {
       },
       Block: {
         columns: [
-          {name: "Name", isVisible: true},
+          {name: "Name", isVisible: false},
           {name: "Block Revision", isVisible: true},
           {name: "Manual", isVisible: true}
         ],
@@ -114,7 +133,7 @@ export class TableComponent implements OnInit {
   }
 
   getPinnedData() {
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/pinned') // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/memorytable/pinned') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         message.results.forEach((index: any) => {
@@ -132,25 +151,25 @@ export class TableComponent implements OnInit {
       });
   }
 
-  onSkuSelect(sku:string){
+  onSkuSelect(sku: string) {
     this.filterQuery['chip_name'] = this.query.chip;
-    Object.assign( this.filterQuery,{'chip_sku':sku});
+    Object.assign(this.filterQuery, {'chip_sku': sku});
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/filter?' + query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
-          this.MemoryParamsService.clearTableRows();
-          this.rows = [];
-          this.rows = message;
-        });
+        this.MemoryParamsService.clearTableRows();
+        this.rows = [];
+        this.rows = message;
+      });
 
   }
 
-  onRevisionSelect(chip_revision:string){
+  onRevisionSelect(chip_revision: string) {
     this.filterQuery['chip_name'] = this.query.chip;
-    Object.assign( this.filterQuery,{chip_revision});
+    Object.assign(this.filterQuery, {chip_revision});
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/filter?' + query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.MemoryParamsService.clearTableRows();
@@ -162,7 +181,7 @@ export class TableComponent implements OnInit {
   onSearchChange(searchValue: string, column: string) {
     if (searchValue === '') {
       this.MemoryParamsService.clearTableRows();
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -173,47 +192,40 @@ export class TableComponent implements OnInit {
 
     if (column === 'SKU' && searchValue !== '') {
       let skus: any = [];
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/search/' + searchValue) // ...using post request
-          .map((res) => res.json()) // ...and calling .json() on the response to return data
-          .subscribe(message => {
-            message.forEach((message: any) => {
-              if (skus.indexOf(message.chip_sku) === -1) {
-                skus.push(message.chip_sku)
-              }
-            });
-            this.skus = skus;
+      this.http.get('http://localhost:9000/goldenregister/v1/sku/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (skus.indexOf(message.chip_sku) === -1) {
+              skus.push(message.chip_sku)
+            }
           });
-       }
-
-    if (column === 'Revision' && searchValue !== '') {
-      let revisions: any = [];
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
-          .map((res) => res.json()) // ...and calling .json() on the response to return data
-          .subscribe(message => {
-            message.forEach((message: any) => {
-              if (this.revisions.indexOf(message.revision) === -1) {
-                  this.revisions.push(message.revision);
-              }
-            });
-          });
-        }
+          this.skus = skus;
+        });
     }
 
-
-}
-
-
-
- /**
+    if (column === 'Revision' && searchValue !== '') {
+      //let revisions: any = [];
+      this.http.get('http://localhost:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.revisions.indexOf(message.revision) === -1) {
+              this.revisions.push(message.revision);
+            }
+          });
+        });
+    }
+/*
     if (column === "Package Info" && searchValue !== '') {
       setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/packageinfo/search/' + searchValue) // ...using post request
+        this.http.get('http://localhost:9000/goldenregister/v1/chips/packageinfo/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
               if (searchresults.indexOf(message.packageinfo) === -1) {
                 searchresults.push(message.packageinfo);
-                this.filterByChipPackageInfo(message.packageinfo)
+
               }
             });
           });
@@ -223,13 +235,13 @@ export class TableComponent implements OnInit {
 
     if (column === "Platform" && searchValue !== '') {
       setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/platforms/search/' + searchValue) // ...using post request
+        this.http.get('http://localhost:9000/goldenregister/v1/sku/platforms/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
               if (searchresults.indexOf(message.platform) === -1) {
                 searchresults.push(message.platform);
-                this.filterByPlatform(message.platform)
+
               }
             });
           });
@@ -238,295 +250,273 @@ export class TableComponent implements OnInit {
 
     if (column === "Programs" && searchValue !== '') {
       setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/programs/search/' + searchValue) // ...using post request
+        this.http.get('http://localhost:9000/goldenregister/v1/sku/programs/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
               if (searchresults.indexOf(message.program) === -1) {
                 searchresults.push(message.program);
-                this.filterByProgram(message.program);
+
               }
             });
           });
       }, 3000);
-    }
+    }*/
 
     if (column === "Reg Name" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/register/search/' + searchValue) // ...using post request
+        //regNames:any = [];
+        this.http.get('http://localhost:9000/goldenregister/v1/register/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
-              if (searchresults.indexOf(message.name) === -1) {
-                searchresults.push(message.name);
-                this.filterByRegisterName(message.name)
+              if (this.regNames.indexOf(message.name) === -1) {
+                this.regNames.push(message.name);
               }
             });
           });
-      }, 3000);
+
     }
 
     if (column === "Name" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/blocks/search/' + searchValue) // ...using post request
+        //this.names=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/blocks/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
+
             message.forEach((message: any) => {
-              ;
-              if (searchresults.indexOf(message.name) === -1) {
-                searchresults.push(message.name);
-                this.filterByBlockName(message.name)
+              if (this.names.indexOf(message.name) === -1) {
+                alert(">>>>"+message.name);
+                this.names.push(message.name);
               }
             });
           });
-      }, 3000);
+
     }
 
     if (column === "Reg Address" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/register/search/address/' + searchValue) // ...using post request
+        this.regAddresses=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/register/search/address/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {
             message.forEach((message: any) => {
-              ;
-              if (searchresults.indexOf(message.address) === -1) {
-                searchresults.push(message.address);
-                this.filterByRegisterAddress(message.address)
+              if (this.regAddresses.indexOf(message.address) === -1) {
+                this.regAddresses.push(message.address);
               }
             });
           });
-      }, 3000);
+
     }
 
     if (column === "Block Revision" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/block/revision/search/' + searchValue) // ...using post request
+        this.blockRevisions=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/block/revision/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(revisions => {
             revisions.forEach((revision: any) => {
-              ;
-              if (searchresults.indexOf(revision) === -1) {
-                searchresults.push(revision);
-                this.filterByBlockRevision(revision);
+              if (this.blockRevisions.indexOf(revision) === -1) {
+                this.blockRevisions.push(revision);
               }
             });
           });
-      }, 3000);
+
     }
 
     if (column === "Reg Type" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/type/search/' + searchValue) // ...using post request
+        this.regTypes=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/registerfields/type/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(registerfields => {
             this.MemoryParamsService.clearTableRows();
             registerfields.forEach((registerfield: any) => {
-              if (searchresults.indexOf(registerfield.registertype) === -1) {
-                searchresults.push(registerfield.registertype);
-                this.filterByRegisterType(registerfield.registertype);
+              if (this.regTypes.indexOf(registerfield.registertype) === -1) {
+                this.regTypes.push(registerfield.registertype);
               }
             });
           });
-      }, 3000);
     }
 
     if (column === "Field Name" && searchValue !== '') {
-      //setTimeout(() => {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/name/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:9000/goldenregister/v1/registerfields/name/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(registerfields => {
           this.MemoryParamsService.clearTableRows();
           registerfields.forEach((registerfield: any) => {
-            if (searchresults.indexOf(registerfield.name) === -1) {
-              searchresults.push(registerfield.name);
-              this.filterByFieldName(registerfield.name);
+            if (this.fieldNames.indexOf(registerfield.name) === -1) {
+              this.fieldNames.push(registerfield.name);
             }
           });
         });
-      // }, 3000);
     }
 
     if (column === "Mask" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/mask/search/' + searchValue) // ...using post request
+      this.masks=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/registerfields/mask/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(registerfields => {
             this.MemoryParamsService.clearTableRows();
             registerfields.forEach((registerfield: any) => {
-              if (searchresults.indexOf(registerfield.mask) === -1) {
-                searchresults.push(registerfield.mask);
-                this.filterByMask(registerfield.mask);
+              if (this.masks.indexOf(registerfield.mask) === -1) {
+                this.masks.push(registerfield.mask);
+
               }
             });
           });
-      }, 3000);
     }
 
     if (column === "Value" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/value/search/' + searchValue) // ...using post request
+        this.values=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/registerfields/value/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(registerfields => {
             this.MemoryParamsService.clearTableRows();
             registerfields.forEach((registerfield: any) => {
-              if (searchresults.indexOf(registerfield.value) === -1) {
-                searchresults.push(registerfield.value);
-                this.filterByRegisterFieldValue(registerfield.value);
+              if (this.values.indexOf(registerfield.value) === -1) {
+                this.values.push(registerfield.value);
               }
             });
           });
-      }, 3000);
     }
 
     if (column === "ASIC" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/asic/search/' + searchValue) // ...using post request
+        this.asics=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/registerfields/asic/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(registerfields => {
             this.MemoryParamsService.clearTableRows();
             registerfields.forEach((registerfield: any) => {
-              if (searchresults.indexOf(registerfield.asic) === -1) {
-                searchresults.push(registerfield.asic);
-                this.filterByRegisterASIC(registerfield.asic);
+              if (this.asics.indexOf(registerfield.asic) === -1) {
+                this.asics.push(registerfield.asic);
               }
             });
           });
-      }, 3000);
     }
 
     if (column === "Comments" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/comments/search/' + searchValue) // ...using post request
+        this.comments=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/registerfields/comments/search/' + searchValue) // ...using post request
           .map((res) => res.json())
           .subscribe(registerfields => {
             this.MemoryParamsService.clearTableRows();
             registerfields.forEach((registerfield: any) => {
-              if (searchresults.indexOf(registerfield.comments) === -1) {
-                searchresults.push(registerfield.comments);
-                this.filterByRegisterComments(registerfield.comments);
+              if (this.comments.indexOf(registerfield.comments) === -1) {
+                this.comments.push(registerfield.comments);
               }
             });
           });
-      }, 3000);
+
     }
 
     if (column === "Min Temp" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mintemp/search/' + searchValue) // ...using post request
+        this.minTemps=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/conditions/mintemp/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(conditions => {
             this.MemoryParamsService.clearTableRows();
             conditions.forEach((condition: any) => {
-              if (searchresults.indexOf(condition.mintemp) === -1) {
-                searchresults.push(condition.mintemp);
-                this.filterByMintemp(condition.mintemp);
+              if (this.minTemps.indexOf(condition.mintemp) === -1) {
+                this.minTemps.push(condition.mintemp);
               }
             });
           });
-      }, 3000);
     }
 
     if (column === "Max Temp" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/maxtemp/search/' + searchValue) // ...using post request
+          this.maxTemps=[];
+          this.http.get('http://localhost:9000/goldenregister/v1/conditions/maxtemp/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(conditions => {
             this.MemoryParamsService.clearTableRows();
             conditions.forEach((condition: any) => {
-              if (searchresults.indexOf(condition.maxtemp) === -1) {
-                searchresults.push(condition.maxtemp);
-                this.filterByMaxtemp(condition.maxtemp);
+              if (this.maxTemps.indexOf(condition.maxtemp) === -1) {
+                this.maxTemps.push(condition.maxtemp);
               }
             });
           });
-      }, 3000);
+
     }
 
     if (column === "Thermal Sen" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/sensor/search/' + searchValue) // ...using post request
+
+      this.thermalsens=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/conditions/sensor/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(conditions => {
             this.MemoryParamsService.clearTableRows();
             conditions.forEach((condition: any) => {
-              if (searchresults.indexOf(condition.thermalSensor) === -1) {
-                searchresults.push(condition.thermalSensor);
-                this.filterBythermalSensor(condition.thermalSensor);
+              if (this.thermalsens.indexOf(condition.thermalSensor) === -1) {
+                this.thermalsens.push(condition.thermalSensor);
               }
             });
           });
-      }, 3000);
     }
 
     if (column === "Frequency" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/frequency/search/' + searchValue) // ...using post request
+      this.frequencies=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/conditions/frequency/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(conditions => {
             this.MemoryParamsService.clearTableRows();
             conditions.forEach((condition: any) => {
-              if (searchresults.indexOf(condition.frequency) === -1) {
-                searchresults.push(condition.frequency);
-                this.filterByFrequency(condition.frequency);
+              if (this.frequencies.indexOf(condition.frequency) === -1) {
+                this.frequencies.push(condition.frequency);
               }
             });
           });
-      }, 3000);
+
     }
 
     if (column === "Mode" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mode/search/' + searchValue) // ...using post request
+        this.modes=[];
+        this.http.get('http://localhost:9000/goldenregister/v1/conditions/mode/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(conditions => {
             this.MemoryParamsService.clearTableRows();
             conditions.forEach((condition: any) => {
-              if (searchresults.indexOf(condition.mode) === -1) {
-                searchresults.push(condition.mode);
-                this.filterByMode(condition.mode);
+              if (this.modes.indexOf(condition.mode) === -1) {
+                this.modes.push(condition.mode);
+
               }
             });
           });
-      }, 3000);
     }
 
     if (column === "Phase" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/phase/search/' + searchValue) // ...using post request
+        this.phases= [];
+        this.http.get('http://localhost:9000/goldenregister/v1/conditions/phase/search/' + searchValue) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(conditions => {
             this.MemoryParamsService.clearTableRows();
             conditions.forEach((condition: any) => {
-              if (searchresults.indexOf(condition.phase) === -1) {
-                searchresults.push(condition.phase);
-                this.filterByPhase(condition.phase);
+              if (this.phases.indexOf(condition.phase) === -1) {
+                this.states.push(condition.phase);
               }
             });
           });
-      }, 3000);
+
     }
 
     if (column === "State" && searchValue !== '') {
-      setTimeout(() => {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/state/search/' + searchValue) // ...using post request
-          .map((res) => res.json()) // ...and calling .json() on the response to return data
-          .subscribe(conditions => {
-            this.MemoryParamsService.clearTableRows();
-            conditions.forEach((condition: any) => {
-              if (searchresults.indexOf(condition.state) === -1) {
-                searchresults.push(condition.state);
-                this.filterByState(condition.state);
-              }
-            });
+      this.states = [];
+      this.http.get('http://localhost:9000/goldenregister/v1/conditions/state/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(conditions => {
+          this.MemoryParamsService.clearTableRows();
+          conditions.forEach((condition: any) => {
+            if (this.states.indexOf(condition.state) === -1) {
+              this.states.push(condition.state);
+            }
           });
-      }, 3000);
+        });
     }
   }
+}
 
+
+/*
   filterByRegisterName(name: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -542,7 +532,7 @@ export class TableComponent implements OnInit {
   filterByBlockName(name: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -558,7 +548,7 @@ export class TableComponent implements OnInit {
   filterByChipSKU(name: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -575,7 +565,7 @@ export class TableComponent implements OnInit {
   filterBychipRevision(revision: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -591,7 +581,7 @@ export class TableComponent implements OnInit {
   filterByRegisterAddress(address: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -607,7 +597,7 @@ export class TableComponent implements OnInit {
   filterByChipPackageInfo(packageinfo: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -623,7 +613,7 @@ export class TableComponent implements OnInit {
   filterByPlatform(platform: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -639,7 +629,7 @@ export class TableComponent implements OnInit {
   filterByProgram(program: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -655,7 +645,7 @@ export class TableComponent implements OnInit {
   filterByBlockRevision(revision: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -671,7 +661,7 @@ export class TableComponent implements OnInit {
   filterByRegisterType(registertype: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -689,7 +679,7 @@ export class TableComponent implements OnInit {
   filterByFieldName(name: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -707,7 +697,7 @@ export class TableComponent implements OnInit {
   filterByMask(mask: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -725,7 +715,7 @@ export class TableComponent implements OnInit {
   filterByRegisterFieldValue(value: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -743,7 +733,7 @@ export class TableComponent implements OnInit {
   filterByRegisterASIC(asic: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -761,7 +751,7 @@ export class TableComponent implements OnInit {
   filterByRegisterComments(comments: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -779,7 +769,7 @@ export class TableComponent implements OnInit {
   filterByMintemp(mintemp: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -797,7 +787,7 @@ export class TableComponent implements OnInit {
   filterByMaxtemp(maxtemp: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -815,7 +805,7 @@ export class TableComponent implements OnInit {
   filterBythermalSensor(thermalSensor: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -833,7 +823,7 @@ export class TableComponent implements OnInit {
   filterByMode(mode: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -851,7 +841,7 @@ export class TableComponent implements OnInit {
   filterByPhase(phase: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -869,7 +859,7 @@ export class TableComponent implements OnInit {
   filterByState(state: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
@@ -887,15 +877,13 @@ export class TableComponent implements OnInit {
   filterByFrequency(frequency: any) {
     this.MemoryParamsService.clearTableRows();
     if (this.query && typeof    this.query !== 'undefined') {
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
+      this.http.post('http://localhost:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.results.forEach((result: any) => {
             let json = JSON.parse(result);
             if (json.frequency === frequency) {
-              setTimeout(() => {
-                this.MemoryParamsService.setTableRows(json);
-              }, 1000)
+
             }
           });
         });
@@ -904,4 +892,5 @@ export class TableComponent implements OnInit {
 
 }
 
-*/
+
+  */
