@@ -206,6 +206,59 @@ export class TableComponent implements OnInit {
   onBlockRevisionSelect(block_revision:string){
     this.makeFilterQuery({block_revision});
   }
+
+  onRegisterTypeSelect(registertype:string){
+    this.makeFilterQuery({registertype});
+  }
+
+  onRegisterAddressSelect(address:string){
+    this.makeFilterQuery({address});
+  }
+
+  onRegisterNameSelect(register:string){
+    this.makeFilterQuery({register});
+  }
+
+  onRegisterFieldNameSelect(field_name:string){
+    this.makeFilterQuery({field_name});
+  }
+
+  onRegisterMaskSelect(mask:string){
+    this.makeFilterQuery({mask});
+  }
+
+  onRegisterValueSelect(value:string){
+    this.makeFilterQuery({value});
+  }
+
+  onRegistersMinTempSelect(min_temp:string){
+    this.makeFilterQuery({min_temp});
+  }
+  onRegistersMaxTempSelect(max_temp:string){
+    this.makeFilterQuery({max_temp});
+  }
+  onRegistersThermalSenSelect(thermal_sensor:string){
+    this.makeFilterQuery({thermal_sensor});
+  }
+
+  onRegistersFrequencySelect(frequency:string){
+    this.makeFilterQuery({frequency});
+  }
+
+  onRegistersModeSelect(mode:string){
+    this.makeFilterQuery({mode});
+  }
+  onRegistersPhaseSelect(phase:string){
+    this.makeFilterQuery({phase});
+  }
+  onRegistersStateSelect(state:string){
+    this.makeFilterQuery({state});
+  }
+
+  onRegistersAsicSelect(asic:string){
+    this.makeFilterQuery({asic});
+  }
+
   onPlatformSelect(platform:string){
     this.filterQuery['chip_name'] = this.query.chip;
     Object.assign( this.filterQuery,{platform});
@@ -213,21 +266,13 @@ export class TableComponent implements OnInit {
     this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
-        this.MemoryParamsService.clearTableRows();
         this.rows = message;
       });
   }
 
   onSearchChange(searchValue: string, column: string) {
     if (searchValue === '') {
-      this.MemoryParamsService.clearTableRows();
-      this.http.post('http://172.17.175.38:9000/goldenregister/v1/memorytable/records', this.query) // ...using post request
-        .map((res) => res.json()) // ...and calling .json() on the response to return data
-        .subscribe(message => {
-          message.results.forEach((result: any) => {
-            this.MemoryParamsService.setTableRows(JSON.parse(result));
-          });
-        });
+
     }
 
     if (column === 'SKU' && searchValue !== '') {
@@ -240,6 +285,8 @@ export class TableComponent implements OnInit {
             }
           });
         });
+    } else {
+      this.skus = [] ;
     }
 
     if (column === 'Revision' && searchValue !== '') {
@@ -252,6 +299,8 @@ export class TableComponent implements OnInit {
             }
           });
         });
+    } else {
+      this.revisions = [];
     }
 
     if (column === "Package Info" && searchValue !== '') {
@@ -264,6 +313,8 @@ export class TableComponent implements OnInit {
             }
           });
         });
+    } else {
+      this.packageInfos = [];
     }
 
 
@@ -277,6 +328,8 @@ export class TableComponent implements OnInit {
             }
           });
         });
+    } else {
+      this.platforms =[];
     }
 
     if (column === "Programs" && searchValue !== '') {
@@ -289,6 +342,8 @@ export class TableComponent implements OnInit {
             }
           });
         });
+    } else {
+      this.programs = [];
     }
 
     if (column === "Name" && searchValue !== '') {
@@ -301,6 +356,8 @@ export class TableComponent implements OnInit {
             }
           });
         });
+    } else {
+      this.blockNames = [];
     }
 
     if (column === "Block Revision" && searchValue !== '') {
@@ -314,8 +371,10 @@ export class TableComponent implements OnInit {
             }
           });
         });
+    } else {
+      this.blockRevisions = [];
     }
-    
+
     if (column === "Manual" && searchValue !== '') {
       this.http.get('http://172.17.175.38:9000/goldenregister/v1/manual/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
@@ -326,10 +385,225 @@ export class TableComponent implements OnInit {
             }
           });
         });
+    } else {
+      this.manualNames = [] ;
     }
 
+    if (column === "Reg Type" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/type/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.regTypes.indexOf(message.register_type) === -1) {
+              this.regTypes.push(message.register_type);
+            }
+          });
+        });
+    } else {
+      this.regTypes = [];
+    }
+
+    if (column === "Reg Address" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/register/search/address/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.regAddresses.indexOf(message.address) === -1) {
+              this.regAddresses.push(message.address);
+            }
+          });
+        });
+    } else {
+      this.regAddresses =[];
+    }
+
+    if (column === "Reg Name" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/register/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.regNames.indexOf(message.name) === -1) {
+              this.regNames.push(message.name);
+            }
+          });
+        });
+    } else {
+      this.regNames = [];
+    }
+
+    if (column === "Field Name" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/name/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.fieldNames.indexOf(message.field_name) === -1) {
+              this.fieldNames.push(message.field_name);
+            }
+          });
+        });
+    } else {
+      this.fieldNames = [];
+    }
+
+    if (column === "Mask" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/mask/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message  => {
+          message.forEach((message: any) => {
+            if (this.masks.indexOf(message.mask) === -1) {
+              this.masks.push(message.mask);
+            }
+          });
+        });
+    } else {
+      this.masks = [];
+    }
+
+    if (column === "Value" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/value/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+         message.forEach((message: any) => {
+            if (this.values.indexOf(message.value) === -1) {
+              this.values.push(message.value);
+            }
+          });
+        });
+    } else {
+      this.values=[];
+    }
+
+    if (column === "ASIC" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/asic/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(registerfields => {
+          registerfields.forEach((registerfield: any) => {
+            if (this.asics.indexOf(registerfield.asic) === -1) {
+              this.asics.push(registerfield.asic);
+            }
+          });
+        });
+    } else {
+      this.asics =[];
+    }
+
+    if (column === "Min Temp" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mintemp/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.minTemps.indexOf(message.min_temp) === -1) {
+              this.minTemps.push(message.min_temp);
+            }
+          });
+        });
+    } else {
+      this.minTemps = [] ;
+    }
+
+    if (column === "Max Temp" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/maxtemp/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.maxTemps.indexOf(message.max_temp) === -1) {
+              this.maxTemps.push(message.max_temp);
+            }
+          });
+        });
+    } else {
+      this.maxTemps=[];
+    }
+
+    if (column === "Thermal Sen" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/sensor/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.thermalsens.indexOf(message.thermal_sensor) === -1) {
+              this.thermalsens.push(message.thermal_sensor);
+            }
+          });
+        });
+    } else {
+      this.thermalsens = [] ;
+    }
+
+    if (column === "Frequency" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/frequency/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          this.MemoryParamsService.clearTableRows();
+          message.forEach((message: any) => {
+            if (this.frequencies.indexOf(message.frequency) === -1) {
+              this.frequencies.push(message.frequency);
+            }
+          });
+        });
+    } else {
+      this.frequencies = [];
+    }
+
+    if (column === "Mode" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mode/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.modes.indexOf(message.mode) === -1) {
+              this.modes.push(message.mode);
+            }
+          });
+        });
+    } else{
+      this.modes =[] ;
+    }
+
+    if (column === "Phase" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/phase/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.phases.indexOf(message.phase) === -1) {
+              this.phases.push(message.phase);
+            }
+          });
+        });
+    } else {
+      this.phases =[] ;
+    }
+
+    if (column === "State" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/state/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          message.forEach((message: any) => {
+            if (this.states.indexOf(message.state) === -1) {
+              this.states.push(message.state);
+            }
+          });
+        });
+    } else {
+      this.states =[];
+    }
+
+    if (column === "Comments" && searchValue !== '') {
+        this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/comments/search/' + searchValue) // ...using post request
+          .map((res) => res.json())
+          .subscribe(message => {
+            message.forEach((message: any) => {
+              if (this.searchresults.indexOf(message.comments) === -1) {
+                this.searchresults.push(message.comments);
+                let comment = message.comments;
+                this.filterQuery({comment})
+              }
+            });
+          });
+    } else {
+      this.searchresults =[] ;
+    }
 
   }
+
 }
 
 
