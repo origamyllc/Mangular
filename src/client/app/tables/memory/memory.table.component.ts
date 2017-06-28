@@ -206,6 +206,9 @@ export class TableComponent implements OnInit {
     this.makeFilterQuery({block_revision});
   }
 
+  onRegistersAsicSelect(asic:string){
+    this.makeFilterQuery({asic});
+  }
   onRegistersMinTempSelect(min_temp:string){
     this.makeFilterQuery({min_temp});
   }
@@ -347,6 +350,19 @@ export class TableComponent implements OnInit {
           message.forEach((message: any) => {
             if (this.manualNames.indexOf(message.name) === -1) {
               this.manualNames.push(message.name);
+            }
+          });
+        });
+    }
+
+    if (column === "ASIC" && searchValue !== '') {
+      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/asic/search/' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(registerfields => {
+          this.MemoryParamsService.clearTableRows();
+          registerfields.forEach((registerfield: any) => {
+            if (this.asics.indexOf(registerfield.asic) === -1) {
+              this.asics.push(registerfield.asic);
             }
           });
         });

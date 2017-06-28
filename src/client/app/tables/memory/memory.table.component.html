@@ -123,6 +123,9 @@
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
               </div>
+              <div *ngIf=" j == 6 ">
+                <span *ngFor="let asic of asics" (click)="onRegistersAsicSelect(asic)">{{asic}}</span>
+              </div>
               <div *ngIf=" j == 7 ">
                 <span *ngFor="let minTemp of minTemps" (click)="onRegistersMinTempSelect(minTemp)">{{minTemp}}</span>
               </div>
