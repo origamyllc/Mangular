@@ -1,74 +1,18 @@
 $break-small: 500px;
 $break-large: 1200px;
-@mixin navbarlist() {
-  ul {
-    z-index:100;
-    li {
-      list-style: none;
-      padding-left: 10px;
-      display: flex;
-      text-align: center;
-      width:100%;
-      > a {
-        color: white;
-        font-size: 14px;
-        font-weight: 800;
-        line-height: 48px;
-        margin-right: 20px;
-        text-decoration: none;
-        cursor: pointer;
-        text-align: center;
-      }
-      a:hover {
-        color: white;
-        text-decoration: none;
-        cursor: pointer;
-      }
-    }
-  }
-}
-
-@mixin menubar() {
-  .menu-bar {
-    width: 100%;
-    height: 50px;
-    background-color: #ed1c24;
-    position: absolute;
-    left: 0px;
-    color: white;
-    border-bottom: 5px solid white;
-    span {
-      display: inherit !important;
-      font-size: 20px;
-      margin: 10px;
-    }
-    .nav {
-      display: inherit !important;
-      background-color: #ed1c24;
-      margin-top: 0px;
-      > li {
-        font-color: white;
-      }
-    }
-  }
-}
+$layout-default:#fafafa;
+$navbar-width: 15vw;
 
 sd-navbar {
   font-size: 0.8rem;
-  span {
-    i {
-      margin: 10px;
-    }
-  }
   @media screen and (max-width: $break-small) {
-    @include menubar;
+
     #navbar {
-      margin-top: 60px;
       margin-left: -30px;
       height: 620px;
-      background-color: #333333;
+      background-color: #fafafa;
       z-index: 1;
-      @include navbarlist;
+
       ul {
         font-size: 16px;
         i {
@@ -90,18 +34,12 @@ sd-navbar {
       padding: 0 16px;
     }
 
-    @include menubar;
-      span {
-        display: none !important;
-      }
-
     #navbar {
-      @include navbarlist;
-      background-color: #333333;
-      width: 15%;
-      height: 720px;
+      background-color: $layout-default;
+      width: $navbar-width;
+      box-shadow: 0 0px 0px 0 rgba(200, 200, 200, 0.7), 0 6px 6px rgba(0,0,0,0.23);
       display: inline-block;
-      margin-top: 65px;
+      margin-top: -10px;
 
       a:hover {
         float:left;
@@ -109,20 +47,30 @@ sd-navbar {
         width:110px;
       }
       ul {
-        background-color: #333333;
-        width: 100%;
-        height: 620px;
+        background-color: $layout-default;
+        width:  $navbar-width;
+        height:930px;
+        box-shadow:0 0px 0px 0 rgba(200, 200, 200, 0.7),0 16px 6px rgba(0,0,0,0.23);
         display: inline-block;
+        position: absolute;
+        bottom:0px;
+
+        .nav-link { background-color: black; div  { color:white; text-align:center; i{ margin-right: 20px;}}}
+
+        > li:nth-child(1) {
+          margin-top: 30px;
+        }
+
+        > li:nth-child(2) {
+          margin-left: 80px;
+          font-size:20px;
+        }
         div {
-          color: white;
+          color: black;
           font-size: 16px;
           margin: 0px 25px 15px 5px;
           i{
             margin:10px;
-          }
-          > li:nth-child(2) {
-            margin-left: 25px;
-            font-size:20px;
           }
         }
       }

@@ -1,0 +1,54 @@
+<div class="container">
+  <ul class="memory-table">
+    <li>
+      <div class="filter-container">
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+          <span class="caret"></span>
+          <p *ngIf="hideModules" >CHIP</p>
+          <p *ngIf="!hideModules" >{{query.chip}}</p>
+        </button>
+        <ul class="dropdown-menu chips">
+          <li *ngFor="let chip of chips" (click)="selectedChip(chip.chip_name)">
+            <span>{{chip.chip_name}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown" >
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+          <span class="caret"></span>
+          <p *ngIf="hideSku">MODULE</p>
+          <p *ngIf="!hideSku">{{query.module}}</p>
+        </button>
+        <ul class="dropdown-menu chips">
+          <li *ngFor="let mod of mods" (click)="selectedModule(mod.modules[0])" >{{mod.modules[0]}}</li>
+        </ul>
+      </div>
+      <div class="dropdown"  >
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+          <span class="caret"></span>
+          <p *ngIf="hideRevision">SKU</p>
+          <p *ngIf="!hideRevision">{{query.sku}}</p></button>
+        <ul class="dropdown-menu chips">
+          <li *ngFor="let sku of ( skus | unique:'sku' )" (click)="selectedSku(sku)">{{sku}}</li>
+        </ul>
+      </div>
+      <div class="dropdown"  >
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+          <span class="caret"></span>
+          <p *ngIf="hideSubmit">REVISION</p>
+          <p *ngIf="!hideSubmit">{{query.revision}}</p></button>
+        <ul class="dropdown-menu chips">
+          <li *ngFor="let skudetails of revisions " (click)="selectedRevision(skudetails.revision)">{{skudetails.revision}}</li>
+        </ul>
+      </div>
+      </div>
+      </li>
+   <li>
+      <sd-memory-table id="records"></sd-memory-table>
+    </li>
+    <li>
+     <sd-pinned-table id="pinned-rows"></sd-pinned-table>
+   </li>
+  </ul>
+</div>

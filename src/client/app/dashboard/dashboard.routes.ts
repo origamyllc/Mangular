@@ -6,6 +6,10 @@ import { DashboardComponent } from './index';
 
 export const DashboardRoutes: Route[] = [
   {
+    path: '',
+    component: DashboardComponent
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent
   }

@@ -1,0 +1,75 @@
+@mixin dropdown()
+{
+  .dropdown {
+    margin: 3px;
+  }
+
+  .btn, ul {
+    width: autox;
+  }
+
+  .go {
+    margin: 0 0 0 4px;
+  }
+
+  .open>.dropdown-menu {
+    display: block;
+    border-left: solid 1px;
+    border-right: solid 1px;
+    min-width: 120px;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    border-radius: 0px 0px 4px 4px;
+    border-color: #286090;
+    font-size: 12px;
+    padding-left: 0px;
+  }
+
+  .x-dashboard .container .dropdown-menu ul li {
+    padding-left: 10px;
+  }
+
+  .btn {
+    background-color: #FFFFFF;
+    font-size: 12px;
+    height: 22px;
+    border: 1px solid #6E6E6E;
+    border-radius: 2px;
+    display: inline-block;
+    line-height: 20px;
+    padding: 0 0.6rem;
+    margin-right: 8px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+    &:hover {
+        color: #171717;
+        background-color: #286090;
+        border-color: #204d74;
+      }
+  }
+
+  .btnaction {
+    background-color: #76B900;
+    font-size: 12px;
+    height: 22px;
+    border: 1px solid #6E6E6E;
+    border-radius: 2px;
+    display: inline-block;
+    line-height: 20px;
+    padding: 0 0.6rem;
+    margin-right: 8px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    color: #ffffff;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+}
+
+x-dashboard .dropdown button span {
+    margin-top: 8px;
+    float: right;
+}

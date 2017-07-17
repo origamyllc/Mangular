@@ -1,0 +1,36 @@
+@import "./dropdown";
+
+x-dashboard{
+  position: relative;
+  left:53px;
+
+  .container{
+    display:flex;
+    margin:10px;
+    padding: 10px;
+    @include dropdown();
+  }
+
+  .dropdown{
+    button{
+      width:120px;
+      text-align:left;
+      span{
+        margin-top:5px;
+        float:right;
+      }
+    }
+
+    #submit{
+      width:44px;
+    }
+  }
+  .dropdown-menu{
+    
+      li:hover {
+        background-color: #76b900;
+      }
+    }
+
+}
+

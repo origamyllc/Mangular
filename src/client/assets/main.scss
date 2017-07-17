@@ -1,11 +1,19 @@
-@import "navbar";
-@import "heading";
 @import "material/card";
 @import "material/materialize";
+@import "./sidenav";
+@import "./dashboard";
+@import "./nvbugs";
+@import "./notes";
+@import "./block";
+@import "./modes";
+@import "./users";
+@import "./registers";
+@import "./memorytable";
 
 .main-container{
-  width:80%;
+  width:100%;
   z-index:-1;
+  overflow-x: scroll;
   @media screen and (max-width: $break-small) {
     margin-left:0px;
   }
@@ -14,27 +22,36 @@
   }
 }
 
-.container {
-  margin-top:30px;
-  @media screen and (max-width: $break-small) {
-    margin-left:0px; padding-left: 0px;
-  }
-  @media screen and (min-width: $break-large) {
-    margin-left:17%;
-  }
-}
-span.badge{ color:white;}
-
-.table-grid-container {
-  max-height: 500px;
-  overflow: scroll;
+.disable {
+  pointer-events: none;
 }
 
 .card-grid-container {
-  max-height: 500px;
+  height: 53vw;
+  border:none;
   @media screen and (min-width: $break-large) {
     overflow: scroll;
-  }
+    }
 }
-.right-alert{ > div{ color:red;margin-top:-10px;margin-bottom:10px;}}
 
+.title{
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+#nvidiaLogo {
+  width: 160px;
+  height: 60px;
+  margin: 0px 60px 80px 50px;
+}
+
+#user-vector{
+  width: 85px;
+  height: 85px;
+  margin: 0px 75px 10px 90px;
+}
+
+.dropdown-with-title{
+  display:flex;
+  margin-left:40px;
+}

@@ -1,0 +1,17 @@
+sd-modes{
+  position: relative;
+  left:150px;
+
+  .container{
+    display:flex;
+    margin:20px;
+
+    .dropdown{
+      margin:20px;
+    }
+
+    .btn, ul{
+      width:200px;
+    }
+  }
+}

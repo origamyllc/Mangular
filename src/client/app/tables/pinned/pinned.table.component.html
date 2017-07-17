@@ -1,0 +1,111 @@
+
+<div class="table-container"  *ngIf="!hidePinnedtable" >
+  <table class="table data-table" >
+    <tbody class="parent-table-body">
+    <tr>
+      <td>
+        <table class="table">
+          <thead>
+          <tr>
+            <th></th>
+            <th *ngFor="let column of config[groups[0]].columns">
+              <div class="table-header">
+                <p>{{column.name}}</p>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody class="child-table-body">
+          <tr *ngFor="let row of rows; let i = index" >
+            <td></td>
+            <td>{{row.record_id}}</td>
+            <td (click)="editTableCellHandler($event,'chipSku',i)">{{row.chip_sku}}</td>
+            <td (click)="editTableCellHandler($event,'chipRevision',i)">{{row.chip_revision}}</td>
+            <td (click)="editTableCellHandler($event,'chipPackageinfo',i)" >{{row.chip_package_info}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table" [hidden]="!config[groups[1]].isVisible">
+          <thead>
+          <tr>
+            <th *ngFor="let column of config[groups[1]].columns">
+              <div class="table-header">
+                <p>{{column.name}}</p>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody class="child-table-body">
+          <tr *ngFor="let row of rows ; let i = index">
+            <td (click)="editTableCellHandler($event,'platform',i)" >{{row.platform}}</td>
+            <td (click)="editTableCellHandler($event,'program',i)">{{row.program}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table" [hidden]="!config[groups[2]].isVisible">
+          <thead>
+          <tr>
+            <th *ngFor="let column of config[groups[2]].columns">
+              <div class="table-header">
+                <p>{{column.name}}</p>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody class="child-table-body">
+          <tr *ngFor="let row of rows; let i = index" >
+            <td (click)="editTableCellHandler($event,'blockName',i)">{{row.block_name}}</td>
+            <td (click)="editTableCellHandler($event,'blockRevision',i)" >{{row.block_revision}}</td>
+            <td (click)="editTableCellHandler($event,'manualName',i)">{{row.manual_name}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+      <td>
+        <table class="table" [hidden]="!config[groups[3]].isVisible">
+          <thead>
+          <tr>
+            <th *ngFor="let column of config[groups[3]].columns">
+              <div class="table-header">
+                <p>{{column.name}}</p>
+              </div>
+            </th>
+            <th>
+
+            </th>
+          </tr>
+          </thead>
+          <tbody class="child-table-body">
+           <tr *ngFor="let row of rows; let i = index" >
+             <td (click)="editTableCellHandler($event,'registertype',i)">{{row.registertype}}</td>
+             <td (click)="editTableCellHandler($event,'address',i)">{{row.address}}</td>
+             <td (click)="editTableCellHandler($event,'name',i)" >{{row.register}}</td>
+             <td (click)="editTableCellHandler($event,'field',i)"  >{{row.field}}</td>
+             <td (click)="editTableCellHandler($event,'mask',i)" >{{row.mask}}</td>
+             <td (click)="editTableCellHandler($event,'value',i)" >{{row.value}}</td>
+             <td (click)="editTableCellHandler($event,'asic',i)" >{{row.asic}}</td>
+             <td (click)="editTableCellHandler($event,'mintemp',i)" >{{row.min_temp}}</td>
+             <td (click)="editTableCellHandler($event,'maxtemp',i)" >{{row.max_temp}}</td>
+             <td (click)="editTableCellHandler($event,'thermalSensor',i)" >{{row.thermal_sensor}}</td>
+             <td (click)="editTableCellHandler($event,'frequency',i)">{{row.frequency}}</td>
+             <td (click)="editTableCellHandler($event,'mode',i)" style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
+             <td (click)="editTableCellHandler($event,'phase',i)" >{{row.phase}}</td>
+             <td (click)="editTableCellHandler($event,'state',i)">{{row.state}}</td>
+             <td (click)="editTableCellHandler($event,'comments',i)" style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
+             <td>N/A</td>
+             <td>N/A</td>
+             <td>N/A</td>
+             <td><div type="button" class="btn btn-primary delete-btn" (click)="onDelete($event,i)">Delete</div></td>
+           </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div type="button" class="btn btn-primary"  *ngIf="editable"  (click)="onSubmit($event)" >Submit</div>
