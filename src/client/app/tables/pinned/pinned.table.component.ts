@@ -123,7 +123,6 @@ export class PinnedTableComponent implements OnInit {
     let pinnedTableParamsService = this.PinnedTableParamsService;
     let target = event.target || event.srcElement || event.currentTarget;
     let action = 'update';
-
       $(target).replaceWith("<td><form><fieldset><input class='target' type='text' /></fieldset></form></td>");
       $(".target").keyup(function (event: any) {
         if(event.keyCode !== 8 ) {

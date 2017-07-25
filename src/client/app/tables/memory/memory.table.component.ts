@@ -28,7 +28,7 @@ export class TableComponent implements OnInit {
   latch = 0;
   filterQuery:any = {} ;
 
-
+  histories :any =[];
   skus: any = [];
   revisions: any = [];
   packageInfos: any = [];
@@ -139,7 +139,7 @@ export class TableComponent implements OnInit {
   }
 
   getPinnedData() {
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/pinned') // ...using post request
+    this.http.get('http://172.20.215.239:9000/goldenregister/v1/memorytable/pinned') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         message.results.forEach((index: any) => {
@@ -161,7 +161,7 @@ export class TableComponent implements OnInit {
     this.filterQuery['chip_name'] = this.query.chip;
     Object.assign( this.filterQuery,{'chip_sku':sku});
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://172.20.215.239:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
           this.MemoryParamsService.clearTableRows();
@@ -174,7 +174,7 @@ export class TableComponent implements OnInit {
   makeFilterQuery(param:any){
     Object.assign( this.filterQuery,param);
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://172.20.215.239:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.MemoryParamsService.clearTableRows();
@@ -263,7 +263,7 @@ export class TableComponent implements OnInit {
     this.filterQuery['chip_name'] = this.query.chip;
     Object.assign( this.filterQuery,{platform});
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://172.20.215.239:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.rows = message;
@@ -276,7 +276,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === 'SKU' && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/sku/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -290,7 +290,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === 'Revision' && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -304,7 +304,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Package Info" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/packageinfo/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/chips/packageinfo/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -319,7 +319,7 @@ export class TableComponent implements OnInit {
 
 
     if (column === "Platform" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/platforms/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/sku/platforms/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -333,7 +333,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Programs" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/programs/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/sku/programs/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -347,7 +347,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Name" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/blocks/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/blocks/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -362,7 +362,7 @@ export class TableComponent implements OnInit {
 
     if (column === "Block Revision" && searchValue !== '') {
       this.blockRevisions=[];
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/block/revision/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/block/revision/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -376,7 +376,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Manual" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/manual/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/manual/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -390,7 +390,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Type" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/type/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/registerfields/type/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -404,7 +404,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Address" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/register/search/address/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/register/search/address/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -418,7 +418,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Name" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/register/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/register/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -432,7 +432,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Field Name" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/name/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/registerfields/name/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -446,7 +446,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Mask" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/mask/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/registerfields/mask/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message  => {
           message.forEach((message: any) => {
@@ -460,7 +460,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Value" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/value/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/registerfields/value/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
          message.forEach((message: any) => {
@@ -474,7 +474,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "ASIC" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/asic/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/registerfields/asic/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(registerfields => {
           registerfields.forEach((registerfield: any) => {
@@ -488,7 +488,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Min Temp" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mintemp/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/conditions/mintemp/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -502,7 +502,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Max Temp" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/maxtemp/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/conditions/maxtemp/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -516,7 +516,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Thermal Sen" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/sensor/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/conditions/sensor/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -530,7 +530,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Frequency" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/frequency/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/conditions/frequency/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.MemoryParamsService.clearTableRows();
@@ -545,7 +545,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Mode" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mode/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/conditions/mode/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -559,7 +559,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Phase" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/phase/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/conditions/phase/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -573,7 +573,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "State" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/state/search/' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.239:9000/goldenregister/v1/conditions/state/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           message.forEach((message: any) => {
@@ -587,7 +587,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Comments" && searchValue !== '') {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/comments/search/' + searchValue) // ...using post request
+        this.http.get('http://172.20.215.239:9000/goldenregister/v1/registerfields/comments/search/' + searchValue) // ...using post request
           .map((res) => res.json())
           .subscribe(message => {
             message.forEach((message: any) => {
@@ -601,7 +601,33 @@ export class TableComponent implements OnInit {
     } else {
       this.searchresults =[] ;
     }
+  }
 
+  getHistory(event:any,row:any){
+    // allow the click only once
+    this.http.get('http://172.17.175.38:3000/goldenregister/v1/chips/history/' + row.record_id) // ...using post request
+      .map((res) => res.json()) // ...and calling .json() on the response to return data
+      .subscribe(message => {
+        let target = event.target || event.srcElement || event.currentTarget;
+        let currentRow = target.parentNode.parentNode;
+
+        if(this.latch == 0 ) {
+          message.result.forEach((row:any) => {
+            console.log(row);
+            $(currentRow).append(`<tr class='history'> 
+                                    <td>${row.record_id} </td>
+                                    <td>${row.chip_sku} </td>
+                                    <td>${row.chip_revision} </td>
+                                    <td>${row.chip_package_info} </td>
+                                  </tr>`);
+          });
+
+          this.latch ++;
+        } else {
+          $(".history").remove();
+          this.latch = 0 ;
+        }
+      });
   }
 
 }

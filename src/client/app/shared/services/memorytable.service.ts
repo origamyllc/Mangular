@@ -14,7 +14,7 @@ export class MemoryParamsService  {
   static instance: MemoryParamsService;
   private obj: Object;
   private records:any = [];
-  private set = new Set<any>() ;
+
   public _subject = new Subject<any>();
   public event = this._subject.asObservable();
   private seen:any = {} ;

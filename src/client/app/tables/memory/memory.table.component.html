@@ -185,7 +185,9 @@
             <td>{{row.phase}}</td>
             <td>{{row.state}}</td>
             <td style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
-            <td>N/A</td>
+            <td>{{row.record_version}}
+              <button (click)="getHistory($event,row)"></button>
+            </td>
             <td>N/A</td>
             <td>N/A</td>
           </tr>
