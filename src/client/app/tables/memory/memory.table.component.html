@@ -36,9 +36,9 @@
            <tr *ngFor="let row of rows | filter:filterText;let i = index " class="prime" >
              <td class = "pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
              <td>{{row.record_id}}</td>
-             <td>{{row.chip_sku}}</td>
-             <td>{{row.chip_revision}}</td>
-             <td>{{row.chip_package_info}}</td>
+             <td>{{row.sku}}</td>
+             <td>{{row.sku_info}}</td>
+             <td>{{row.package_info}}</td>
            </tr>
            </tbody>
         </table>
@@ -68,8 +68,8 @@
           </thead>
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows | filter:filterText;">
-            <td>{{row.platform}}</td>
-            <td>{{row.program}}</td>
+            <td>{{row.platform_name}}</td>
+            <td>{{row.programs}}</td>
           </tr>
           </tbody>
         </table>
@@ -102,9 +102,9 @@
           </thead>
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows | filter:filterText; ">
-            <td>{{row.block_name}}</td>
-            <td>{{row.block_revision}}</td>
-            <td>{{row.manual_name}}</td>
+            <td>{{row.block}}</td>
+            <td>%3CDC%3E</td>
+            <td>{{row.manual}}</td>
           </tr>
           </tbody>
         </table>
@@ -170,9 +170,9 @@
           </thead>
           <tbody class="child-table-body" id="registerFields">
           <tr *ngFor="let row of rows | filter:filterText">
-            <td>{{row.registertype}}</td>
-            <td>{{row.address}}</td>
-            <td>{{row.register}}</td>
+            <td>{{row.reg_type}}</td>
+            <td>{{row.reg_address}}</td>
+            <td>{{row.reg_name}}</td>
             <td>{{row.field_name}}</td>
             <td>{{row.mask}}</td>
             <td>{{row.value}}</td>
@@ -182,10 +182,10 @@
             <td>{{row.thermal_sensor}}</td>
             <td>{{row.frequency}}</td>
             <td style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
-            <td>{{row.phase}}</td>
-            <td>{{row.state}}</td>
+            <td>{{row.curr_phase}}</td>
+            <td>{{row.curr_state}}</td>
             <td style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
-            <td>{{row.record_version}}
+            <td>{{row.version}}
               <button (click)="getHistory($event,row)"></button>
             </td>
             <td>N/A</td>

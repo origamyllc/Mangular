@@ -4,14 +4,15 @@
   <div class="title">
     <h6>Memory Table</h6>
   </div>
+
   <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
       <span class="caret"></span>
       <p *ngIf="hideModules" >CHIP</p>
-      <p *ngIf="!hideModules" >{{chipName}}</p>
+      <p *ngIf="!hideModules" >{{chips}}</p>
     </button>
      <ul class="dropdown-menu chips">
-      <li *ngFor="let chip of chips" (click)="selectedChip(chip.chip_name)">{{chip.chip_name}}</li>
+      <li *ngFor="let chip of chips" (click)="selectedChip(chips)">{{chips}}</li>
     </ul>
   </div>
   <div class="dropdown" *ngIf="!hideModules">
@@ -21,7 +22,7 @@
       <p *ngIf="!hideSku" >{{modName}}</p>
     </button>
      <ul class="dropdown-menu chips">
-      <li *ngFor="let mod of ( mods | unique:'module' ) " (click)="selectedModule(mod)" >{{mod}}</li>
+      <li *ngFor="let mod of mods " (click)="selectedModule(mod)" >{{mod}}</li>
     </ul>
   </div>
   <div class="dropdown" *ngIf="!hideSku">
@@ -31,7 +32,7 @@
       <p *ngIf="!hideRevision" >{{skuNumber}}</p>
     </button>
     <ul class="dropdown-menu chips">
-      <li *ngFor="let sku of ( skus | unique:'sku' ) " (click)="selectedSku(sku)">{{sku}}</li>
+      <li *ngFor="let sku of skus " (click)="selectedSku(sku)">{{sku}}</li>
     </ul>
   </div>
   <div class="dropdown" *ngIf="!hideRevision" >
@@ -41,7 +42,7 @@
       <p *ngIf="!hideSubmit" >{{revision}}</p>
     </button>
     <ul class="dropdown-menu chips">
-      <li *ngFor="let skudetails of ( revisions | unique:'revision')" (click)="selectedRevision(skudetails)">{{skudetails}}</li>
+      <li *ngFor="let revision of revisions" (click)="selectedRevision(revision)">{{revision}}</li>
     </ul>
   </div>
   <div class="dropdown" *ngIf="!hideSubmit" >
@@ -49,3 +50,5 @@
   </div>
 
 </div>
+
+

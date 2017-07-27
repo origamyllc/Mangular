@@ -80,7 +80,7 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
     this.query.chip = chipname;
     this.hideModules = false;
-    this.http.get('http://172.20.215.239:9000/goldenregister/v1/memorytable/records/chip/' + this.query.chip.toString()) // ...using post request
+    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/records/chip/' + this.query.chip.toString()) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
@@ -93,7 +93,7 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
      this.query.module = modulename;
      this.hideSku = false;
-    this.http.get('http://172.20.215.239:9000/goldenregister/v1/memorytable/records/module/' + this.query.module.toString() ) // ...using post request
+    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/records/module/' + this.query.module.toString() ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
@@ -106,7 +106,7 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
     this.query.sku = skunumber;
     this.hideRevision =false;
-    this.http.get('http://172.20.215.239:9000/goldenregister/v1/memorytable/records/sku/' +  this.query.sku.toString() ) // ...using post request
+    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/records/sku/' +  this.query.sku.toString() ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
@@ -119,7 +119,7 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
     this.query.revision = revision ;
     this.hideSubmit=false;
-    this.http.get('http://172.20.215.239:9000/goldenregister/v1/memorytable/records/revisions/' +  this.query.revision.toString() ) // ...using post request
+    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/records/revisions/' +  this.query.revision.toString() ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         message.results.forEach((result:any) => {
@@ -130,21 +130,10 @@ export class RegistersComponent {
 
   getData(){
     console.log(this.query)
-    this.http.post('http://172.20.215.239:9000/goldenregister/v1/memorytable/records',this.query ) // ...using post request
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
-        console.log(message)
-        message.results.forEach((result:any) => {
-
-          if(this.records.indexOf(JSON.parse(result).record_id) === -1 ) {
-            this.records.push(JSON.parse(result).record_id);
-            console.log(JSON.parse(result))
-
-            this.MemoryParamsService.setTableRows(JSON.parse(result));
-          }
-
-
-        });
+            this.MemoryParamsService.setTableRows(message);
       });
   }
 

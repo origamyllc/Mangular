@@ -40,7 +40,6 @@ export class DashboardComponent implements OnInit  {
   hideRevision:boolean;
   hideSubmit:boolean;
 
-
   processedModules =new Array<any>();
 
   constructor(
@@ -56,6 +55,8 @@ export class DashboardComponent implements OnInit  {
         this.hideSubmit=true;
         this.MemoryParamsService.clearTableRows();
   }
+
+  // get the chips
 
   getChips() {
     this.ChipService.getChips().subscribe(
@@ -107,7 +108,7 @@ export class DashboardComponent implements OnInit  {
 
    submit() {
      let obj:Object = {
-                         'chip' : this.chipName,
+                         'chip_name' : this.chipName,
                          'module':this.modName,
                          'sku':this.skuNumber,
                          'revision': this.revision

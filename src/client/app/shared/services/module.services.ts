@@ -21,14 +21,14 @@ export class ModuleService {
   constructor (private http: Http) {}
 
   getModuleByName(name:string):Observable<Module[]>  {
-    this.modulesUrl = 'http://172.20.215.241:3000/goldenregister/v1/modules/'+name;
+    this.modulesUrl = 'http://172.17.175.38:3000/goldenregister/register/distinct?sku';
     return this.http.get(this.modulesUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   getModule():Observable<Module[]>  {
-    this.modulesUrl = 'http://172.20.215.241:3000/goldenregister/v1/modules';
+    this.modulesUrl = 'http://172.17.175.38:3000/goldenregister/v1/modules';
     return this.http.get(this.modulesUrl)
       .map(this.extractData)
       .catch(this.handleError);
@@ -37,6 +37,7 @@ export class ModuleService {
 
   private extractData(res: Response) {
     let body = res.json();
+    console.log(body)
     return body.result || { };
   }
 
@@ -56,3 +57,4 @@ export class ModuleService {
 
 
 }
+

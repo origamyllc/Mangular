@@ -13,7 +13,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class ChipService {
 
-  private chipsUrl = 'http://172.20.215.241:3000/goldenregister/v1/chips';  // URL to web API
+  private chipsUrl = 'http://172.17.175.38:3000/goldenregister/register/distinct?chip_name';  // URL to web API
   constructor (private http: Http) {}
 
   getChips():Observable<Chip[]>  {
@@ -24,6 +24,7 @@ export class ChipService {
 
   private extractData(res: Response) {
     let body = res.json();
+
     return body.result || { };
   }
 

@@ -13,23 +13,25 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class ModuleSkuService {
   private modulesUrl = '';
+  private skuUrl = '';
+  private revisionUrl = '';
+
   //get the url
   constructor (private http: Http) {}
 
   getModuleSkuByName(name:string):Observable<ModuleSku[]>  {
 
-      this.modulesUrl = 'http://172.20.215.241:3000/goldenregister/v1/sku/'+name;
+    this.skuUrl = 'http://172.17.175.38:3000/goldenregister/register/distinct?sku';
 
-    return this.http.get(this.modulesUrl)
+    return this.http.get(this.skuUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   getModuleSku():Observable<ModuleSku[]>  {
+    this.revisionUrl = 'http://172.17.175.38:3000/goldenregister/register/distinct?revision';
 
-    this.modulesUrl = 'http://172.20.215.241:3000/goldenregister/v1/sku';
-
-    return this.http.get(this.modulesUrl)
+    return this.http.get(this.revisionUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }

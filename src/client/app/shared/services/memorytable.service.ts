@@ -32,13 +32,13 @@ export class MemoryParamsService  {
    }
 
    setTableRows(records:any):void {
-         this.records.push(records);
+         this.records = records;
+         console.log(this.records)
          this.records.map( (item:any) => { return item }).filter((x:any,i:any) => {;
            if( !this.seen[x.record_id]){
                this.seen[x.record_id] = x;
            }
          });
-
          this._subject.next( Object.values(this.seen));
    }
 
