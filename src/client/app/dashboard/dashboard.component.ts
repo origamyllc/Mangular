@@ -108,10 +108,10 @@ export class DashboardComponent implements OnInit  {
 
    submit() {
      let obj:Object = {
-                         'chip_name' : this.chipName,
-                         'module':this.modName,
-                         'sku':this.skuNumber,
-                         'revision': this.revision
+                         "chip_name" : this.chipName[0],
+                         "module":this.modName,
+                         "sku":this.skuNumber,
+                         "revision": this.revision
       };
 
 

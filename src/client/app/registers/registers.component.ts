@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, HostListener ,Inject } from '@angular/core';
 import { ChipService } from '../shared/services/chip.services';
 import { ChipDetailsService } from '../shared/services/chipDetail.services';
 import { ModuleService } from '../shared/services/module.services';
@@ -12,6 +12,7 @@ import { Revision } from '../shared/models/revision.model';
 import { Router } from '@angular/router';
 import { SocketService } from '../shared/services/socket.service';
 import {Http, Headers} from '@angular/http';
+import { DOCUMENT } from '@angular/platform-browser';
 
 /**
  * This class represents the navigation bar component.
@@ -30,6 +31,7 @@ export class RegistersComponent {
   revisions:Revision[];
   errorMessage:any;
   query:any ;
+  $query:any ;
   rows:any;
   hideModules:boolean;
   hideSku:boolean;
@@ -37,6 +39,7 @@ export class RegistersComponent {
   hideSubmit:boolean;
   records = new Array<any>();
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private ChipService : ChipService,
     private ChipDetailsService:ChipDetailsService,
     private ModuleService:ModuleService,
@@ -59,13 +62,13 @@ export class RegistersComponent {
   }
 
   getModules() {
-    this.ChipDetailsService.getChipDetails().subscribe(
+    this.ChipDetailsService.getChipDetailsByName().subscribe(
       modules => this.mods = modules,
       error =>  this.errorMessage = <any>error);
   }
 
   getModuleSkus() {
-    this.ModuleService.getModule().subscribe(
+    this.ModuleService.getModuleByName().subscribe(
       skus => this.skus = skus,
       error => this.errorMessage = <any>error);
   }
@@ -80,12 +83,14 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
     this.query.chip = chipname;
     this.hideModules = false;
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/records/chip/' + this.query.chip.toString()) // ...using post request
+    this.$query  = {
+      "conditions" : { "chip_name" : chipname } ,
+      "page_number" : "1"
+    };
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
-        message.results.forEach((result:any) => {
-          this.MemoryParamsService.setTableRows(JSON.parse(result));
-        });
+        this.MemoryParamsService.setTableRows(message);
       });
   }
 
@@ -93,12 +98,14 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
      this.query.module = modulename;
      this.hideSku = false;
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/records/module/' + this.query.module.toString() ) // ...using post request
+    this.$query  = {
+      "conditions" : { "module" : modulename } ,
+      "page_number" : "1"
+    };
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
-        message.results.forEach((result:any) => {
-          this.MemoryParamsService.setTableRows(JSON.parse(result));
-        });
+        this.MemoryParamsService.setTableRows(message);
       });
   }
 
@@ -106,12 +113,14 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
     this.query.sku = skunumber;
     this.hideRevision =false;
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/records/sku/' +  this.query.sku.toString() ) // ...using post request
+    this.$query  = {
+      "conditions" : { "sku":skunumber } ,
+      "page_number" : "1"
+    };
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
-        message.results.forEach((result:any) => {
-          this.MemoryParamsService.setTableRows(JSON.parse(result));
-        });
+        this.MemoryParamsService.setTableRows(message);
       });
   }
 
@@ -119,18 +128,25 @@ export class RegistersComponent {
     this.MemoryParamsService.clearTableRows();
     this.query.revision = revision ;
     this.hideSubmit=false;
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/records/revisions/' +  this.query.revision.toString() ) // ...using post request
+    this.$query  = {
+      "conditions" : { "revision" : revision } ,
+      "page_number" : "1"
+    };
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
-        message.results.forEach((result:any) => {
-          this.MemoryParamsService.setTableRows(JSON.parse(result));
-        });
+        this.MemoryParamsService.setTableRows(message);
       });
   }
 
   getData(){
-    console.log(this.query)
-    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.query ) // ...using post request
+
+   this.$query  = {
+      "conditions" : this.query ,
+      "page_number" : "1"
+    };
+
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
             this.MemoryParamsService.setTableRows(message);
@@ -146,7 +162,42 @@ export class RegistersComponent {
     this.getModuleSkus();
     this.getRevision();
     this.getData();
+
   }
+
+  public navIsFixed: boolean = false;
+
+  @HostListener("window:scroll", [])
+  onWindowScroll() {
+    let status = "not reached";
+    let windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    let body = document.body, html = document.documentElement;
+    let docHeight = Math.max(body.scrollHeight,
+      body.offsetHeight, html.clientHeight,
+      html.scrollHeight, html.offsetHeight);
+    let windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight) {
+      status = 'bottom reached';
+    }
+
+    if( status == 'bottom reached' ){
+      let page_number = parseInt(this.$query.page_number) + 1;
+      this.$query  = {
+        "conditions" : this.query ,
+        "page_number" : page_number
+      };
+
+      this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe( message => {
+          this.MemoryParamsService.setTableRows(message);
+        });
+    }
+
+    status = "not reached";
+  }
+
+
 
 
 }
