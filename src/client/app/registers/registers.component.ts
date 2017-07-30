@@ -129,11 +129,12 @@ export class RegistersComponent {
   }
 
   getData(){
-    console.log(this.query)
-    this.http.post('http://localhost:3000/goldenregister/register',this.query ) // ...using post request
+    var queryObj = new Object();
+    queryObj["conditions"] = this.query;
+    this.http.post('http://localhost:3000/goldenregister/register/search',queryObj) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
-            this.MemoryParamsService.setTableRows(message);
+        this.MemoryParamsService.setTableRows(message);
       });
   }
 
