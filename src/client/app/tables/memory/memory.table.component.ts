@@ -28,7 +28,9 @@ export class TableComponent implements OnInit {
   latch = 0;
   filterQuery:any = {} ;
 
+  showTypeAhead: any = false;
   histories :any =[];
+  recordIds: any =[];
   skus: any = [];
   revisions: any = [];
   packageInfos: any = [];
@@ -64,6 +66,7 @@ export class TableComponent implements OnInit {
     this.MemoryParamsService.clearTableRows();
     this.filterQuery['chip_name'] = this.query.chip;
     this.getData();
+    this.showTypeAhead = false;
   }
 
   ngOnInit() {
@@ -118,7 +121,7 @@ export class TableComponent implements OnInit {
     }
 
     this.groups = Object.keys(this.config);
-    this.getPinnedData();
+    // this.getPinnedData();
   }
 
   getData() {
@@ -159,10 +162,16 @@ export class TableComponent implements OnInit {
 
 
   makeFilterQuery(param:any){
+    // Set selected value to the input field and clear these values from param object
+    $('input[name="' + param.columnName + '"]').val(param.selectedValue);
+    delete param.selectedValue;
+    delete param.columnName;
+
     Object.assign( this.filterQuery,this.MemoryParamsService.getQueryParams());
     Object.assign(this.filterQuery,param);
     var queryObj = new Object();
     queryObj["conditions"] = this.filterQuery;
+    this.showTypeAhead = false;
     this.http.post('http://localhost:3000/goldenregister/register/search', queryObj) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
@@ -172,86 +181,89 @@ export class TableComponent implements OnInit {
       });
   }
 
-  onSkuSelect(sku_info:string) {
-    this.makeFilterQuery({sku_info});
+  onRecordIdSelect(record_id:string, columnName:string) {
+    this.makeFilterQuery({record_id: record_id, selectedValue: record_id, columnName: columnName});
   }
-  onRevisionSelect(chip_revision_entry:string){
-    this.makeFilterQuery({chip_revision_entry});
+  onSkuSelect(sku_info:string, columnName:string) {
+    this.makeFilterQuery({sku_info: sku_info, selectedValue: sku_info, columnName: columnName});
   }
-
-  onPackageInfoSelect(package_info:string){
-    this.makeFilterQuery({package_info});
-  }
-
-  onProgramSelect(programs:string){
-    this.makeFilterQuery({programs});
+  onRevisionSelect(chip_revision_entry:string, columnName:string){
+    this.makeFilterQuery({chip_revision_entry, selectedValue: chip_revision_entry, columnName: columnName});
   }
 
-  onBlockNameSelect(block:string){
-    this.makeFilterQuery({block});
+  onPackageInfoSelect(package_info:string, columnName:string){
+    this.makeFilterQuery({package_info, selectedValue: package_info, columnName: columnName});
   }
 
-  onManualNameSelect(manual:string){
-    this.makeFilterQuery({manual});
+  onProgramSelect(programs:string, columnName:string){
+    this.makeFilterQuery({programs, selectedValue: programs, columnName: columnName});
   }
 
-  onBlockRevisionSelect(block_revision:string){
-    this.makeFilterQuery({block_revision});
+  onBlockNameSelect(block:string, columnName:string){
+    this.makeFilterQuery({block, selectedValue: block, columnName: columnName});
   }
 
-  onRegisterTypeSelect(reg_type:string){
-    this.makeFilterQuery({reg_type});
+  onManualNameSelect(manual:string, columnName:string){
+    this.makeFilterQuery({manual, selectedValue: manual, columnName: columnName});
   }
 
-  onRegisterAddressSelect(reg_address:string){
-    this.makeFilterQuery({reg_address});
+  onBlockRevisionSelect(block_revision:string, columnName:string){
+    this.makeFilterQuery({block_revision, selectedValue: block_revision, columnName: columnName});
   }
 
-  onRegisterNameSelect(reg_name:string){
-    this.makeFilterQuery({reg_name});
+  onRegisterTypeSelect(reg_type:string, columnName:string){
+    this.makeFilterQuery({reg_type, selectedValue: reg_type, columnName: columnName});
   }
 
-  onRegisterFieldNameSelect(field_name:string){
-    this.makeFilterQuery({field_name});
+  onRegisterAddressSelect(reg_address:string, columnName:string){
+    this.makeFilterQuery({reg_address, selectedValue: reg_address, columnName: columnName});
   }
 
-  onRegisterMaskSelect(mask:string){
-    this.makeFilterQuery({mask});
+  onRegisterNameSelect(reg_name:string, columnName:string){
+    this.makeFilterQuery({reg_name, selectedValue: reg_name, columnName: columnName});
   }
 
-  onRegisterValueSelect(value:string){
-    this.makeFilterQuery({value});
+  onRegisterFieldNameSelect(field_name:string, columnName:string){
+    this.makeFilterQuery({field_name, selectedValue: field_name, columnName: columnName});
   }
 
-  onRegistersMinTempSelect(min_temp:string){
-    this.makeFilterQuery({min_temp});
-  }
-  onRegistersMaxTempSelect(max_temp:string){
-    this.makeFilterQuery({max_temp});
-  }
-  onRegistersThermalSenSelect(thermal_sensor:string){
-    this.makeFilterQuery({thermal_sensor});
+  onRegisterMaskSelect(mask:string, columnName:string){
+    this.makeFilterQuery({mask, selectedValue: mask, columnName: columnName});
   }
 
-  onRegistersFrequencySelect(frequency:string){
-    this.makeFilterQuery({frequency});
+  onRegisterValueSelect(value:string, columnName:string){
+    this.makeFilterQuery({value, selectedValue: value, columnName: columnName});
   }
 
-  onRegistersModeSelect(mode:string){
-    this.makeFilterQuery({mode});
+  onRegistersMinTempSelect(min_temp:string, columnName:string){
+    this.makeFilterQuery({min_temp, selectedValue: min_temp, columnName: columnName});
   }
-  onRegistersPhaseSelect(curr_phase:string){
-    this.makeFilterQuery({curr_phase});
+  onRegistersMaxTempSelect(max_temp:string, columnName:string){
+    this.makeFilterQuery({max_temp, selectedValue: max_temp, columnName: columnName});
   }
-  onRegistersStateSelect(curr_state:string){
-    this.makeFilterQuery({curr_state});
+  onRegistersThermalSenSelect(thermal_sensor:string, columnName:string){
+    this.makeFilterQuery({thermal_sensor, selectedValue: thermal_sensor, columnName: columnName});
   }
 
-  onRegistersAsicSelect(asic:string){
-    this.makeFilterQuery({asic});
+  onRegistersFrequencySelect(frequency:string, columnName:string){
+    this.makeFilterQuery({frequency, selectedValue: frequency, columnName: columnName});
   }
-  onPlatformSelect(platform_name:string){
-    this.makeFilterQuery({platform_name});
+
+  onRegistersModeSelect(mode:string, columnName:string){
+    this.makeFilterQuery({mode, selectedValue: mode, columnName: columnName});
+  }
+  onRegistersPhaseSelect(curr_phase:string, columnName:string){
+    this.makeFilterQuery({curr_phase, selectedValue: curr_phase, columnName: columnName});
+  }
+  onRegistersStateSelect(curr_state:string, columnName:string){
+    this.makeFilterQuery({curr_state, selectedValue: curr_state, columnName: columnName});
+  }
+
+  onRegistersAsicSelect(asic:string, columnName:string){
+    this.makeFilterQuery({asic, selectedValue: asic, columnName: columnName});
+  }
+  onPlatformSelect(platform_name:string, columnName:string){
+    this.makeFilterQuery({platform_name, selectedValue: platform_name, columnName: columnName});
   }
 
   /*onPlatformSelect(platform:string){
@@ -266,10 +278,26 @@ export class TableComponent implements OnInit {
   }*/
 
   onSearchChange(searchValue: string, column: string) {
+    if (column === 'Record Id' && searchValue !== '') {
+      this.http.get('http://localhost:3000/goldenregister/register?record_id=' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.recordIds.indexOf(message) === -1) {
+              this.recordIds.push(message);
+            }
+          });
+        });
+    } else {
+      this.recordIds = [] ;
+    }
+
     if (column === 'SKU' && searchValue !== '') {
       this.http.get('http://localhost:3000/goldenregister/register?sku_info=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.skus.indexOf(message) === -1) {
               this.skus.push(message)
@@ -284,6 +312,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?chip_revision_entry=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.revisions.indexOf(message) === -1) {
               this.revisions.push(message);
@@ -298,6 +327,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?package_info=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.packageInfos.indexOf(message) === -1) {
               this.packageInfos.push(message);
@@ -313,6 +343,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?platform_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.platforms.indexOf(message) === -1) {
               this.platforms.push(message);
@@ -327,6 +358,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?programs=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.programs.indexOf(message) === -1) {
               this.programs.push(message);
@@ -341,6 +373,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?block=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.blockNames.indexOf(message) === -1) {
               this.blockNames.push(message);
@@ -356,6 +389,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/v1/block/revision/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.forEach((message: any) => {
             if (this.blockRevisions.indexOf(message) === -1) {
               this.blockRevisions.push(message);
@@ -370,6 +404,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?manual=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.manualNames.indexOf(message) === -1) {
               this.manualNames.push(message);
@@ -384,6 +419,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?reg_type=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.regTypes.indexOf(message) === -1) {
               this.regTypes.push(message);
@@ -398,6 +434,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?reg_address=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.regAddresses.indexOf(message) === -1) {
               this.regAddresses.push(message);
@@ -412,6 +449,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?reg_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.regNames.indexOf(message) === -1) {
               this.regNames.push(message);
@@ -426,6 +464,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?field_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.fieldNames.indexOf(message) === -1) {
               this.fieldNames.push(message);
@@ -440,6 +479,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?mask=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message  => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.masks.indexOf(message) === -1) {
               this.masks.push(message);
@@ -454,6 +494,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?value=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.values.indexOf(message) === -1) {
               this.values.push(message);
@@ -468,6 +509,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?asic=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.asics.indexOf(message) === -1) {
               this.asics.push(message);
@@ -482,6 +524,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?min_temp=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.minTemps.indexOf(message) === -1) {
               this.minTemps.push(message);
@@ -496,6 +539,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?max_temp=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.maxTemps.indexOf(message) === -1) {
               this.maxTemps.push(message);
@@ -510,6 +554,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?thermal_sensor=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.thermalsens.indexOf(message) === -1) {
               this.thermalsens.push(message);
@@ -524,6 +569,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?frequency=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           this.MemoryParamsService.clearTableRows();
           message.result.forEach((message: any) => {
             if (this.frequencies.indexOf(message) === -1) {
@@ -539,6 +585,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?mode=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.modes.indexOf(message) === -1) {
               this.modes.push(message);
@@ -553,6 +600,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?curr_phase=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.phases.indexOf(message) === -1) {
               this.phases.push(message);
@@ -567,6 +615,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?curr_state=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.states.indexOf(message) === -1) {
               this.states.push(message);
@@ -581,6 +630,7 @@ export class TableComponent implements OnInit {
       this.http.get('http://localhost:3000/goldenregister/register?comments=' + searchValue) // ...using post request
         .map((res) => res.json())
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.searchresults.indexOf(message) === -1) {
               this.searchresults.push(message);

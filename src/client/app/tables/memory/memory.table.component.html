@@ -20,20 +20,23 @@
                   (input)="onSearchChange($event.target.value,column.name)"
                 /></p>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 1 ">
-                <span *ngFor="let sku of skus" (click)="onSkuSelect(sku)">{{sku}}</span>
+              <div class="typeaheadv" *ngIf=" j == 0 && showTypeAhead">
+                <span *ngFor="let id of recordIds" (click)="onRecordIdSelect(id, 'Record Id')">{{id}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 2 ">
-                <span *ngFor="let revision of revisions" (click)="onRevisionSelect(revision)">{{revision }}</span>
+              <div class="typeaheadv" *ngIf=" j == 1 && showTypeAhead">
+                <span *ngFor="let sku of skus" (click)="onSkuSelect(sku, 'SKU')">{{sku}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 3 ">
-                <span *ngFor="let packageInfo of packageInfos" (click)="onPackageInfoSelect(packageInfo)">{{packageInfo}}</span>
+              <div class="typeaheadv" *ngIf=" j == 2 && showTypeAhead">
+                <span *ngFor="let revision of revisions" (click)="onRevisionSelect(revision, 'Revision')">{{revision }}</span>
+              </div>
+              <div class="typeaheadv" *ngIf=" j == 3 && showTypeAhead">
+                <span *ngFor="let packageInfo of packageInfos" (click)="onPackageInfoSelect(packageInfo, 'Package Info')">{{packageInfo}}</span>
               </div>
             </th>
           </tr>
           </thead>
            <tbody class="child-table-body">
-           <tr *ngFor="let row of rows | filter:filterText;let i = index " class="prime" >
+           <tr *ngFor="let row of rows | filter:filterText;let i = index " class="prime" id="{{row._id}}">
              <td class = "pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
              <td>{{row.record_id}}</td>
              <td>{{row.sku}}</td>
@@ -57,17 +60,17 @@
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 0 ">
-                <span *ngFor="let platform of platforms" (click)="onPlatformSelect(platform)">{{platform}}</span>
+              <div class="typeaheadv" *ngIf=" j == 0 && showTypeAhead">
+                <span *ngFor="let platform of platforms" (click)="onPlatformSelect(platform, 'Platform')">{{platform}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 1 ">
-                <span *ngFor="let program of programs" (click)="onProgramSelect(program)">{{program}}</span>
+              <div class="typeaheadv" *ngIf=" j == 1 && showTypeAhead">
+                <span *ngFor="let program of programs" (click)="onProgramSelect(program, 'Programs')">{{program}}</span>
               </div>
             </th>
           </tr>
           </thead>
           <tbody class="child-table-body">
-          <tr *ngFor="let row of rows | filter:filterText;">
+          <tr *ngFor="let row of rows | filter:filterText;" id="{{row._id}}">
             <td>{{row.platform_name}}</td>
             <td>{{row.programs}}</td>
           </tr>
@@ -88,20 +91,20 @@
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 0 ">
-                <span *ngFor="let blockName of blockNames" (click)="onBlockNameSelect(blockName)">{{blockName}}</span>
+              <div class="typeaheadv" *ngIf=" j == 0 && showTypeAhead">
+                <span *ngFor="let blockName of blockNames" (click)="onBlockNameSelect(blockName, 'Name')">{{blockName}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 1 ">
-                <span *ngFor="let blockRevision of blockRevisions" (click)="onBlockRevisionSelect(blockRevision)">{{blockRevision}}</span>
+              <div class="typeaheadv" *ngIf=" j == 1 && showTypeAhead">
+                <span *ngFor="let blockRevision of blockRevisions" (click)="onBlockRevisionSelect(blockRevision, 'Block Revision')">{{blockRevision}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 2 ">
-                <span *ngFor="let manualName of manualNames" (click)="onManualNameSelect(manualName)">{{manualName}}</span>
+              <div class="typeaheadv" *ngIf=" j == 2 && showTypeAhead">
+                <span *ngFor="let manualName of manualNames" (click)="onManualNameSelect(manualName, 'Manual')">{{manualName}}</span>
               </div>
             </th>
           </tr>
           </thead>
           <tbody class="child-table-body">
-          <tr *ngFor="let row of rows | filter:filterText; ">
+          <tr *ngFor="let row of rows | filter:filterText; " id="{{row._id}}">
             <td>{{row.block}}</td>
             <td>%3CDC%3E</td>
             <td>{{row.manual}}</td>
@@ -123,53 +126,53 @@
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 0 ">
-                <span *ngFor="let type of regTypes" (click)="onRegisterTypeSelect(type)">{{type}}</span>
+              <div class="typeaheadv" *ngIf=" j == 0 && showTypeAhead">
+                <span *ngFor="let type of regTypes" (click)="onRegisterTypeSelect(type, 'Reg Type')">{{type}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 1 ">
-                <span *ngFor="let address of regAddresses" (click)="onRegisterAddressSelect(address)">{{address}}</span>
+              <div class="typeaheadv" *ngIf=" j == 1 && showTypeAhead">
+                <span *ngFor="let address of regAddresses" (click)="onRegisterAddressSelect(address, 'Reg Address')">{{address}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 2 ">
-                <span *ngFor="let register of regNames" (click)="  onRegisterNameSelect(register)">{{register}}</span>
+              <div class="typeaheadv" *ngIf=" j == 2 && showTypeAhead">
+                <span *ngFor="let register of regNames" (click)="  onRegisterNameSelect(register, 'Reg Name')">{{register}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 3 ">
-                <span *ngFor="let field_name of fieldNames" (click)="  onRegisterFieldNameSelect(field_name)">{{field_name}}</span>
+              <div class="typeaheadv" *ngIf=" j == 3 && showTypeAhead">
+                <span *ngFor="let field_name of fieldNames" (click)="  onRegisterFieldNameSelect(field_name, 'Field Name')">{{field_name}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 4 ">
-                <span *ngFor="let mask of masks" (click)="  onRegisterMaskSelect(mask)">{{mask}}</span>
+              <div class="typeaheadv" *ngIf=" j == 4 && showTypeAhead">
+                <span *ngFor="let mask of masks" (click)="  onRegisterMaskSelect(mask, 'Mask')">{{mask}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 5 ">
-                 <span *ngFor="let value of values" (click)="  onRegisterValueSelect(value)">{{value}}</span>
+              <div class="typeaheadv" *ngIf=" j == 5 && showTypeAhead">
+                 <span *ngFor="let value of values" (click)="  onRegisterValueSelect(value, 'Value')">{{value}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 6 ">
-                <span *ngFor="let asic of asics" (click)="onRegistersAsicSelect(asic)">{{asic}}</span>
+              <div class="typeaheadv" *ngIf=" j == 6 && showTypeAhead">
+                <span *ngFor="let asic of asics" (click)="onRegistersAsicSelect(asic, 'ASIC')">{{asic}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 7 ">
-                <span *ngFor="let minTemp of minTemps" (click)="onRegistersMinTempSelect(minTemp)">{{minTemp}}</span>
+              <div class="typeaheadv" *ngIf=" j == 7 && showTypeAhead">
+                <span *ngFor="let minTemp of minTemps" (click)="onRegistersMinTempSelect(minTemp, 'Min Temp')">{{minTemp}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 8 ">
-                <span *ngFor="let maxTemp of maxTemps" (click)="onRegistersMaxTempSelect(maxTemp)">{{maxTemp}}</span>
+              <div class="typeaheadv" *ngIf=" j == 8 && showTypeAhead">
+                <span *ngFor="let maxTemp of maxTemps" (click)="onRegistersMaxTempSelect(maxTemp, 'Max Temp')">{{maxTemp}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 9 ">
-                <span *ngFor="let thermalSen of thermalsens" (click)="onRegistersThermalSenSelect(thermalSen)">{{thermalSen}}</span>
+              <div class="typeaheadv" *ngIf=" j == 9 && showTypeAhead">
+                <span *ngFor="let thermalSen of thermalsens" (click)="onRegistersThermalSenSelect(thermalSen, 'Thermal Sen')">{{thermalSen}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 10 ">
-                <span *ngFor="let frequency of frequencies" (click)="onRegistersFrequencySelect(frequency)">{{frequency}}</span>
+              <div class="typeaheadv" *ngIf=" j == 10 && showTypeAhead">
+                <span *ngFor="let frequency of frequencies" (click)="onRegistersFrequencySelect(frequency, 'Frequency')">{{frequency}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 11 ">
-                <span *ngFor="let mode of modes" (click)="onRegistersModeSelect(mode)">{{mode}}</span>
+              <div class="typeaheadv" *ngIf=" j == 11 && showTypeAhead">
+                <span *ngFor="let mode of modes" (click)="onRegistersModeSelect(mode, 'Mode')">{{mode}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 12 ">
-                <span *ngFor="let phase of phases" (click)="onRegistersPhaseSelect(phase)">{{phase}}</span>
+              <div class="typeaheadv" *ngIf=" j == 12 && showTypeAhead">
+                <span *ngFor="let phase of phases" (click)="onRegistersPhaseSelect(phase, 'Phase')">{{phase}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 13 ">
-                   <span *ngFor="let state of states" (click)="onRegistersStateSelect(state)">{{state}}</span>
+              <div class="typeaheadv" *ngIf=" j == 13 && showTypeAhead">
+                   <span *ngFor="let state of states" (click)="onRegistersStateSelect(state, 'State')">{{state}}</span>
               </div>
             </th>
           </tr>
           </thead>
           <tbody class="child-table-body" id="registerFields">
-          <tr *ngFor="let row of rows | filter:filterText">
+          <tr *ngFor="let row of rows | filter:filterText" id="{{row._id}}">
             <td>{{row.reg_type}}</td>
             <td>{{row.reg_address}}</td>
             <td>{{row.reg_name}}</td>
