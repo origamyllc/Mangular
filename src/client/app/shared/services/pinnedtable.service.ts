@@ -51,7 +51,7 @@ export class PinnedTableParamsService  {
     Object.keys(data).forEach((key:any) => {
       let action = data[key].action;
       if(action  !== 'delete') {
-        this.updateUrl = 'http://localhost:9000/goldenregister/v1/update/records';
+        this.updateUrl = 'http://localhost:3000/goldenregister/register/history';
         console.log(data[key])
         this.http.post(this.updateUrl,data[key], {headers: headers}) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data

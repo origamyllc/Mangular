@@ -14,6 +14,7 @@ import { NotesModule } from './notes/notes.module';
 import { BlockModule } from './blocks/block.module';
 import { UserModule } from './user/user.module';
 import { ModeModule } from './modes/mode.module';
+import {MemoryParamsService} from './shared/services/memorytable.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

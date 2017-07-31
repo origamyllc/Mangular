@@ -10,7 +10,7 @@
             <th>
             </th>
             <th *ngFor="let column of config[groups[0]].columns;let j = index ">
-              <div class="table-header">
+              <div class="table-header" >
                 <p>{{column.name}}</p>
               </div>
               <div class="table-header">
@@ -106,7 +106,7 @@
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows | filter:filterText; " id="{{row._id}}">
             <td>{{row.block}}</td>
-            <td>%3CDC%3E</td>
+            <td>{{row.block_revision}}</td>
             <td>{{row.manual}}</td>
           </tr>
           </tbody>
@@ -172,7 +172,7 @@
           </tr>
           </thead>
           <tbody class="child-table-body" id="registerFields">
-          <tr *ngFor="let row of rows | filter:filterText" id="{{row._id}}">
+          <tr *ngFor="let row of rows ">
             <td>{{row.reg_type}}</td>
             <td>{{row.reg_address}}</td>
             <td>{{row.reg_name}}</td>
@@ -188,9 +188,7 @@
             <td>{{row.curr_phase}}</td>
             <td>{{row.curr_state}}</td>
             <td style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
-            <td>{{row.version}}
-              <button (click)="getHistory($event,row)"></button>
-            </td>
+            <td>{{row.version}}</td>
             <td>N/A</td>
             <td>N/A</td>
           </tr>

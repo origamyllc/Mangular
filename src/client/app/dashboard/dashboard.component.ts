@@ -107,12 +107,12 @@ export class DashboardComponent implements OnInit  {
   }
 
    submit() {
-    let obj:Object = {
-        'chip_name' : this.chipName,
-        'module':this.modName,
-        'sku':this.skuNumber,
-        'revision': this.revision
-    };
+     let obj:Object = {
+                         "chip_name" : this.chipName,
+                         "module":this.modName,
+                         "sku":this.skuNumber,
+                         "revision": this.revision
+      };
 
 
      this.MemoryParamsService.setQueryParams(obj);
