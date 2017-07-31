@@ -58,20 +58,20 @@ export class RegistersComponent {
       error =>  this.errorMessage = <any>error);
   }
 
-  getModules() {
-    this.ChipDetailsService.getChipDetails().subscribe(
+  getModules(name:string) {
+    this.ChipDetailsService.getChipDetailsByName(name).subscribe(
       modules => this.mods = modules,
       error =>  this.errorMessage = <any>error);
   }
 
-  getModuleSkus() {
-    this.ModuleService.getModule().subscribe(
+  getModuleSkus(name:string) {
+    this.ModuleService.getModuleByName(name).subscribe(
       skus => this.skus = skus,
       error => this.errorMessage = <any>error);
   }
 
-  getRevision() {
-    this.ModuleSkuService.getModuleSku().subscribe(
+  getRevision(name:string) {
+    this.ModuleSkuService.getModuleSkuByName(name).subscribe(
       revisions => this.revisions = revisions,
       error =>  this.errorMessage = <any>error);
   }
@@ -143,9 +143,9 @@ export class RegistersComponent {
    */
   ngOnInit() {
     this.getChips();
-    this.getModules();
-    this.getModuleSkus();
-    this.getRevision();
+    this.getModules('');
+    this.getModuleSkus('');
+    this.getRevision('');
     this.getData();
   }
 

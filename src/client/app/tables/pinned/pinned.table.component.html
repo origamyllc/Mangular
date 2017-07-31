@@ -19,9 +19,9 @@
           <tr *ngFor="let row of rows; let i = index" >
             <td></td>
             <td>{{row.record_id}}</td>
-            <td (click)="editTableCellHandler($event,'chip_sku',i)">{{row.chip_sku}}</td>
-            <td (click)="editTableCellHandler($event,'chip_revision',i)">{{row.chip_revision}}</td>
-            <td (click)="editTableCellHandler($event,'chip_package_info',i)" >{{row.chip_package_info}}</td>
+            <td (click)="editTableCellHandler($event,'sku',i)">{{row.sku}}</td>
+            <td (click)="editTableCellHandler($event,'sku_info',i)">{{row.sku_info}}</td>
+            <td (click)="editTableCellHandler($event,'package_info',i)" >{{row.package_info}}</td>
           </tr>
           </tbody>
         </table>
@@ -39,8 +39,8 @@
           </thead>
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows ; let i = index">
-            <td (click)="editTableCellHandler($event,'platform',i)" >{{row.platform}}</td>
-            <td (click)="editTableCellHandler($event,'program',i)">{{row.program}}</td>
+            <td (click)="editTableCellHandler($event,'platform_name',i)" >{{row.platform_name}}</td>
+            <td (click)="editTableCellHandler($event,'programs',i)">{{row.programs}}</td>
           </tr>
           </tbody>
         </table>
@@ -58,9 +58,9 @@
           </thead>
           <tbody class="child-table-body">
           <tr *ngFor="let row of rows; let i = index" >
-            <td (click)="editTableCellHandler($event,'block_name',i)">{{row.block_name}}</td>
-            <td (click)="editTableCellHandler($event,'block_revision',i)" >{{row.block_revision}}</td>
-            <td (click)="editTableCellHandler($event,'manual_name',i)">{{row.manual_name}}</td>
+            <td (click)="editTableCellHandler($event,'block',i)">{{row.block}}</td>
+            <td (click)="editTableCellHandler($event,'block_revision',i)" >DC</td>
+            <td (click)="editTableCellHandler($event,'manual',i)">{{row.manual}}</td>
           </tr>
           </tbody>
         </table>
@@ -81,9 +81,9 @@
           </thead>
           <tbody class="child-table-body">
            <tr *ngFor="let row of rows; let i = index" >
-             <td (click)="editTableCellHandler($event,'registertype',i)">{{row.registertype}}</td>
-             <td (click)="editTableCellHandler($event,'address',i)">{{row.address}}</td>
-             <td (click)="editTableCellHandler($event,'register',i)" >{{row.register}}</td>
+             <td (click)="editTableCellHandler($event,'reg_type',i)">{{row.reg_type}}</td>
+             <td (click)="editTableCellHandler($event,'reg_address',i)">{{row.reg_address}}</td>
+             <td (click)="editTableCellHandler($event,'reg_name',i)" >{{row.reg_name}}</td>
              <td (click)="editTableCellHandler($event,'field_name',i)"  >{{row.field_name}}</td>
              <td (click)="editTableCellHandler($event,'mask',i)" >{{row.mask}}</td>
              <td (click)="editTableCellHandler($event,'value',i)" >{{row.value}}</td>
@@ -93,8 +93,8 @@
              <td (click)="editTableCellHandler($event,'thermal_sensor',i)" >{{row.thermal_sensor}}</td>
              <td (click)="editTableCellHandler($event,'frequency',i)">{{row.frequency}}</td>
              <td (click)="editTableCellHandler($event,'mode',i)" style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
-             <td (click)="editTableCellHandler($event,'phase',i)" >{{row.phase}}</td>
-             <td (click)="editTableCellHandler($event,'state',i)">{{row.state}}</td>
+             <td (click)="editTableCellHandler($event,'curr_phase',i)" >{{row.curr_phase}}</td>
+             <td (click)="editTableCellHandler($event,'curr_state',i)">{{row.curr_state}}</td>
              <td (click)="editTableCellHandler($event,'comments',i)" style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
              <td>{{row.record_version}}</td>
              <td>N/A</td>
