@@ -19,8 +19,8 @@
           <tr *ngFor="let row of rows; let i = index" >
             <td></td>
             <td>{{row.record_id}}</td>
-            <td (click)="editTableCellHandler($event,'sku',i)">{{row.sku}}</td>
             <td (click)="editTableCellHandler($event,'sku_info',i)">{{row.sku_info}}</td>
+            <td (click)="editTableCellHandler($event,'chip_revision_entry',i)">{{row.chip_revision_entry}}</td>
             <td (click)="editTableCellHandler($event,'package_info',i)" >{{row.package_info}}</td>
           </tr>
           </tbody>
