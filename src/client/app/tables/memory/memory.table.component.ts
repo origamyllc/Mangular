@@ -28,7 +28,9 @@ export class TableComponent implements OnInit {
   latch = 0;
   filterQuery:any = {} ;
 
+  showTypeAhead: any = false;
   histories :any =[];
+  recordIds: any =[];
   skus: any = [];
   revisions: any = [];
   packageInfos: any = [];
@@ -64,6 +66,7 @@ export class TableComponent implements OnInit {
     this.MemoryParamsService.clearTableRows();
     this.filterQuery['chip_name'] = this.query.chip;
     this.getData();
+    this.showTypeAhead = false;
   }
 
   ngOnInit() {
@@ -118,7 +121,7 @@ export class TableComponent implements OnInit {
     }
 
     this.groups = Object.keys(this.config);
-    this.getPinnedData();
+    // this.getPinnedData();
   }
 
   getData() {
@@ -139,7 +142,7 @@ export class TableComponent implements OnInit {
   }
 
   getPinnedData() {
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/memorytable/pinned') // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/memorytable/pinned') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         message.results.forEach((index: any) => {
@@ -157,24 +160,19 @@ export class TableComponent implements OnInit {
       });
   }
 
-  onSkuSelect(sku:string){
-    this.filterQuery['chip_name'] = this.query.chip;
-    Object.assign( this.filterQuery,{'chip_sku':sku});
-    let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
-      .map((res) => res.json()) // ...and calling .json() on the response to return data
-      .subscribe(message => {
-          this.MemoryParamsService.clearTableRows();
-          this.rows = [];
-          this.rows = message;
-        });
-
-  }
 
   makeFilterQuery(param:any){
-    Object.assign( this.filterQuery,param);
-    let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    // Set selected value to the input field and clear these values from param object
+    $('input[name="' + param.columnName + '"]').val(param.selectedValue);
+    delete param.selectedValue;
+    delete param.columnName;
+
+    Object.assign( this.filterQuery,this.MemoryParamsService.getQueryParams());
+    Object.assign(this.filterQuery,param);
+    var queryObj = new Object();
+    queryObj["conditions"] = this.filterQuery;
+    this.showTypeAhead = false;
+    this.http.post('http://localhost:3000/goldenregister/register/search', queryObj) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.MemoryParamsService.clearTableRows();
@@ -183,102 +181,123 @@ export class TableComponent implements OnInit {
       });
   }
 
-  onRevisionSelect(chip_revision:string){
-    this.makeFilterQuery({chip_revision});
+  onRecordIdSelect(record_id:string, columnName:string) {
+    this.makeFilterQuery({record_id: record_id, selectedValue: record_id, columnName: columnName});
+  }
+  onSkuSelect(sku_info:string, columnName:string) {
+    this.makeFilterQuery({sku_info: sku_info, selectedValue: sku_info, columnName: columnName});
+  }
+  onRevisionSelect(chip_revision_entry:string, columnName:string){
+    this.makeFilterQuery({chip_revision_entry, selectedValue: chip_revision_entry, columnName: columnName});
   }
 
-  onPackageInfoSelect(chip_package_info:string){
-    this.makeFilterQuery({chip_package_info});
+  onPackageInfoSelect(package_info:string, columnName:string){
+    this.makeFilterQuery({package_info, selectedValue: package_info, columnName: columnName});
   }
 
-  onProgramSelect(program:string){
-    this.makeFilterQuery({program});
+  onProgramSelect(programs:string, columnName:string){
+    this.makeFilterQuery({programs, selectedValue: programs, columnName: columnName});
   }
 
-  onBlockNameSelect(block_name:string){
-    this.makeFilterQuery({block_name});
+  onBlockNameSelect(block:string, columnName:string){
+    this.makeFilterQuery({block, selectedValue: block, columnName: columnName});
   }
 
-  onManualNameSelect(manual_name:string){
-    this.makeFilterQuery({manual_name});
+  onManualNameSelect(manual:string, columnName:string){
+    this.makeFilterQuery({manual, selectedValue: manual, columnName: columnName});
   }
 
-  onBlockRevisionSelect(block_revision:string){
-    this.makeFilterQuery({block_revision});
+  onBlockRevisionSelect(block_revision:string, columnName:string){
+    this.makeFilterQuery({block_revision, selectedValue: block_revision, columnName: columnName});
   }
 
-  onRegisterTypeSelect(registertype:string){
-    this.makeFilterQuery({registertype});
+  onRegisterTypeSelect(reg_type:string, columnName:string){
+    this.makeFilterQuery({reg_type, selectedValue: reg_type, columnName: columnName});
   }
 
-  onRegisterAddressSelect(address:string){
-    this.makeFilterQuery({address});
+  onRegisterAddressSelect(reg_address:string, columnName:string){
+    this.makeFilterQuery({reg_address, selectedValue: reg_address, columnName: columnName});
   }
 
-  onRegisterNameSelect(register:string){
-    this.makeFilterQuery({register});
+  onRegisterNameSelect(reg_name:string, columnName:string){
+    this.makeFilterQuery({reg_name, selectedValue: reg_name, columnName: columnName});
   }
 
-  onRegisterFieldNameSelect(field_name:string){
-    this.makeFilterQuery({field_name});
+  onRegisterFieldNameSelect(field_name:string, columnName:string){
+    this.makeFilterQuery({field_name, selectedValue: field_name, columnName: columnName});
   }
 
-  onRegisterMaskSelect(mask:string){
-    this.makeFilterQuery({mask});
+  onRegisterMaskSelect(mask:string, columnName:string){
+    this.makeFilterQuery({mask, selectedValue: mask, columnName: columnName});
   }
 
-  onRegisterValueSelect(value:string){
-    this.makeFilterQuery({value});
+  onRegisterValueSelect(value:string, columnName:string){
+    this.makeFilterQuery({value, selectedValue: value, columnName: columnName});
   }
 
-  onRegistersMinTempSelect(min_temp:string){
-    this.makeFilterQuery({min_temp});
+  onRegistersMinTempSelect(min_temp:string, columnName:string){
+    this.makeFilterQuery({min_temp, selectedValue: min_temp, columnName: columnName});
   }
-  onRegistersMaxTempSelect(max_temp:string){
-    this.makeFilterQuery({max_temp});
+  onRegistersMaxTempSelect(max_temp:string, columnName:string){
+    this.makeFilterQuery({max_temp, selectedValue: max_temp, columnName: columnName});
   }
-  onRegistersThermalSenSelect(thermal_sensor:string){
-    this.makeFilterQuery({thermal_sensor});
-  }
-
-  onRegistersFrequencySelect(frequency:string){
-    this.makeFilterQuery({frequency});
+  onRegistersThermalSenSelect(thermal_sensor:string, columnName:string){
+    this.makeFilterQuery({thermal_sensor, selectedValue: thermal_sensor, columnName: columnName});
   }
 
-  onRegistersModeSelect(mode:string){
-    this.makeFilterQuery({mode});
-  }
-  onRegistersPhaseSelect(phase:string){
-    this.makeFilterQuery({phase});
-  }
-  onRegistersStateSelect(state:string){
-    this.makeFilterQuery({state});
+  onRegistersFrequencySelect(frequency:string, columnName:string){
+    this.makeFilterQuery({frequency, selectedValue: frequency, columnName: columnName});
   }
 
-  onRegistersAsicSelect(asic:string){
-    this.makeFilterQuery({asic});
+  onRegistersModeSelect(mode:string, columnName:string){
+    this.makeFilterQuery({mode, selectedValue: mode, columnName: columnName});
+  }
+  onRegistersPhaseSelect(curr_phase:string, columnName:string){
+    this.makeFilterQuery({curr_phase, selectedValue: curr_phase, columnName: columnName});
+  }
+  onRegistersStateSelect(curr_state:string, columnName:string){
+    this.makeFilterQuery({curr_state, selectedValue: curr_state, columnName: columnName});
   }
 
-  onPlatformSelect(platform:string){
+  onRegistersAsicSelect(asic:string, columnName:string){
+    this.makeFilterQuery({asic, selectedValue: asic, columnName: columnName});
+  }
+  onPlatformSelect(platform_name:string, columnName:string){
+    this.makeFilterQuery({platform_name, selectedValue: platform_name, columnName: columnName});
+  }
+
+  /*onPlatformSelect(platform:string){
     this.filterQuery['chip_name'] = this.query.chip;
     Object.assign( this.filterQuery,{platform});
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://172.17.175.38:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://localhost:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.rows = message;
       });
-  }
+  }*/
 
   onSearchChange(searchValue: string, column: string) {
-    if (searchValue === '') {
-
+    if (column === 'Record Id' && searchValue !== '') {
+      this.http.get('http://localhost:3000/goldenregister/register?record_id=' + searchValue) // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.recordIds.indexOf(message) === -1) {
+              this.recordIds.push(message);
+            }
+          });
+        });
+    } else {
+      this.recordIds = [] ;
     }
 
     if (column === 'SKU' && searchValue !== '') {
-      this.http.get('http://172.17.175.38:3000/goldenregister/register?sku=' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?sku_info=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.result.forEach((message: any) => {
             if (this.skus.indexOf(message) === -1) {
               this.skus.push(message)
@@ -290,12 +309,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === 'Revision' && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/revision/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?chip_revision_entry=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.revisions.indexOf(message.revision) === -1) {
-              this.revisions.push(message.revision);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.revisions.indexOf(message) === -1) {
+              this.revisions.push(message);
             }
           });
         });
@@ -304,12 +324,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Package Info" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/chips/packageinfo/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?package_info=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.packageInfos.indexOf(message.package_info) === -1) {
-              this.packageInfos.push(message.package_info);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.packageInfos.indexOf(message) === -1) {
+              this.packageInfos.push(message);
             }
           });
         });
@@ -319,12 +340,13 @@ export class TableComponent implements OnInit {
 
 
     if (column === "Platform" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/platforms/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?platform_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.platforms.indexOf(message.platform) === -1) {
-              this.platforms.push(message.platform);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.platforms.indexOf(message) === -1) {
+              this.platforms.push(message);
             }
           });
         });
@@ -333,12 +355,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Programs" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/sku/programs/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?programs=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.programs.indexOf(message.program) === -1) {
-              this.programs.push(message.program);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.programs.indexOf(message) === -1) {
+              this.programs.push(message);
             }
           });
         });
@@ -347,12 +370,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Name" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/blocks/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?block=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.blockNames.indexOf(message.name) === -1) {
-              this.blockNames.push(message.name);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.blockNames.indexOf(message) === -1) {
+              this.blockNames.push(message);
             }
           });
         });
@@ -362,9 +386,10 @@ export class TableComponent implements OnInit {
 
     if (column === "Block Revision" && searchValue !== '') {
       this.blockRevisions=[];
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/block/revision/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/v1/block/revision/search/' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           message.forEach((message: any) => {
             if (this.blockRevisions.indexOf(message) === -1) {
               this.blockRevisions.push(message);
@@ -376,12 +401,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Manual" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/manual/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?manual=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.manualNames.indexOf(message.name) === -1) {
-              this.manualNames.push(message.name);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.manualNames.indexOf(message) === -1) {
+              this.manualNames.push(message);
             }
           });
         });
@@ -390,12 +416,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Type" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/type/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?reg_type=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.regTypes.indexOf(message.register_type) === -1) {
-              this.regTypes.push(message.register_type);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.regTypes.indexOf(message) === -1) {
+              this.regTypes.push(message);
             }
           });
         });
@@ -404,12 +431,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Address" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/register/search/address/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?reg_address=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.regAddresses.indexOf(message.address) === -1) {
-              this.regAddresses.push(message.address);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.regAddresses.indexOf(message) === -1) {
+              this.regAddresses.push(message);
             }
           });
         });
@@ -418,12 +446,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Name" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/register/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?reg_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.regNames.indexOf(message.name) === -1) {
-              this.regNames.push(message.name);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.regNames.indexOf(message) === -1) {
+              this.regNames.push(message);
             }
           });
         });
@@ -432,12 +461,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Field Name" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/name/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?field_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.fieldNames.indexOf(message.field_name) === -1) {
-              this.fieldNames.push(message.field_name);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.fieldNames.indexOf(message) === -1) {
+              this.fieldNames.push(message);
             }
           });
         });
@@ -446,12 +476,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Mask" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/mask/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?mask=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message  => {
-          message.forEach((message: any) => {
-            if (this.masks.indexOf(message.mask) === -1) {
-              this.masks.push(message.mask);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.masks.indexOf(message) === -1) {
+              this.masks.push(message);
             }
           });
         });
@@ -460,12 +491,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Value" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/value/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?value=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-         message.forEach((message: any) => {
-            if (this.values.indexOf(message.value) === -1) {
-              this.values.push(message.value);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.values.indexOf(message) === -1) {
+              this.values.push(message);
             }
           });
         });
@@ -474,12 +506,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "ASIC" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/asic/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?asic=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
-        .subscribe(registerfields => {
-          registerfields.forEach((registerfield: any) => {
-            if (this.asics.indexOf(registerfield.asic) === -1) {
-              this.asics.push(registerfield.asic);
+        .subscribe(message => {
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.asics.indexOf(message) === -1) {
+              this.asics.push(message);
             }
           });
         });
@@ -488,12 +521,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Min Temp" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mintemp/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?min_temp=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.minTemps.indexOf(message.min_temp) === -1) {
-              this.minTemps.push(message.min_temp);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.minTemps.indexOf(message) === -1) {
+              this.minTemps.push(message);
             }
           });
         });
@@ -502,12 +536,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Max Temp" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/maxtemp/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?max_temp=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.maxTemps.indexOf(message.max_temp) === -1) {
-              this.maxTemps.push(message.max_temp);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.maxTemps.indexOf(message) === -1) {
+              this.maxTemps.push(message);
             }
           });
         });
@@ -516,12 +551,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Thermal Sen" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/sensor/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?thermal_sensor=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.thermalsens.indexOf(message.thermal_sensor) === -1) {
-              this.thermalsens.push(message.thermal_sensor);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.thermalsens.indexOf(message) === -1) {
+              this.thermalsens.push(message);
             }
           });
         });
@@ -530,13 +566,14 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Frequency" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/frequency/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?frequency=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          this.showTypeAhead = true;
           this.MemoryParamsService.clearTableRows();
-          message.forEach((message: any) => {
-            if (this.frequencies.indexOf(message.frequency) === -1) {
-              this.frequencies.push(message.frequency);
+          message.result.forEach((message: any) => {
+            if (this.frequencies.indexOf(message) === -1) {
+              this.frequencies.push(message);
             }
           });
         });
@@ -545,12 +582,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Mode" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/mode/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?mode=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.modes.indexOf(message.mode) === -1) {
-              this.modes.push(message.mode);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.modes.indexOf(message) === -1) {
+              this.modes.push(message);
             }
           });
         });
@@ -559,12 +597,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Phase" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/phase/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?curr_phase=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.phases.indexOf(message.phase) === -1) {
-              this.phases.push(message.phase);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.phases.indexOf(message) === -1) {
+              this.phases.push(message);
             }
           });
         });
@@ -573,12 +612,13 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "State" && searchValue !== '') {
-      this.http.get('http://172.17.175.38:9000/goldenregister/v1/conditions/state/search/' + searchValue) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register?curr_state=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
-          message.forEach((message: any) => {
-            if (this.states.indexOf(message.state) === -1) {
-              this.states.push(message.state);
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.states.indexOf(message) === -1) {
+              this.states.push(message);
             }
           });
         });
@@ -587,17 +627,18 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Comments" && searchValue !== '') {
-        this.http.get('http://172.17.175.38:9000/goldenregister/v1/registerfields/comments/search/' + searchValue) // ...using post request
-          .map((res) => res.json())
-          .subscribe(message => {
-            message.forEach((message: any) => {
-              if (this.searchresults.indexOf(message.comments) === -1) {
-                this.searchresults.push(message.comments);
-                let comment = message.comments;
-                this.filterQuery({comment})
-              }
-            });
+      this.http.get('http://localhost:3000/goldenregister/register?comments=' + searchValue) // ...using post request
+        .map((res) => res.json())
+        .subscribe(message => {
+          this.showTypeAhead = true;
+          message.result.forEach((message: any) => {
+            if (this.searchresults.indexOf(message) === -1) {
+              this.searchresults.push(message);
+              let comment = message.comments;
+              this.filterQuery({comment})
+            }
           });
+        });
     } else {
       this.searchresults =[] ;
     }
@@ -605,7 +646,8 @@ export class TableComponent implements OnInit {
 
   getHistory(event:any,row:any){
     // allow the click only once
-    this.http.get('http://172.17.175.38:3000/goldenregister/v1/chips/history/' + row.record_id) // ...using post request
+    alert("Getting history");
+    this.http.get('http://localhost:3000/goldenregister/v1/chips/history/' + row.record_id) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         let target = event.target || event.srcElement || event.currentTarget;

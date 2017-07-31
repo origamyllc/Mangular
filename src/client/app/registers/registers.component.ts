@@ -62,13 +62,13 @@ export class RegistersComponent {
   }
 
   getModules() {
-    this.ChipDetailsService.getChipDetailsByName().subscribe(
+    this.ChipDetailsService.getChipDetailsByName('').subscribe(
       modules => this.mods = modules,
       error =>  this.errorMessage = <any>error);
   }
 
   getModuleSkus() {
-    this.ModuleService.getModuleByName().subscribe(
+    this.ModuleService.getModuleByName('').subscribe(
       skus => this.skus = skus,
       error => this.errorMessage = <any>error);
   }
