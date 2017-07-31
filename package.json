@@ -118,7 +118,7 @@
     "semver": "^5.3.0",
     "serve-static": "^1.11.1",
     "slash": "~1.0.0",
-    "socket.io-client": "^1.7.3",
+    "socket.io-client":"^1.7.3",
     "systemjs-builder": "0.15.32",
     "tildify": "^1.2.0",
     "traceur": "^0.0.111",

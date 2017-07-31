@@ -7,6 +7,8 @@
 
 }
 
+
+
  .typeaheadv{
    background-color: #eaedf1;
    position: absolute;
@@ -79,7 +81,7 @@
     overflow-y: scroll;
     width: 100%;
     .table-container{
-      margin-top: 30px;
+      margin-top: 53px;
       position: relative;
       width: 100%;
       table{
@@ -130,8 +132,13 @@
   li{
     .filter-container{
       display: flex;
-      position:absolute;
-      top:5px;
+      position:fixed;
+      top:25px;
+      z-index: 5;
+      width: 100%;
+      background-color: #ffffff;
+      padding-top: 6px;
+      padding-bottom: 6px;
       button{
         width:120px;
         text-align:left;
@@ -179,9 +186,12 @@
 }
 
  sd-pinned-table{
-    position:absolute;
+    position:fixed;
     top:50px;
    .table-container{
+     margin-top: 12px;
+     background-color: #ffffff;
+     height: 249px;
     width:100%;
      z-index: 10;
      .parent-table-body{
