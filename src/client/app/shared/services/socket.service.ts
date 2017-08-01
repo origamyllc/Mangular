@@ -9,7 +9,7 @@ let pins:any = [];
 
 @Injectable()
 export class SocketService {
-  private url = 'http://172.17.175.38:3010';
+  private url = 'http://172.20.215.238:3010';
   private socket:any =io(this.url);
   private pins:any = [];
 

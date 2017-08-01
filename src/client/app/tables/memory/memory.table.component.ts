@@ -142,7 +142,7 @@ export class TableComponent implements OnInit {
   }
 
   getPinnedData() {
-    this.http.get('http://localhost:9000/goldenregister/v1/memorytable/pinned') // ...using post request
+    this.http.get('http://172.20.215.238:9000/goldenregister/v1/memorytable/pinned') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         message.results.forEach((index: any) => {
@@ -172,7 +172,7 @@ export class TableComponent implements OnInit {
     var queryObj:any = new Object();
     queryObj["conditions"] = this.filterQuery;
     this.showTypeAhead = false;
-    this.http.post('http://localhost:3000/goldenregister/register', queryObj) // ...using post request
+    this.http.post('http://172.20.215.238:3000/goldenregister/register', queryObj) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.MemoryParamsService.clearTableRows();
@@ -270,7 +270,7 @@ export class TableComponent implements OnInit {
     this.filterQuery['chip_name'] = this.query.chip;
     Object.assign( this.filterQuery,{platform});
     let query = querystring.stringify(this.filterQuery);
-    this.http.get('http://localhost:9000/goldenregister/v1/filter?'+query) // ...using post request
+    this.http.get('http://172.20.215.238:9000/goldenregister/v1/filter?'+query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         this.rows = message;
@@ -279,7 +279,7 @@ export class TableComponent implements OnInit {
 
   onSearchChange(searchValue: string, column: string) {
     if (column === 'Record Id' && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?record_id=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?record_id=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -295,7 +295,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === 'SKU' && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?sku_info=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?sku_info=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -311,7 +311,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === 'Revision' && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?chip_revision_entry=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?chip_revision_entry=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -327,7 +327,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Package Info" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?package_info=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?package_info=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -344,7 +344,7 @@ export class TableComponent implements OnInit {
 
 
     if (column === "Platform" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?platform_name=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?platform_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -360,7 +360,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Programs" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?programs=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?programs=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -376,7 +376,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Name" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?block=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?block=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -393,7 +393,7 @@ export class TableComponent implements OnInit {
 
     if (column === "Block Revision" && searchValue !== '') {
       this.blockRevisions=[];
-      this.http.get('http://localhost:3000/goldenregister/register?block_revision' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?block_revision' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -408,7 +408,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Manual" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?manual=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?manual=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -424,7 +424,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Type" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?reg_type=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?reg_type=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -440,7 +440,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Address" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?reg_address=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?reg_address=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -456,7 +456,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Reg Name" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?reg_name=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?reg_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -472,7 +472,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Field Name" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?field_name=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?field_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -488,7 +488,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Mask" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?mask=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?mask=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message  => {
           this.showTypeAhead = true;
@@ -504,7 +504,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Value" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?value=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?value=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -520,7 +520,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "ASIC" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?asic=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?asic=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -536,7 +536,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Min Temp" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?min_temp=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?min_temp=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -552,7 +552,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Max Temp" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?max_temp=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?max_temp=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -568,7 +568,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Thermal Sen" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?thermal_sensor=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?thermal_sensor=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -584,7 +584,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Frequency" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?frequency=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?frequency=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -601,7 +601,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Mode" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?mode=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?mode=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -617,7 +617,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Phase" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?curr_phase=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?curr_phase=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -633,7 +633,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "State" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?curr_state=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?curr_state=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -649,7 +649,7 @@ export class TableComponent implements OnInit {
     }
 
     if (column === "Comments" && searchValue !== '') {
-      this.http.get('http://localhost:3000/goldenregister/register?comments=' + searchValue) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register?comments=' + searchValue) // ...using post request
         .map((res) => res.json())
         .subscribe(message => {
           this.showTypeAhead = true;
@@ -669,8 +669,8 @@ export class TableComponent implements OnInit {
   getHistory(event:any,row:any){
     // allow the click only once
     console.log("Getting history");
-    // this.http.get('http://localhost:3000/goldenregister/register/history/' + row._id) // ...using post request
-    this.http.get('http://localhost:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // ...using post request
+    // this.http.get('http://172.20.215.238:3000/goldenregister/register/history/' + row._id) // ...using post request
+    this.http.get('http://172.20.215.238:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         $('tr#' + row._id).toggleClass('expanded');
