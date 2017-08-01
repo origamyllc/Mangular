@@ -668,28 +668,18 @@ export class TableComponent implements OnInit {
 
   getHistory(event:any,row:any){
     // allow the click only once
-    alert("Getting history");
-    this.http.get('http://localhost:3000/goldenregister/v1/chips/history/' + row.record_id) // ...using post request
+    console.log("Getting history");
+    // this.http.get('http://localhost:3000/goldenregister/register/history/' + row._id) // ...using post request
+    this.http.get('http://localhost:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
-        let target = event.target || event.srcElement || event.currentTarget;
-        let currentRow = target.parentNode.parentNode;
-
-        if(this.latch == 0 ) {
-          message.result.forEach((row:any) => {
-            console.log(row);
-            $(currentRow).append(`<tr class='history'> 
-                                    <td>${row.record_id} </td>
-                                    <td>${row.chip_sku} </td>
-                                    <td>${row.chip_revision} </td>
-                                    <td>${row.chip_package_info} </td>
-                                  </tr>`);
-          });
-
-          this.latch ++;
+        $('tr#' + row._id).toggleClass('expanded');
+        if(!row.expanded) {
+          row.exapnded = true;
+          row['subRows'] = message;
         } else {
-          $(".history").remove();
-          this.latch = 0 ;
+          row.expanded = false;
+          row['subRows'] = [];
         }
       });
   }

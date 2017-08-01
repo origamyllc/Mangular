@@ -36,13 +36,22 @@
           </tr>
           </thead>
            <tbody class="child-table-body">
-           <tr *ngFor="let row of rows | filter:filterText;let i = index " class="prime" id="{{row._id}}">
-             <td class = "pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
-             <td>{{row.record_id}}</td>
-             <td>{{row.sku}}</td>
-             <td>{{row.sku_info}}</td>
-             <td>{{row.package_info}}</td>
-           </tr>
+             <ng-container *ngFor="let row of rows | filter:filterText;let i = index ">
+                <tr class="prime" id="{{row._id}}">
+                  <td class = "pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
+                  <td>{{row.record_id}}</td>
+                  <td>{{row.sku}}</td>
+                  <td>{{row.sku_info}}</td>
+                  <td>{{row.package_info}}</td>
+                </tr>
+                <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
+                  <td></td>
+                  <td>{{subRow.record_id}}</td>
+                  <td>{{subRow.sku}}</td>
+                  <td>{{subRow.sku_info}}</td>
+                  <td>{{subRow.package_info}}</td>
+                </tr>
+             </ng-container>
            </tbody>
         </table>
       </td>
@@ -70,10 +79,16 @@
           </tr>
           </thead>
           <tbody class="child-table-body">
-          <tr *ngFor="let row of rows | filter:filterText;" id="{{row._id}}">
-            <td>{{row.platform_name}}</td>
-            <td>{{row.programs}}</td>
-          </tr>
+            <ng-container *ngFor="let row of rows | filter:filterText;">
+                  <tr id="{{row._id}}">
+                    <td>{{row.platform_name}}</td>
+                    <td>{{row.programs}}</td>
+                  </tr>
+                  <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
+                    <td>{{subRow.platform_name}}</td>
+                    <td>{{subRow.programs}}</td>
+                  </tr>
+            </ng-container>
           </tbody>
         </table>
       </td>
@@ -104,11 +119,18 @@
           </tr>
           </thead>
           <tbody class="child-table-body">
-          <tr *ngFor="let row of rows | filter:filterText; " id="{{row._id}}">
-            <td>{{row.block}}</td>
-            <td>{{row.block_revision}}</td>
-            <td>{{row.manual}}</td>
-          </tr>
+            <ng-container *ngFor="let row of rows | filter:filterText; ">
+              <tr id="{{row._id}}">
+                <td>{{row.block}}</td>
+                <td>{{row.block_revision}}</td>
+                <td>{{row.manual}}</td>
+              </tr>
+              <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
+                <td>{{subRow.block}}</td>
+                <td>{{subRow.block_revision}}</td>
+                <td>{{subRow.manual}}</td>
+              </tr>
+            </ng-container>
           </tbody>
         </table>
       </td>
@@ -172,26 +194,50 @@
           </tr>
           </thead>
           <tbody class="child-table-body" id="registerFields">
-          <tr *ngFor="let row of rows ">
-            <td>{{row.reg_type}}</td>
-            <td>{{row.reg_address}}</td>
-            <td>{{row.reg_name}}</td>
-            <td>{{row.field_name}}</td>
-            <td>{{row.mask}}</td>
-            <td>{{row.value}}</td>
-            <td>{{row.asic}}</td>
-            <td>{{row.min_temp}}</td>
-            <td>{{row.max_temp}}</td>
-            <td>{{row.thermal_sensor}}</td>
-            <td>{{row.frequency}}</td>
-            <td style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
-            <td>{{row.curr_phase}}</td>
-            <td>{{row.curr_state}}</td>
-            <td style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
-            <td>{{row.version}}</td>
-            <td>N/A</td>
-            <td>N/A</td>
-          </tr>
+            <ng-container *ngFor="let row of rows | filter:filterText; ">
+              <tr id="{{row._id}}">
+                <td>{{row.reg_type}}</td>
+                <td>{{row.reg_address}}</td>
+                <td>{{row.reg_name}}</td>
+                <td>{{row.field_name}}</td>
+                <td>{{row.mask}}</td>
+                <td>{{row.value}}</td>
+                <td>{{row.asic}}</td>
+                <td>{{row.min_temp}}</td>
+                <td>{{row.max_temp}}</td>
+                <td>{{row.thermal_sensor}}</td>
+                <td>{{row.frequency}}</td>
+                <td style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
+                <td>{{row.curr_phase}}</td>
+                <td>{{row.curr_state}}</td>
+                <td style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
+                <td>{{row.version}}
+                  <button (click)="getHistory($event,row)"></button>
+                </td>
+                <td>N/A</td>
+                <td>N/A</td>
+              </tr>
+              <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
+                <td>{{subRow.reg_type}}</td>
+                <td>{{subRow.reg_address}}</td>
+                <td>{{subRow.reg_name}}</td>
+                <td>{{subRow.field_name}}</td>
+                <td>{{subRow.mask}}</td>
+                <td>{{subRow.value}}</td>
+                <td>{{subRow.asic}}</td>
+                <td>{{subRow.min_temp}}</td>
+                <td>{{subRow.max_temp}}</td>
+                <td>{{subRow.thermal_sensor}}</td>
+                <td>{{subRow.frequency}}</td>
+                <td style="min-width:200px;max-height:10px;height:80%">{{subRow.mode}}</td>
+                <td>{{subRow.curr_phase}}</td>
+                <td>{{subRow.curr_state}}</td>
+                <td style="min-width:1800px;max-height:10px;height:80%">{{subRow.comments}}</td>
+                <td>{{subRow.version}}</td>
+                <td>N/A</td>
+                <td>N/A</td>
+              </tr>
+            </ng-container>
           </tbody>
         </table>
       </td>
