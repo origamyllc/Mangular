@@ -190,7 +190,7 @@ export class RegistersComponent {
     }
 
     if( status == 'bottom reached' ){
-      let page_number = parseInt(this.$query.page_number) + 1;
+      let page_number = !this.$query ? 1 : parseInt(this.$query.page_number) + 1;
       this.$query  = {
         "conditions" : this.query ,
         "page_number" : page_number
