@@ -54,6 +54,7 @@ export class PinnedTableParamsService  {
         this.updateUrl = 'http://localhost:3000/goldenregister/register/history';
         console.log(data[key]);
         delete data[key]['subRows'];
+        delete data[key]['expanded'];
         this.http.post(this.updateUrl,data[key], {headers: headers}) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {

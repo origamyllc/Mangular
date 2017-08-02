@@ -7,7 +7,7 @@
         <table class="table">
           <thead>
           <tr>
-            <th></th>
+            <th class="pin-placeholder"></th>
             <th *ngFor="let column of config[groups[0]].columns">
               <div class="table-header">
                 <p>{{column.name}}</p>
@@ -92,10 +92,10 @@
              <td (click)="editTableCellHandler($event,'max_temp',i)" >{{row.max_temp}}</td>
              <td (click)="editTableCellHandler($event,'thermal_sensor',i)" >{{row.thermal_sensor}}</td>
              <td (click)="editTableCellHandler($event,'frequency',i)">{{row.frequency}}</td>
-             <td (click)="editTableCellHandler($event,'mode',i)" style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
+             <td (click)="editTableCellHandler($event,'mode',i)">{{row.mode}}</td>
              <td (click)="editTableCellHandler($event,'curr_phase',i)" >{{row.curr_phase}}</td>
              <td (click)="editTableCellHandler($event,'curr_state',i)">{{row.curr_state}}</td>
-             <td (click)="editTableCellHandler($event,'comments',i)" style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
+             <td (click)="editTableCellHandler($event,'comments',i)">{{row.comments}}</td>
              <td>{{row.record_version}}</td>
              <td>N/A</td>
              <td>N/A</td>

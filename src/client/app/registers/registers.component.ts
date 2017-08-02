@@ -48,10 +48,10 @@ export class RegistersComponent {
     private socketService:SocketService,
     public http: Http,
     private router:Router) {
-      this.hideModules = true;
-      this.hideSku = true;
-      this.hideRevision =true;
-      this.hideSubmit=true;
+      this.hideModules = false;
+      this.hideSku = false;
+      this.hideRevision =false;
+      this.hideSubmit=false;
      this.query = MemoryParamsService.getQueryParams();
   }
 
@@ -79,17 +79,24 @@ export class RegistersComponent {
       error =>  this.errorMessage = <any>error);
   }
 
+  clearColumnLevelFilters () {
+    $.each($('input[id="column-level-filters"]'), (i: number, v: any) => {
+      $(v).val('');
+    });
+  }
+
   selectedChip(chipname:string) {
     this.MemoryParamsService.clearTableRows();
     this.query.chip = chipname;
     this.hideModules = false;
     this.$query  = {
-      "conditions" : { "chip_name" : chipname } ,
+      "conditions" : this.query,
       "page_number" : "1"
     };
     this.http.post('http://localhost:3000/goldenregister/register',this.$query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
+        this.clearColumnLevelFilters();
         this.MemoryParamsService.setTableRows(message);
       });
   }
@@ -99,12 +106,13 @@ export class RegistersComponent {
      this.query.module = modulename;
      this.hideSku = false;
     this.$query  = {
-      "conditions" : { "module" : modulename } ,
+      "conditions" : this.query ,
       "page_number" : "1"
     };
     this.http.post('http://localhost:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
+        this.clearColumnLevelFilters();
         this.MemoryParamsService.setTableRows(message);
       });
   }
@@ -114,12 +122,13 @@ export class RegistersComponent {
     this.query.sku = skunumber;
     this.hideRevision =false;
     this.$query  = {
-      "conditions" : { "sku":skunumber } ,
+      "conditions" : this.query ,
       "page_number" : "1"
     };
     this.http.post('http://localhost:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
+        this.clearColumnLevelFilters();
         this.MemoryParamsService.setTableRows(message);
       });
   }
@@ -129,18 +138,18 @@ export class RegistersComponent {
     this.query.revision = revision ;
     this.hideSubmit=false;
     this.$query  = {
-      "conditions" : { "revision" : revision } ,
+      "conditions" : this.query ,
       "page_number" : "1"
     };
     this.http.post('http://localhost:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
+        this.clearColumnLevelFilters();
         this.MemoryParamsService.setTableRows(message);
       });
   }
 
   getData(){
-
    this.$query  = {
       "conditions" : this.query ,
       "page_number" : "1"

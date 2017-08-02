@@ -54,17 +54,25 @@
     margin-right: -10px;
 }
 
+table > tbody > tr > td {
+  white-space: nowrap;
+}
+
 .nowrap{
-   white-space: nowrap
+   white-space: nowrap;
 }
 
 
 .memory-table{
+  > li {
+    &:not(:first-child) {
+      margin-top: 60px;
+    }
+  }
 
   .table-header{
     display: flex;
-
-
+    font-weight: 600;
     i{
       margin:50px;
     }
@@ -109,6 +117,18 @@
                     border:none;
                   }
                   tr{
+                    &.sub-rows.history,
+                    &.prime-expanded {
+                      > td {
+                        background-color: #e2e2e2;
+                        .fa-history {
+                          color: #e89000;
+                          &:hover {
+                            color: #c77d04;
+                          }
+                        }
+                      }
+                    }
                     .pin{
                       i {
                         padding: 2px;
@@ -116,6 +136,17 @@
                     }
                     td {
                       margin: 2px;
+                      .fa-history {
+                        opacity: 1;
+                        color: #b1cb7b;
+                        font-size: 0.8rem;
+                        cursor: pointer;
+                        transition: color 0.25s, opacity 0.25s ease-in-out;
+                        &:hover {
+                          opacity: 0.85;
+                          color: #515151;
+                        }
+                      }
                     }
                   }
                 }
@@ -135,7 +166,7 @@
       top:25px;
       z-index: 5;
       width: 100%;
-      background-color: #ffffff;
+      background-color: #fff;
       padding-top: 6px;
       padding-bottom: 6px;
       button{
@@ -185,13 +216,13 @@
 }
 
  sd-pinned-table{
-    position:fixed;
+    position:absolute;
     top:50px;
    .table-container{
      margin-top: 12px;
      background-color: #ffffff;
      height: 249px;
-    width:100%;
+     width:100%;
      z-index: 10;
      .parent-table-body{
        tr{
@@ -208,6 +239,9 @@
                    font-size: 11px;
                    font-weight: 400;
                    padding: 0px;
+                   &.pin-placeholder {
+                     min-width: 20px;
+                   }
                  }
                }
              }

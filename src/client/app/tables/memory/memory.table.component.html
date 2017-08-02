@@ -14,7 +14,7 @@
                 <p>{{column.name}}</p>
               </div>
               <div class="table-header">
-                <p><input
+                <p><input id="column-level-filters"
                   type="text" name={{column.name}}
                    placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"
@@ -38,7 +38,7 @@
            <tbody class="child-table-body">
              <ng-container *ngFor="let row of rows | filter:filterText;let i = index ">
                 <tr class="prime" id="{{row._id}}">
-                  <td class = "pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
+                  <td class="pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
                   <td>{{row.record_id}}</td>
                   <td>{{row.sku}}</td>
                   <td>{{row.sku_info}}</td>
@@ -64,7 +64,7 @@
                 <p>{{column.name}}</p>
               </div>
               <div class="table-header">
-                <p><input
+                <p><input id="column-level-filters"
                   type="text" name={{column.name}}
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
@@ -80,7 +80,7 @@
           </thead>
           <tbody class="child-table-body">
             <ng-container *ngFor="let row of rows | filter:filterText;">
-                  <tr id="{{row._id}}">
+                  <tr class="prime" id="{{row._id}}">
                     <td>{{row.platform_name}}</td>
                     <td>{{row.programs}}</td>
                   </tr>
@@ -101,7 +101,7 @@
                 <p>{{column.name}}</p>
               </div>
               <div class="table-header">
-                <p><input
+                <p><input id="column-level-filters"
                   type="text" name={{column.name}}
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
@@ -120,7 +120,7 @@
           </thead>
           <tbody class="child-table-body">
             <ng-container *ngFor="let row of rows | filter:filterText; ">
-              <tr id="{{row._id}}">
+              <tr class="prime" id="{{row._id}}">
                 <td>{{row.block}}</td>
                 <td>{{row.block_revision}}</td>
                 <td>{{row.manual}}</td>
@@ -143,7 +143,7 @@
                 <p>{{column.name}}</p>
               </div>
               <div class="table-header">
-                <p><input
+                <p><input id="column-level-filters"
                   type="text" name={{column.name}}
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
@@ -195,7 +195,7 @@
           </thead>
           <tbody class="child-table-body" id="registerFields">
             <ng-container *ngFor="let row of rows | filter:filterText; ">
-              <tr id="{{row._id}}">
+              <tr class="prime" id="{{row._id}}">
                 <td>{{row.reg_type}}</td>
                 <td>{{row.reg_address}}</td>
                 <td>{{row.reg_name}}</td>
@@ -207,12 +207,12 @@
                 <td>{{row.max_temp}}</td>
                 <td>{{row.thermal_sensor}}</td>
                 <td>{{row.frequency}}</td>
-                <td style="min-width:200px;max-height:10px;height:80%">{{row.mode}}</td>
+                <td>{{row.mode}}</td>
                 <td>{{row.curr_phase}}</td>
                 <td>{{row.curr_state}}</td>
-                <td style="min-width:1800px;max-height:10px;height:80%">{{row.comments}}</td>
+                <td>{{row.comments}}</td>
                 <td>{{row.version}}
-                  <button (click)="getHistory($event,row)"></button>
+                  <i class="fa fa-history" (click)="getHistory($event,row)"></i>
                 </td>
                 <td>N/A</td>
                 <td>N/A</td>
@@ -229,10 +229,10 @@
                 <td>{{subRow.max_temp}}</td>
                 <td>{{subRow.thermal_sensor}}</td>
                 <td>{{subRow.frequency}}</td>
-                <td style="min-width:200px;max-height:10px;height:80%">{{subRow.mode}}</td>
+                <td>{{subRow.mode}}</td>
                 <td>{{subRow.curr_phase}}</td>
                 <td>{{subRow.curr_state}}</td>
-                <td style="min-width:1800px;max-height:10px;height:80%">{{subRow.comments}}</td>
+                <td>{{subRow.comments}}</td>
                 <td>{{subRow.version}}</td>
                 <td>N/A</td>
                 <td>N/A</td>

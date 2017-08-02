@@ -668,20 +668,24 @@ export class TableComponent implements OnInit {
 
   getHistory(event:any,row:any){
     // allow the click only once
-    console.log("Getting history");
-    // this.http.get('http://localhost:3000/goldenregister/register/history/' + row._id) // ...using post request
-    this.http.get('http://localhost:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // ...using post request
-      .map((res) => res.json()) // ...and calling .json() on the response to return data
-      .subscribe(message => {
-        $('tr#' + row._id).toggleClass('expanded');
-        if(!row.expanded) {
-          row.exapnded = true;
+    if(!row.expanded) {
+      console.log("Getting history");
+      // this.http.get('http://localhost:3000/goldenregister/register/history/' + row._id) // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // ...using post request
+        .map((res) => res.json()) // ...and calling .json() on the response to return data
+        .subscribe(message => {
+          $('tr[id=' + row._id + ']').addClass('prime-expanded');
+          row.expanded = true;
           row['subRows'] = message;
-        } else {
-          row.expanded = false;
-          row['subRows'] = [];
-        }
-      });
+        });
+    } else {
+        row.expanded = false;
+        $('tr[id=' + row._id + ']').removeClass('prime-expanded');
+        $.each($('tr[id=sub-row-' + row._id + ']'), (i: number, item: any) => {
+          item.remove();
+        });
+        row['subRows'] = [];
+    }
   }
 
 }
