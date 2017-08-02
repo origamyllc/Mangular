@@ -680,6 +680,9 @@ export class TableComponent implements OnInit {
       // this.http.get('http://172.20.215.238:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // For Testing only
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
+          if (!message || !message.length) {
+            return;
+          }
           $('tr[id=' + row._id + ']').addClass('prime-expanded');
           row.expanded = true;
           row['subRows'] = message;
