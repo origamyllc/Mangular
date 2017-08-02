@@ -21,7 +21,7 @@ export class ModuleSkuService {
 
   getModuleSkuByName(name:string):Observable<ModuleSku[]>  {
 
-    this.skuUrl = 'http://172.20.215.238:3000/goldenregister/register/distinct?sku';
+    this.skuUrl = 'http://172.17.175.38:3000/goldenregister/register/distinct?sku';
 
     return this.http.get(this.skuUrl)
       .map(this.extractData)
@@ -29,7 +29,7 @@ export class ModuleSkuService {
   }
 
   getModuleSku():Observable<ModuleSku[]>  {
-    this.revisionUrl = 'http://172.20.215.238:3000/goldenregister/register/distinct?revision';
+    this.revisionUrl = 'http://172.17.175.38:3000/goldenregister/register/distinct?revision';
 
     return this.http.get(this.revisionUrl)
       .map(this.extractData)

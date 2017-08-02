@@ -13,7 +13,7 @@
 .main-container{
   width:100%;
   z-index:-1;
-  overflow-x: scroll;
+  overflow-x: hidden;
   @media screen and (max-width: $break-small) {
     margin-left:0px;
   }
@@ -30,7 +30,7 @@
   height: 53vw;
   border:none;
   @media screen and (min-width: $break-large) {
-    overflow: scroll;
+
     }
 }
 
@@ -55,3 +55,4 @@
   display:flex;
   margin-left:40px;
 }
+

@@ -20,7 +20,7 @@ export class ChipDetailsService {
 
   getChipDetailsByName(name:string):Observable<Chip[]>  {
 
-      this.modulesUrl = 'http://172.20.215.238:3000/goldenregister/register/distinct?module';
+      this.modulesUrl = 'http://172.17.175.38:3000/goldenregister/register/distinct?module';
 
       return this.http.get(this.modulesUrl)
         .map(this.extractData)
@@ -29,7 +29,7 @@ export class ChipDetailsService {
   }
 
 
-  private chipsUrl = 'http://172.20.215.238:3000/goldenregister/v1/chips';  // URL to web API
+  private chipsUrl = 'http://172.17.175.38:3000/goldenregister/v1/chips';  // URL to web API
 
   getChipDetails():Observable<Chip[]>  {
     return this.http.get(this.chipsUrl)

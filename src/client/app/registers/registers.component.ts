@@ -80,9 +80,9 @@ export class RegistersComponent {
   }
 
   clearColumnLevelFilters () {
-    $.each($('input[id="column-level-filters"]'), (i: number, v: any) => {
+ /*   $.each($('input[id="column-level-filters"]'), (i: number, v: any) => {
       $(v).val('');
-    });
+    });*/
   }
 
   selectedChip(chipname:string) {
@@ -93,7 +93,7 @@ export class RegistersComponent {
       "conditions" : this.query,
       "page_number" : "1"
     };
-    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query) // ...using post request
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         this.clearColumnLevelFilters();
@@ -109,7 +109,7 @@ export class RegistersComponent {
       "conditions" : this.query ,
       "page_number" : "1"
     };
-    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         this.clearColumnLevelFilters();
@@ -125,7 +125,7 @@ export class RegistersComponent {
       "conditions" : this.query ,
       "page_number" : "1"
     };
-    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         this.clearColumnLevelFilters();
@@ -141,7 +141,7 @@ export class RegistersComponent {
       "conditions" : this.query ,
       "page_number" : "1"
     };
-    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         this.clearColumnLevelFilters();
@@ -155,7 +155,7 @@ export class RegistersComponent {
       "page_number" : "1"
     };
 
-    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
+    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
             this.MemoryParamsService.setTableRows(message);
@@ -184,26 +184,31 @@ export class RegistersComponent {
     let docHeight = Math.max(body.scrollHeight,
       body.offsetHeight, html.clientHeight,
       html.scrollHeight, html.offsetHeight);
-    let windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight) {
-      status = 'bottom reached';
-    }
 
-    if( status == 'bottom reached' ){
+    let windowBottom  = windowHeight + window.pageYOffset;
+
+   if( windowBottom  >= docHeight - 100 ) {
+     console.log(docHeight,windowBottom);
+     status = 'bottom reached';
+   }
+
+
+    if( status == 'bottom reached' && docHeight > 1800){
       let page_number = !this.$query ? 1 : parseInt(this.$query.page_number) + 1;
       this.$query  = {
         "conditions" : this.query ,
         "page_number" : page_number
       };
 
-      this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
+      this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe( message => {
           this.MemoryParamsService.setTableRows(message);
         });
     }
-
-    status = "not reached";
+    else {
+      status = "not reached";
+    }
   }
 
 

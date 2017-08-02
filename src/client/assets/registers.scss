@@ -1,17 +1,13 @@
 @import "./dropdown";
 
 sd-register-memory-table{
+
   position: absolute;
     left: 10px;
- //   background-color: gold;
     width: 100%;
 
   .container{
     margin: 10px;
- //   background-color: red;
-  //  position: relative;
-    width: 100%;
-
     @include dropdown();
   }
 }
