@@ -35,7 +35,7 @@ export function serveDocs() {
   );
 
   server.listen(Config.DOCS_PORT, () =>
-    openResource('http://172.17.175.38:' + Config.DOCS_PORT + Config.APP_BASE)
+    openResource('http://172.20.215.238:' + Config.DOCS_PORT + Config.APP_BASE)
   );
 }
 
@@ -51,7 +51,7 @@ export function serveCoverage() {
   );
 
   server.listen(Config.COVERAGE_PORT, () =>
-    openResource('http://172.17.175.38:' + Config.COVERAGE_PORT + Config.APP_BASE)
+    openResource('http://172.20.215.238:' + Config.COVERAGE_PORT + Config.APP_BASE)
   );
 }
 
@@ -67,6 +67,6 @@ export function serveProd() {
   server.use(fallback('index.html', { root }));
 
   server.listen(Config.PORT, () =>
-    openResource('http://172.17.175.38:' + Config.PORT + Config.APP_BASE)
+    openResource('http://172.20.215.238:' + Config.PORT + Config.APP_BASE)
   );
 };
