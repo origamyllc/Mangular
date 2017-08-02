@@ -25,6 +25,7 @@ import { DOCUMENT } from '@angular/platform-browser';
 })
 
 export class RegistersComponent {
+  public maxWindowHeight : number = 1000;
   chips: Chip[];
   mods: Module[];
   skus:ModuleSku[];
@@ -175,43 +176,41 @@ export class RegistersComponent {
   }
 
   public navIsFixed: boolean = false;
-
   @HostListener("window:scroll", [])
   onWindowScroll() {
     let status = "not reached";
+    
     let windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
     let body = document.body, html = document.documentElement;
     let docHeight = Math.max(body.scrollHeight,
       body.offsetHeight, html.clientHeight,
       html.scrollHeight, html.offsetHeight);
 
+
     let windowBottom  = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight-50) {
+      status = 'bottom reached';
+    }
+    if( status == 'bottom reached' && docHeight >1800){
 
-   if( windowBottom  >= docHeight - 100 ) {
-     console.log(docHeight,windowBottom);
-     status = 'bottom reached';
-   }
-
-
-    if( status == 'bottom reached' && docHeight > 1800){
       let page_number = !this.$query ? 1 : parseInt(this.$query.page_number) + 1;
       this.$query  = {
         "conditions" : this.query ,
         "page_number" : page_number
       };
 
-      this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
+      this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
+
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe( message => {
           this.MemoryParamsService.setTableRows(message);
         });
+
     }
     else {
       status = "not reached";
     }
+
   }
-
-
-
 
 }

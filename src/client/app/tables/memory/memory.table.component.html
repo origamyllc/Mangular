@@ -40,16 +40,16 @@
                 <tr class="prime" id="{{row._id}}">
                   <td class="pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
                   <td>{{row.record_id}}</td>
-                  <td>{{row.sku}}</td>
                   <td>{{row.sku_info}}</td>
+                  <td>{{row.chip_revision_entry}}</td>
                   <td>{{row.package_info}}</td>
                 </tr>
                 <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
                   <td></td>
-                  <td>{{subRow.record_id}}</td>
-                  <td>{{subRow.sku}}</td>
-                  <td>{{subRow.sku_info}}</td>
-                  <td>{{subRow.package_info}}</td>
+                  <td >{{subRow.record_id}}</td>
+                  <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('sku_info')!==-1}">{{subRow.sku_info}}</td>
+                  <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('chip_revision_entry')!==-1}">{{subRow.chip_revision_entry}}</td>
+                  <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('package_info')!==-1}">{{subRow.package_info}}</td>
                 </tr>
              </ng-container>
            </tbody>
@@ -85,8 +85,8 @@
                     <td>{{row.programs}}</td>
                   </tr>
                   <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
-                    <td>{{subRow.platform_name}}</td>
-                    <td>{{subRow.programs}}</td>
+                    <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('platform_name')!==-1}">{{subRow.platform_name}}</td>
+                    <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('programs')!==-1}">{{subRow.programs}}</td>
                   </tr>
             </ng-container>
           </tbody>
@@ -126,9 +126,9 @@
                 <td>{{row.manual}}</td>
               </tr>
               <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
-                <td>{{subRow.block}}</td>
-                <td>{{subRow.block_revision}}</td>
-                <td>{{subRow.manual}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('block')!==-1}">{{subRow.block}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('block_revision')!==-1}">{{subRow.block_revision}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('manual')!==-1}">{{subRow.manual}}</td>
               </tr>
             </ng-container>
           </tbody>
@@ -218,21 +218,21 @@
                 <td>N/A</td>
               </tr>
               <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
-                <td>{{subRow.reg_type}}</td>
-                <td>{{subRow.reg_address}}</td>
-                <td>{{subRow.reg_name}}</td>
-                <td>{{subRow.field_name}}</td>
-                <td>{{subRow.mask}}</td>
-                <td>{{subRow.value}}</td>
-                <td>{{subRow.asic}}</td>
-                <td>{{subRow.min_temp}}</td>
-                <td>{{subRow.max_temp}}</td>
-                <td>{{subRow.thermal_sensor}}</td>
-                <td>{{subRow.frequency}}</td>
-                <td>{{subRow.mode}}</td>
-                <td>{{subRow.curr_phase}}</td>
-                <td>{{subRow.curr_state}}</td>
-                <td>{{subRow.comments}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('reg_type')!==-1}">{{subRow.reg_type}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('reg_address')!==-1}">{{subRow.reg_address}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('reg_name')!==-1}">{{subRow.reg_name}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('field_name')!==-1}">{{subRow.field_name}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('mask')!==-1}">{{subRow.mask}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('value')!==-1}">{{subRow.value}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('asic')!==-1}">{{subRow.asic}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('min_temp')!==-1}">{{subRow.min_temp}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('max_temp')!==-1}">{{subRow.max_temp}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('thermal_sensor')!==-1}">{{subRow.thermal_sensor}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('frequency')!==-1}">{{subRow.frequency}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('mode')!==-1}">{{subRow.mode}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('curr_phase')!==-1}">{{subRow.curr_phase}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('curr_state')!==-1}">{{subRow.curr_state}}</td>
+                <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('comments')!==-1}">{{subRow.comments}}</td>
                 <td>{{subRow.version}}</td>
                 <td>N/A</td>
                 <td>N/A</td>

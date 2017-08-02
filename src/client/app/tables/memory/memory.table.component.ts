@@ -675,7 +675,24 @@ export class TableComponent implements OnInit {
           }
           $('tr[id=' + row._id + ']').addClass('prime-expanded');
           row.expanded = true;
-          row['subRows'] = message;
+          console.log("Message :"+message);
+          let updatedAttrs = [];
+          let histRecords : any = [];
+           message.forEach((message: any) => {
+             updatedAttrs =  message.updated_attributes;
+           
+              updatedAttrs.forEach((attr: any) => {
+                 // let m = "<span \"style=color: 92b204;\">"+message[attr]+"</span>";
+               //  message[attr] =m;
+
+                
+              });
+        
+                 histRecords.push(message);
+              
+           });
+    
+          row['subRows'] = histRecords;
         });
     } else {
         row.expanded = false;

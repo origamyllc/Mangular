@@ -7,8 +7,6 @@
 
 }
 
-
-
  .typeaheadv{
    background-color: #eaedf1;
    position: absolute;
@@ -62,7 +60,6 @@ table > tbody > tr > td {
    white-space: nowrap;
 }
 
-
 .memory-table{
 
   .table-header{
@@ -100,7 +97,7 @@ table > tbody > tr > td {
                 thead{
                   background-color:#EAEDF1;
                   tr{
-                    height:54px;
+                    height:44px;
                     th{
                       max-height:40px;
                       font-size: 11px;
@@ -162,7 +159,7 @@ table > tbody > tr > td {
     .filter-container{
       display: flex;
       position:fixed;
-      top:25px;
+      top:26px;
       z-index: 5;
       width: 100%;
       background-color: #fff;
@@ -183,6 +180,9 @@ table > tbody > tr > td {
           }
         }
       }
+    }
+    .his-attr{
+      color : red;
     }
 
     .filter-dropdown {
