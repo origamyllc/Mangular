@@ -670,8 +670,8 @@ export class TableComponent implements OnInit {
     // allow the click only once
     if(!row.expanded) {
       console.log("Getting history");
-      // this.http.get('http://localhost:3000/goldenregister/register/history/' + row._id) // ...using post request
-      this.http.get('http://localhost:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // ...using post request
+      this.http.get('http://localhost:3000/goldenregister/register/history/' + row._id) // ...using post request
+      // this.http.get('http://172.20.215.238:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // For Testing only
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {
           $('tr[id=' + row._id + ']').addClass('prime-expanded');
