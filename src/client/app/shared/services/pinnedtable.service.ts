@@ -51,7 +51,7 @@ export class PinnedTableParamsService  {
     Object.keys(data).forEach((key:any) => {
       let action = data[key].action;
       if(action  !== 'delete') {
-        this.updateUrl = 'http://172.17.175.38:3000/goldenregister/register/history';
+        this.updateUrl = 'http://172.20.215.238:3000/goldenregister/register/history';
         console.log(data[key]);
         delete data[key]['subRows'];
         delete data[key]['expanded'];
@@ -64,7 +64,7 @@ export class PinnedTableParamsService  {
 
       // delete the record
       if(action  === 'delete') {
-        this.deleteUrl = 'http://172.17.175.38:9000/goldenregister/v1/delete/records';
+        this.deleteUrl = 'http://172.20.215.238:9000/goldenregister/v1/delete/records';
         this.http.post(this.deleteUrl,data[key], {headers: headers}) // ...using post request
           .map((res) => res.json()) // ...and calling .json() on the response to return data
           .subscribe(message => {

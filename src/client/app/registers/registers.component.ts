@@ -94,7 +94,7 @@ export class RegistersComponent {
       "conditions" : this.query,
       "page_number" : "1"
     };
-    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query) // ...using post request
+    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         this.clearColumnLevelFilters();
@@ -110,7 +110,7 @@ export class RegistersComponent {
       "conditions" : this.query ,
       "page_number" : "1"
     };
-    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
+    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         this.clearColumnLevelFilters();
@@ -126,7 +126,7 @@ export class RegistersComponent {
       "conditions" : this.query ,
       "page_number" : "1"
     };
-    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
+    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         this.clearColumnLevelFilters();
@@ -142,7 +142,7 @@ export class RegistersComponent {
       "conditions" : this.query ,
       "page_number" : "1"
     };
-    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
+    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
         this.clearColumnLevelFilters();
@@ -156,7 +156,7 @@ export class RegistersComponent {
       "page_number" : "1"
     };
 
-    this.http.post('http://172.17.175.38:3000/goldenregister/register',this.$query ) // ...using post request
+    this.http.post('http://172.20.215.238:3000/goldenregister/register',this.$query ) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe( message => {
             this.MemoryParamsService.setTableRows(message);
