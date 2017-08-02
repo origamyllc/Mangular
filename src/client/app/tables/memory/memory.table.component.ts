@@ -133,10 +133,16 @@ export class TableComponent implements OnInit {
   pinHandler(event: any, index: number) {
     let target = event.target || event.srcElement || event.currentTarget;
     let row = target.parentNode;
-    let table = row.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+    let memoryTable = $('sd-memory-table#records');
+    let pinnedTable = $('sd-pinned-table#pinned-rows');
     if (this.pinned.indexOf(index) === -1) {
       row.style.color = '#76b900';
-      table.style.marginTop = '300px';
+      if (!memoryTable.hasClass('expanded')) {
+        memoryTable.addClass('expanded');
+      }
+      if (!pinnedTable.hasClass('expanded')) {
+        pinnedTable.addClass('expanded');
+      }
     }
     this.socketService.sendMessage({row: this.rows[index], index: index});
   }
@@ -670,7 +676,7 @@ export class TableComponent implements OnInit {
     // allow the click only once
     if(!row.expanded) {
       console.log("Getting history");
-      this.http.get('http://localhost:3000/goldenregister/register/history/' + row._id) // ...using post request
+      this.http.get('http://172.20.215.238:3000/goldenregister/register/history/' + row._id) // ...using post request
       // this.http.get('http://172.20.215.238:3000/goldenregister/register/history/' + '597f75941889bd815429b37d') // For Testing only
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(message => {

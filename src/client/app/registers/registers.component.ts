@@ -87,7 +87,7 @@ export class RegistersComponent {
 
   selectedChip(chipname:string) {
     this.MemoryParamsService.clearTableRows();
-    this.query.chip = chipname;
+    this.query.chip_name = chipname;
     this.hideModules = false;
     this.$query  = {
       "conditions" : this.query,
