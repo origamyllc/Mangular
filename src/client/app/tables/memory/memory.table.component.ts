@@ -54,6 +54,7 @@ export class TableComponent implements OnInit {
   modes: any = [];
   phases: any= [];
   states: any = [];
+  gAjaxRequestTime: Number = 1234;
 
 
   constructor(elementRef: ElementRef,
@@ -275,25 +276,33 @@ export class TableComponent implements OnInit {
 
   onSearchChange(searchValue: string, column: string) {
     if (column === 'Record Id' && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?record_id=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.recordIds = [] ;
           msg.result.forEach((msg: any) => {
+
             if (this.recordIds.indexOf(msg) === -1) {
               this.recordIds.push(msg);
             }
           });
+        }
         });
     } else {
       this.recordIds = [] ;
     }
 
     if (column === 'SKU' && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?sku_info=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.skus = [] ;
           msg.result.forEach((msg: any) => {
@@ -301,15 +310,19 @@ export class TableComponent implements OnInit {
               this.skus.push(msg)
             }
           });
+        }
         });
     } else {
       this.skus = [] ;
     }
 
     if (column === 'Revision' && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?chip_revision_entry=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.revisions = [];
           msg.result.forEach((msg: any) => {
@@ -317,15 +330,19 @@ export class TableComponent implements OnInit {
               this.revisions.push(msg);
             }
           });
+        }
         });
     } else {
       this.revisions = [];
     }
 
     if (column === "Package Info" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?package_info=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.packageInfos = [];
           msg.result.forEach((msg: any) => {
@@ -333,6 +350,7 @@ export class TableComponent implements OnInit {
               this.packageInfos.push(msg);
             }
           });
+        }
         });
     } else {
       this.packageInfos = [];
@@ -340,9 +358,12 @@ export class TableComponent implements OnInit {
 
 
     if (column === "Platform" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?platform_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.platforms =[];
           msg.result.forEach((msg: any) => {
@@ -350,15 +371,19 @@ export class TableComponent implements OnInit {
               this.platforms.push(msg);
             }
           });
+        }
         });
     } else {
       this.platforms =[];
     }
 
     if (column === "Programs" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?programs=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.programs = [];
           msg.result.forEach((msg: any) => {
@@ -366,15 +391,19 @@ export class TableComponent implements OnInit {
               this.programs.push(msg);
             }
           });
+        }
         });
     } else {
       this.programs = [];
     }
 
     if (column === "Name" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?block=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.blockNames = [];
           msg.result.forEach((msg: any) => {
@@ -382,31 +411,39 @@ export class TableComponent implements OnInit {
               this.blockNames.push(msg);
             }
           });
+        }
         });
     } else {
       this.blockNames = [];
     }
 
     if (column === "Block Revision" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.blockRevisions=[];
       this.http.get('http://172.20.215.238:3000/goldenregister/register?block_revision' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           msg.forEach((msg: any) => {
             if (this.blockRevisions.indexOf(msg) === -1) {
               this.blockRevisions.push(msg);
             }
           });
+        }
         });
     } else {
       this.blockRevisions = [];
     }
 
     if (column === "Manual" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?manual=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.manualNames = [];
           msg.result.forEach((msg: any) => {
@@ -414,15 +451,19 @@ export class TableComponent implements OnInit {
               this.manualNames.push(msg);
             }
           });
+        }
         });
     } else {
       this.manualNames = [] ;
     }
 
     if (column === "Reg Type" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?reg_type=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.regTypes = [];
           msg.result.forEach((msg: any) => {
@@ -430,15 +471,19 @@ export class TableComponent implements OnInit {
               this.regTypes.push(msg);
             }
           });
+        }
         });
     } else {
       this.regTypes = [];
     }
 
     if (column === "Reg Address" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?reg_address=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.regAddresses = [];
           msg.result.forEach((msg: any) => {
@@ -446,15 +491,19 @@ export class TableComponent implements OnInit {
               this.regAddresses.push(msg);
             }
           });
+        }
         });
     } else {
       this.regAddresses =[];
     }
 
     if (column === "Reg Name" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?reg_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.regNames = [];
           msg.result.forEach((msg: any) => {
@@ -462,32 +511,42 @@ export class TableComponent implements OnInit {
               this.regNames.push(msg);
             }
           });
+        }
         });
     } else {
       this.regNames = [];
     }
 
     if (column === "Field Name" && searchValue !== '') {
+      let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
+      console.log("New Ajax Response: "+ requestAjaxTime);
       this.http.get('http://172.20.215.238:3000/goldenregister/register?field_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
-        .subscribe(msg => {
+        .subscribe(msg => {      
+           if(this.gAjaxRequestTime == requestAjaxTime){
+
+          console.log("Request time is:"+requestAjaxTime);
           this.showTypeAhead = true;
-          this.fieldNames = [];
-          console.log("Field Name array:"+this.fieldNames);
-          msg.result.forEach((msg: any) => {
+           this.fieldNames = [];
+           msg.result.forEach((msg: any) => {
             if (this.fieldNames.indexOf(msg) === -1) {
               this.fieldNames.push(msg);
             }
           });
+         }
         });
     } else {
       this.fieldNames = [];
     }
 
     if (column === "Mask" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?mask=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg  => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.masks = [];
           msg.result.forEach((msg: any) => {
@@ -495,15 +554,19 @@ export class TableComponent implements OnInit {
               this.masks.push(msg);
             }
           });
+        }
         });
     } else {
       this.masks = [];
     }
 
     if (column === "Value" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?value=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.values=[];
           msg.result.forEach((msg: any) => {
@@ -511,15 +574,19 @@ export class TableComponent implements OnInit {
               this.values.push(msg);
             }
           });
+        }
         });
     } else {
       this.values=[];
     }
 
     if (column === "ASIC" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?asic=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.asics =[];
           msg.result.forEach((msg: any) => {
@@ -527,15 +594,19 @@ export class TableComponent implements OnInit {
               this.asics.push(msg);
             }
           });
+        }
         });
     } else {
       this.asics =[];
     }
 
     if (column === "Min Temp" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?min_temp=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.minTemps = [] ;
           msg.result.forEach((msg: any) => {
@@ -543,15 +614,19 @@ export class TableComponent implements OnInit {
               this.minTemps.push(msg);
             }
           });
+        }
         });
     } else {
       this.minTemps = [] ;
     }
 
     if (column === "Max Temp" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?max_temp=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.maxTemps=[];
           msg.result.forEach((msg: any) => {
@@ -559,15 +634,19 @@ export class TableComponent implements OnInit {
               this.maxTemps.push(msg);
             }
           });
+        }
         });
     } else {
       this.maxTemps=[];
     }
 
     if (column === "Thermal Sen" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?thermal_sensor=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.thermalsens = [] ;
           msg.result.forEach((msg: any) => {
@@ -575,15 +654,19 @@ export class TableComponent implements OnInit {
               this.thermalsens.push(msg);
             }
           });
+        }
         });
     } else {
       this.thermalsens = [] ;
     }
 
     if (column === "Frequency" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?frequency=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.frequencies = [];
           this.MemoryParamsService.clearTableRows();
@@ -592,15 +675,19 @@ export class TableComponent implements OnInit {
               this.frequencies.push(msg);
             }
           });
+        }
         });
     } else {
       this.frequencies = [];
     }
 
     if (column === "Mode" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?mode=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.modes =[] ;
           msg.result.forEach((msg: any) => {
@@ -608,15 +695,19 @@ export class TableComponent implements OnInit {
               this.modes.push(msg);
             }
           });
+        }
         });
     } else{
       this.modes =[] ;
     }
 
     if (column === "Phase" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?curr_phase=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.phases =[] ;
           msg.result.forEach((msg: any) => {
@@ -624,15 +715,19 @@ export class TableComponent implements OnInit {
               this.phases.push(msg);
             }
           });
+        }
         });
     } else {
       this.phases =[] ;
     }
 
     if (column === "State" && searchValue !== '') {
+       let requestAjaxTime = new Date().getMilliseconds();
+      this.gAjaxRequestTime = requestAjaxTime;
       this.http.get('http://172.20.215.238:3000/goldenregister/register?curr_state=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
         .subscribe(msg => {
+          if(this.gAjaxRequestTime == requestAjaxTime){
           this.showTypeAhead = true;
           this.states =[];
           msg.result.forEach((msg: any) => {
@@ -640,6 +735,7 @@ export class TableComponent implements OnInit {
               this.states.push(msg);
             }
           });
+        }
         });
     } else {
       this.states =[];
