@@ -170,7 +170,17 @@ export class TableComponent implements OnInit {
 
   makeFilterQuery(param:any){
     // Set selected value to the input field and clear these values from param object
-    $('input[name="' + param.columnName + '"]').val(param.selectedValue);
+
+    let x = $(this.elementRef.nativeElement)
+      .find('table')
+      .find('tbody')
+      .find('tr')
+      .find('td')
+      .find('table')
+      .find('thead')
+      .find('th')
+      .find('p')
+      .find('input[name="' + param.columnName + '"]').val(param.selectedValue);
     delete param.selectedValue;
     delete param.columnName;
 
@@ -179,6 +189,7 @@ export class TableComponent implements OnInit {
     var queryObj:any = new Object();
     queryObj["conditions"] = this.filterQuery;
     this.showTypeAhead = false;
+
     this.http.post('http://172.20.215.238:3000/goldenregister/register', queryObj) // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
@@ -186,6 +197,8 @@ export class TableComponent implements OnInit {
         this.rows = [];
         this.rows = message;
       });
+
+
   }
 
   onRecordIdSelect(record_id:string, columnName:string) {
@@ -285,7 +298,6 @@ export class TableComponent implements OnInit {
           this.showTypeAhead = true;
           this.recordIds = [] ;
           msg.result.forEach((msg: any) => {
-
             if (this.recordIds.indexOf(msg) === -1) {
               this.recordIds.push(msg);
             }
@@ -523,7 +535,7 @@ export class TableComponent implements OnInit {
       console.log("New Ajax Response: "+ requestAjaxTime);
       this.http.get('http://172.20.215.238:3000/goldenregister/register?field_name=' + searchValue) // ...using post request
         .map((res) => res.json()) // ...and calling .json() on the response to return data
-        .subscribe(msg => {      
+        .subscribe(msg => {
            if(this.gAjaxRequestTime == requestAjaxTime){
 
           console.log("Request time is:"+requestAjaxTime);
@@ -777,18 +789,18 @@ export class TableComponent implements OnInit {
           let histRecords : any = [];
            message.forEach((message: any) => {
              updatedAttrs =  message.updated_attributes;
-           
+
               updatedAttrs.forEach((attr: any) => {
                  // let m = "<span \"style=color: 92b204;\">"+message[attr]+"</span>";
                //  message[attr] =m;
 
-                
+
               });
-        
+
                  histRecords.push(message);
-              
+
            });
-    
+
           row['subRows'] = histRecords;
         });
     } else {
