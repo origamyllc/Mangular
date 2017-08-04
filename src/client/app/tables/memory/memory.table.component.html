@@ -34,7 +34,7 @@
           </thead>
            <tbody class="child-table-body">
            <tr *ngFor="let row of rows | filter:filterText;let i = index " class="prime" >
-             <td class = "pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
+             <td class="pin" ><i class="fa fa-thumb-tack" id="record-{{row.record_id}}" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
              <td>{{row.record_id}}</td>
              <td>{{row.chip_sku}}</td>
              <td>{{row.chip_revision}}</td>
