@@ -20,16 +20,16 @@
                   (input)="onSearchChange($event.target.value,column.name)"
                 /></p>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 0 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 0 && column.isVisible">
                 <span *ngFor="let id of recordIds" (click)="onRecordIdSelect(id, 'Record Id')">{{id}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 1 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 1 && column.isVisible">
                 <span *ngFor="let sku of skus" (click)="onSkuSelect(sku, 'SKU')">{{sku}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 2 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 2 && column.isVisible">
                 <span *ngFor="let revision of revisions" (click)="onRevisionSelect(revision, 'Revision')">{{revision }}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 3 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 3 && column.isVisible">
                 <span *ngFor="let packageInfo of packageInfos" (click)="onPackageInfoSelect(packageInfo, 'Package Info')">{{packageInfo}}</span>
               </div>
             </th>
@@ -69,10 +69,10 @@
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 0 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 0 && column.isVisible">
                 <span *ngFor="let platform of platforms" (click)="onPlatformSelect(platform, 'Platform')">{{platform}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 1 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 1 && column.isVisible">
                 <span *ngFor="let program of programs" (click)="onProgramSelect(program, 'Programs')">{{program}}</span>
               </div>
             </th>
@@ -106,13 +106,13 @@
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 0 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 0 && column.isVisible">
                 <span *ngFor="let blockName of blockNames" (click)="onBlockNameSelect(blockName, 'Name')">{{blockName}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 1 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 1 && column.isVisible">
                 <span *ngFor="let blockRevision of blockRevisions" (click)="onBlockRevisionSelect(blockRevision, 'Block Revision')">{{blockRevision}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 2 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 2 && column.isVisible">
                 <span *ngFor="let manualName of manualNames" (click)="onManualNameSelect(manualName, 'Manual')">{{manualName}}</span>
               </div>
             </th>
@@ -148,46 +148,46 @@
                   placeholder={{column.name}}
                   (input)="onSearchChange($event.target.value,column.name)"></p>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 0 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 0 && column.isVisible">
                 <span *ngFor="let type of regTypes" (click)="onRegisterTypeSelect(type, 'Reg Type')">{{type}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 1 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 1 && column.isVisible">
                 <span *ngFor="let address of regAddresses" (click)="onRegisterAddressSelect(address, 'Reg Address')">{{address}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 2 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 2 && column.isVisible">
                 <span *ngFor="let register of regNames" (click)="  onRegisterNameSelect(register, 'Reg Name')">{{register}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 3 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 3 && column.isVisible">
                 <span *ngFor="let field_name of fieldNames" (click)="  onRegisterFieldNameSelect(field_name, 'Field Name')">{{field_name}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 4 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 4 && column.isVisible">
                 <span *ngFor="let mask of masks" (click)="  onRegisterMaskSelect(mask, 'Mask')">{{mask}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 5 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 5 && column.isVisible">
                  <span *ngFor="let value of values" (click)="  onRegisterValueSelect(value, 'Value')">{{value}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 6 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 6 && column.isVisible">
                 <span *ngFor="let asic of asics" (click)="onRegistersAsicSelect(asic, 'ASIC')">{{asic}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 7 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 7 && column.isVisible">
                 <span *ngFor="let minTemp of minTemps" (click)="onRegistersMinTempSelect(minTemp, 'Min Temp')">{{minTemp}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 8 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 8 && column.isVisible">
                 <span *ngFor="let maxTemp of maxTemps" (click)="onRegistersMaxTempSelect(maxTemp, 'Max Temp')">{{maxTemp}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 9 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 9 && column.isVisible">
                 <span *ngFor="let thermalSen of thermalsens" (click)="onRegistersThermalSenSelect(thermalSen, 'Thermal Sen')">{{thermalSen}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 10 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 10 && column.isVisible">
                 <span *ngFor="let frequency of frequencies" (click)="onRegistersFrequencySelect(frequency, 'Frequency')">{{frequency}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 11 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 11 && column.isVisible">
                 <span *ngFor="let mode of modes" (click)="onRegistersModeSelect(mode, 'Mode')">{{mode}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 12 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 12 && column.isVisible">
                 <span *ngFor="let phase of phases" (click)="onRegistersPhaseSelect(phase, 'Phase')">{{phase}}</span>
               </div>
-              <div class="typeaheadv" *ngIf=" j == 13 && showTypeAhead">
+              <div class="typeaheadv" *ngIf=" j == 13 && column.isVisible">
                    <span *ngFor="let state of states" (click)="onRegistersStateSelect(state, 'State')">{{state}}</span>
               </div>
             </th>

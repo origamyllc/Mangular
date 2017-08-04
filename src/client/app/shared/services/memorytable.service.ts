@@ -27,8 +27,21 @@ export class MemoryParamsService  {
       this.obj = object;
    }
 
+  
+
    getQueryParams() {
+     console.log("MemoryParamService:"+JSON.stringify(this.obj));
      return this.obj;
+   }
+
+   deleteQueryParam(pObj:string){
+     let newObj   = new Object(this.getQueryParams());
+     delete newObj[pObj];
+     console.log("In delete method:"+JSON.stringify(newObj));
+     this.obj = newObj;
+   }
+   appendQueryParam(param : string){
+      Object.assign(this.obj,param);
    }
 
    setTableRows(records:any):void {
