@@ -110,7 +110,7 @@ export class PinnedTableComponent implements OnInit {
   getData(){
     this.connection = this.socketService.getMessages().subscribe(message => {
       this.hidePinnedtable =false;
-      if(this.rows.indexOf(message) === -1 ){
+      if(this.rows.indexOf(message.record) === -1 ) {
         this.rows.push(message.record);
       }
     });

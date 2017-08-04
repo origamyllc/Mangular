@@ -38,13 +38,13 @@
            <tbody class="child-table-body">
              <ng-container *ngFor="let row of rows | filter:filterText;let i = index ">
                 <tr class="prime" id="{{row._id}}">
-                  <td class="pin" ><i class="fa fa-thumb-tack" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
+                  <td class="pin" ><i class="fa fa-thumb-tack" id="record-{{row.record_id}}" aria-hidden="true" (click)="pinHandler($event,i)"></i></td>
                   <td>{{row.record_id}}</td>
                   <td>{{row.sku_info}}</td>
                   <td>{{row.chip_revision_entry}}</td>
                   <td>{{row.package_info}}</td>
                 </tr>
-                <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" id="sub-row-{{row._id}}">
+                <tr class="sub-rows history" *ngFor="let subRow of row['subRows']" >
                   <td></td>
                   <td >{{subRow.record_id}}</td>
                   <td [ngClass] ="{'his-attr': subRow.updated_attributes.indexOf('sku_info')!==-1}">{{subRow.sku_info}}</td>
