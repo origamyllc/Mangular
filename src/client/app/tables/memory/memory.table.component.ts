@@ -149,7 +149,7 @@ export class TableComponent implements OnInit {
   }
 
    getPinnedData() {
-    this.http.get('http://172.17.175.38:3000/goldenregister/v1/memorytable/pinned') // ...using post request
+    this.http.get('http://172.20.215.238:3000/goldenregister/v1/memorytable/pinned') // ...using post request
       .map((res) => res.json()) // ...and calling .json() on the response to return data
       .subscribe(message => {
         message.results.forEach((record_id: any) => {
