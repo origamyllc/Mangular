@@ -134,6 +134,9 @@ export class TableComponent implements OnInit {
   pinHandler(event: any, index: number) {
     let target = event.target || event.srcElement || event.currentTarget;
     let row = target.parentNode;
+
+    console.log(this.rows[index],this.rows[index].record_id);
+
     let memoryTable = $('sd-memory-table#records');
     let pinnedTable = $('sd-pinned-table#pinned-rows');
     if (this.pinned.indexOf(index) === -1) {
@@ -145,7 +148,7 @@ export class TableComponent implements OnInit {
         pinnedTable.addClass('expanded');
       }
     }
-    this.socketService.sendMessage({row: this.rows[index], index: index});
+    this.socketService.sendMessage({row: this.rows[index],  record_id:this.rows[index].record_id });
   }
 
    getPinnedData() {
